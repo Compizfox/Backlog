@@ -226,18 +226,31 @@ function getStatusOptions() {
 	return $string;
 }
 
-function syncSteam () {
+function SteamApiRequest() {
 	global $mysqli, $config;
 	
 	$json = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1");
-	$steamdata = json_decode($json);
-	
+	return json_decode($json);
+}
+
+function syncSteamAppids() {
+	$steamdata = SteamApiRequest();
 	foreach ($steamdata->response->games as $game) {
 		$name = addslashes($game->name);
 		$appid = $game->appid;
+		
+		$query = "UPDATE game SET appid=$appid WHERE name='$name'";
+		$mysqli->query($query) or die($query); 
+	}
+}
+
+function syncSteamPlaytime() {
+	$steamdata = SteamApiRequest();
+	foreach ($steamdata->response->games as $game) {
+		$appid = $game->appid;
 		$playtime = $game->playtime_forever;
 		
-		$query = "UPDATE game SET appid=$appid, playtime=$playtime WHERE name='$name'";
+		$query = "UPDATE game SET playtime=$playtime WHERE appid=$appid";
 		$mysqli->query($query) or die($query); 
 	}
 }
