@@ -1,4 +1,5 @@
 <?php
+require_once "config.php";
 class game {
 	private $id, $name, $status, $completed, $notes, $color, $purchase;
 
@@ -226,7 +227,18 @@ function getStatusOptions() {
 }
 
 function syncSteam () {
+	global $mysqli, $config;
 	
+	$json = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1");
+	$steamdata = json_decode($json);
 	
+	foreach ($steamdata->response->games as $game) {
+		$name = addslashes($game->name);
+		$appid = $game->appid;
+		$playtime = $game->playtime_forever;
+		
+		$query = "UPDATE game SET appid=$appid, playtime=$playtime WHERE name='$name'";
+		$mysqli->query($query) or die($query); 
+	}
 }
 ?>
