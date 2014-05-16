@@ -3,21 +3,23 @@ require_once "config.php";
 class game {
 	private $id, $name, $status, $completed, $notes, $color, $purchase;
 
-	function __construct($id, $name, $status, $completed, $notes, $color, $purchase=NULL) {
-		$this->setData($id, $name, $status, $completed, $notes, $color, $purchase);
+	function __construct($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $purchase=NULL) {
+		$this->setData($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $purchase);
 	}
 
 	private function getColor() {
 		return $this->color;
 	}
 
-	public function setData($id, $name, $status, $completed, $notes, $color, $purchase) {
+	public function setData($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $purchase) {
 		$this->id = $id;
 		$this->name = $name;
 		$this->status = $status;
 		$this->completed = $completed;
 		$this->notes = $notes;
 		$this->color = $color;
+		$this->appid = $appid;
+		$this->playtime = round($playtime / 60, 2);
 		$this->purchase = $purchase;
 	}
 
@@ -28,7 +30,10 @@ class game {
 		if($beginrow) $string .= ("<tr>");
 		$string .= "<td>{$this->name}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
-		$string .= "<td>{$this->notes}</td><td>";
+		if(!isset($this->purchase)) $string .= "<td>{$this->appid}</td>";
+		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
+		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
+		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
 		$string .= "<a href=\"index.php?page=modifygame&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=game&game={$this->id}";
 		if(isset($this->purchase)) $string .= "&purchase=" . $this->purchase;
@@ -79,7 +84,9 @@ class dlc {
 		$string .= "<tr class=\"dlc\">";
 		$string .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;{$this->name}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
-		$string .= "<td>{$this->notes}</td><td>";
+		if(!isset($this->purchase)) $string .= "<td></td><td></td>";
+		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
+		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
 		$string .= "<a href=\"index.php?page=modifydlc&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=dlc&dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
@@ -98,12 +105,12 @@ class listGames {
 		global $mysqli;
 		$string = "";
 		
-		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) {$this->condition} GROUP BY game.name ORDER BY game.game_id";
+		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) {$this->condition} GROUP BY game.name ORDER BY game.game_id";
 		$this->query2 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM dlc JOIN status USING (status_id)";
 		$result = $mysqli->query($this->query);
 
 		while($entries = $result->fetch_assoc()) {
-			$game = new game($entries['game_id'], $entries['name'], $entries['status'], $entries['completed'], $entries['notes'], $entries['color']);
+			$game = new game($entries['game_id'], $entries['name'], $entries['status'], $entries['completed'], $entries['notes'], $entries['color'], $entries['appid'], $entries['playtime']);
 			$string .= $game->drawRow();
 
 			$game_id = $entries['game_id'];
@@ -171,7 +178,7 @@ class listPurchases {
 			$result2 = $mysqli->query($this->query2 . " WHERE purchase.purchase_id={$entries['purchase_id']}");
 			$j = 0; // draw first game without <tr>
 			while($entries2 = $result2->fetch_assoc()) {
-				$game = new game($entries2['game_id'], $entries2['name'], $entries2['status'], $entries2['completed'], $entries2['notes'], $entries2['color'], $entries['purchase_id']);
+				$game = new game($entries2['game_id'], $entries2['name'], $entries2['status'], $entries2['completed'], $entries2['notes'], $entries2['color'], NULL, NULL, $entries['purchase_id']);
 				$string .= $game->drawRow($j);
 
 				$result3 = $mysqli->query($this->query3 . " WHERE game_id={$entries2['game_id']}");
@@ -227,13 +234,14 @@ function getStatusOptions() {
 }
 
 function SteamApiRequest() {
-	global $mysqli, $config;
+	global $config;
 	
 	$json = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1");
 	return json_decode($json);
 }
 
 function syncSteamAppids() {
+	global $mysqli;
 	$steamdata = SteamApiRequest();
 	foreach ($steamdata->response->games as $game) {
 		$name = addslashes($game->name);
@@ -245,6 +253,7 @@ function syncSteamAppids() {
 }
 
 function syncSteamPlaytime() {
+	global $mysqli;
 	$steamdata = SteamApiRequest();
 	foreach ($steamdata->response->games as $game) {
 		$appid = $game->appid;

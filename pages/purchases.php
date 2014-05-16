@@ -24,7 +24,6 @@ $script = "$('#selectall').click (function () {
 				<th>Note</th>
 				<th>Game(s)</th>
 				<th>Status</th>
-				<th>Notes</th>
 				<th></th>
 			</tr>
 		</thead>

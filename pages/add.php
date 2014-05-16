@@ -86,5 +86,8 @@ if(isset($_POST['submit'])) {
 			$mysqli->query($query) or die($query);
 		}
 	}
+	
+	syncSteamAppids();
+	syncSteamPlaytime();
 }
 ?>

@@ -2,14 +2,14 @@
 
 - Horizontal menu dropbox active highlight
 
-- Steam API import/sync
-
 - Add sanitizing (lege purchases)
 
 - Searchbox
 
 - Settings
  |---- Statuses
+ 
+- Game icons (from Steam?)
  
  - DLC scopes
 * done *  |---- Completed
@@ -31,3 +31,5 @@
 * done *  |---- Statistieken (pie charts)
 
 * done * - History
+
+* done * - Steam API import/sync
