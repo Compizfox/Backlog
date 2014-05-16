@@ -224,4 +224,9 @@ function getStatusOptions() {
 	}
 	return $string;
 }
+
+function syncSteam () {
+	
+	
+}
 ?>
