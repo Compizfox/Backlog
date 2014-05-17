@@ -40,7 +40,6 @@ class game {
 		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" /> ";
 		$string .= "{$this->name}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
-		if(!isset($this->purchase)) $string .= "<td>{$this->appid}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
@@ -94,7 +93,7 @@ class dlc {
 		$string .= "<tr class=\"dlc\">";
 		$string .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;{$this->name}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
-		if(!isset($this->purchase)) $string .= "<td></td><td></td>";
+		if(!isset($this->purchase)) $string .= "<td></td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -257,7 +256,25 @@ function syncSteamAppids() {
 		$name = addslashes($game->name);
 		$appid = $game->appid;
 		
-		$query = "UPDATE game SET appid=$appid WHERE name='$name'";
+		$query = "SELECT * FROM game WHERE name='$name'";
+		$result = $mysqli->query($query) or die($query);
+		$entries = $result->fetch_assoc();
+		if($entries['appid_lock'] == 0) {		
+			$query = "UPDATE game SET appid=$appid WHERE name='$name'";
+			$mysqli->query($query) or die($query);
+		}
+	}
+}
+
+function syncSteamIcons() {
+	global $mysqli;
+	$steamdata = SteamApiRequest();
+	foreach ($steamdata->response->games as $game) {
+		$appid = $game->appid;
+		$icon = $game->img_icon_url;
+		$logo = $game->img_logo_url;
+		
+		$query = "UPDATE game SET img_icon_url='$icon', img_logo_url='$logo' WHERE appid=$appid";
 		$mysqli->query($query) or die($query); 
 	}
 }
@@ -268,10 +285,8 @@ function syncSteamPlaytime() {
 	foreach ($steamdata->response->games as $game) {
 		$appid = $game->appid;
 		$playtime = $game->playtime_forever;
-		$icon = $game->img_icon_url;
-		$logo = $game->img_logo_url;
 		
-		$query = "UPDATE game SET playtime=$playtime, img_icon_url='$icon', img_logo_url='$logo' WHERE appid=$appid";
+		$query = "UPDATE game SET playtime=$playtime WHERE appid=$appid";
 		$mysqli->query($query) or die($query); 
 	}
 }

@@ -18,7 +18,6 @@ $script = "$('#selectall').click (function () {
 			<tr>
 				<th>Name</th>
 				<th>Status</th>
-				<th>Steam appid</th>
 				<th>Playtime (hours)</th>
 				<th>Notes</th>
 				<th><input type="checkbox" id="selectall" /></th>

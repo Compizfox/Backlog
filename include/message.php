@@ -13,6 +13,9 @@ if(isset($_GET['message'])){
 		case "appidssynced":
 			$message = "All games should now have Steam appids assigned. If not, add them manually.";
 			break;
+		case "iconssynced":
+			$message = "All games with Steam appids should now have icons and logos.";
+			break;
 		case "playtimesynced":
 			$message = "All games with Steam appids should now show your Steam playtime.";
 			break;
