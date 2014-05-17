@@ -15,7 +15,7 @@
   - [x] Game
   - [ ] Game completed, DLC uncompleted
  
- - Steam integration
+- [ ] Steam integration
   - [x] Game icons (from Steam?)
   - [x] API
   - [x] Playtime
