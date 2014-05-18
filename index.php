@@ -62,7 +62,7 @@ include("include/menu.php")
 	</div>
 	
 	<footer class="navbar navbar-fixed-bottom">  
-        <p class="text-center">Made by Lars Veldcholte</p>
+        <p class="text-center"><a href="https://github.com/Compizfox/Backlog">Made by Lars Veldcholte</a></p>
     </footer>
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
