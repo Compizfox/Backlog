@@ -34,4 +34,6 @@ Every game has a status attached, like:
 Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS.
 
 ### Development status
-As you might have guessed, Backlog is heavily in development. There is no stable/ready for use release yet. A demo (also development environment) is available at http://backlog.tuxplace.nl.
+As you might have guessed, Backlog is heavily in development. There is no stable/ready for use release yet. You should regard it as WIP/alpha. A demo (also development environment) is available at http://backlog.tuxplace.nl.
+
+This project wasn't originally intended for public distribution, but rather as an (small) school project. Hence the lack comments in the code and so on.
