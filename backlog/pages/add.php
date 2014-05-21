@@ -1,5 +1,23 @@
 <?php
 require_once("include/classes.php");
+require_once("include/connect.php");
+
+$query = "SELECT name FROM game";
+$result = $mysqli->query($query) or die($query);
+$gamearray = json_encode(transpose($result->fetch_all(MYSQLI_ASSOC))[0]);
+
+$script = "<script src=\"//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js\"></script>
+<script>
+	$(function() {
+		var availableTags = $gamearray;
+		
+		$('body').delegate('.autocomplete', 'focusin', function() {
+			$( '.autocomplete' ).autocomplete({
+				source: availableTags
+			});
+		});
+	});
+</script>";
 ?>
 
 <script>
@@ -12,7 +30,7 @@ require_once("include/classes.php");
 		var newdiv = document.createElement('div');
 		newdiv.setAttribute('class', 'form-group');
 		newdiv.setAttribute('id', i);
-		newdiv.innerHTML = "<label class=\"col-sm-1 control-label\">Game:</label> <div class=\"col-md-3\"><input class=\"form-control\" type=\"text\" name=\"game[" + i + "][name]\" required autofocus></div> <label class=\"col-sm-1 control-label\">Status:</label> <div class=\"col-md-2\"><select class=\"form-control\" name=\"game[" + i + "][status]\"><?=addslashes(getStatusOptions())?></select></div> <label class=\"col-sm-1 control-label\">Note:</label><div class=\"col-md-3\"> <input class=\"form-control\" type=\"text\" name=\"game[" + i + "][notes]\"></div><label class=\"col-sm-1 control-label\"><a onclick=\"addDLC(this)\"><span class=\"glyphicon glyphicon-plus-sign\"></span> DLC</a></label>";
+		newdiv.innerHTML = "<label class=\"col-sm-1 control-label\">Game:</label> <div class=\"col-md-3\"><input class=\"form-control autocomplete\" type=\"text\" name=\"game[" + i + "][name]\" required autofocus></div> <label class=\"col-sm-1 control-label\">Status:</label> <div class=\"col-md-2\"><select class=\"form-control\" name=\"game[" + i + "][status]\"><?=addslashes(getStatusOptions())?></select></div> <label class=\"col-sm-1 control-label\">Note:</label><div class=\"col-md-3\"> <input class=\"form-control\" type=\"text\" name=\"game[" + i + "][notes]\"></div><label class=\"col-sm-1 control-label\"><a onclick=\"addDLC(this)\"><span class=\"glyphicon glyphicon-plus-sign\"></span> DLC</a></label>";
 		document.getElementById('dyn').appendChild(newdiv);
 		j[i] = 0;
 		i++;
