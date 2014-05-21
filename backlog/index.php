@@ -1,6 +1,7 @@
 <?php
 include("include/pages.php");
-include("include/menu.php")
+include("include/menu.php");
+$script = "";
 ?>
 
 <!DOCTYPE html>
