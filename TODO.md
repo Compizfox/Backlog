@@ -8,7 +8,10 @@
 
 - [ ] Settings
   - [ ] Statuses
- 
+
+- [ ] Game scopes
+  - [ ] Games not in a purchase
+
 - [ ] DLC scopes
   - [x] Completed
   - [x] Uncompleted
