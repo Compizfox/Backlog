@@ -24,9 +24,10 @@ $result = $mysqli->query($query) or die($query);
 $numuncompletedgames = $result->fetch_array(MYSQLI_NUM)[0];
 
 // Piechart games
+$script = "<script src=\"//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js\"></script>";
+
 $canvasstring = "";
-$scriptstring = "";						
-$scriptstring .= "<script>var ctx = document.getElementById(\"chart\").getContext(\"2d\"); var data = [";
+$script .= "<script>var ctx = document.getElementById(\"chart\").getContext(\"2d\"); var data = [";
 
 $query = "SELECT COUNT(*) FROM game";
 $result = $mysqli->query($query) or die($query);
@@ -39,17 +40,16 @@ $i = 1;
 while($row = $result->fetch_assoc()) {
 	$share = round($row['count'] / $total * 100);
 	$canvasstring .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$scriptstring .= "{value: $share, color: \"#{$row['color']}\" }";
-	if($i != $result->num_rows) $scriptstring .= ",";
+	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
 
-$scriptstring .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
+$script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 
 // Piechart DLC
 $canvasstring2 = "";
-$scriptstring2 = "";						
-$scriptstring2 .= "<script>var ctx = document.getElementById(\"chart2\").getContext(\"2d\"); var data = [";
+$script .= "<script>var ctx = document.getElementById(\"chart2\").getContext(\"2d\"); var data = [";
 
 $query = "SELECT status.name, COUNT(*) as count, color FROM dlc JOIN status USING(status_id) GROUP BY status_id";
 $result = $mysqli->query($query) or die($query);
@@ -59,12 +59,12 @@ $i = 1;
 while($row = $result->fetch_assoc()) {
 	$share = round($row['count'] / $numstatuses * 100);
 	$canvasstring2 .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$scriptstring2 .= "{value: $share, color: \"#{$row['color']}\" }";
-	if($i != $result->num_rows) $scriptstring2 .= ",";
+	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
 
-$scriptstring2 .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
+$script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 
 // Status history
 $historystring = "";
@@ -145,6 +145,3 @@ while($row = $result->fetch_assoc()) {
 		</div><div class="clearfix visible-lg"></div>
 	</div>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js"></script>
-<?=$scriptstring?>
-<?=$scriptstring2?>
