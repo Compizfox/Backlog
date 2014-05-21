@@ -31,7 +31,7 @@ Every game has a status attached, like:
  - Unfinishable (multiplayer only)
 
 ### Used tools and libraries
-Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS.
+Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS. Besides jQuery, it also uses jQuery UI.
 
 ### Development status
 As you might have guessed, Backlog is heavily in development. There is no stable/ready for use release yet. You should regard it as WIP/alpha.
