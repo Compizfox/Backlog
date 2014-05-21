@@ -10,7 +10,7 @@ class menuitem {
 		$this->options = $options;
 		$this->setGlyphicon($glyphicon);
 		$this->title = $title;
-		$this->url = "/index.php?page=$page";
+		$this->url = "index.php?page=$page";
 		if(!empty($scope)) $this->url .= "&scope=$scope";
 		if(!empty($options)) $this->url .= "$options";
 	}
