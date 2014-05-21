@@ -20,6 +20,8 @@
   - [x] API
   - [x] Playtime
   - [ ] Add Steam library
+
+- [ ] jQuery autocomplete on game name textbox on add page
  
 - [x] Modify
 - [x] Inline modify
