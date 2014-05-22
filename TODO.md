@@ -1,3 +1,5 @@
+- [ ] Glyphicon for summary
+
 - [ ] Logo (favicon)
 
 - [ ] Game scope input in menu
