@@ -1,7 +1,6 @@
 <?php
 include("include/pages.php");
 include("include/menu.php");
-$script = "";
 ?>
 
 <!DOCTYPE html>
@@ -10,8 +9,9 @@ $script = "";
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href='//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel='stylesheet' type='text/css'>
 	<link href="stylesheet.css" rel="stylesheet">
+	<?=@$css?>
 	<title><?="Backlog - $pagename"?></title>
 </head>
 
@@ -68,6 +68,7 @@ $script = "";
     
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/js/bootstrap.min.js"></script>
-	<?=$script?>
+	<?=@$js?>
+	<?=@$script?>
 </body>
 </html>

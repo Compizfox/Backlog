@@ -24,10 +24,8 @@ $result = $mysqli->query($query) or die($query);
 $numuncompletedgames = $result->fetch_array(MYSQLI_NUM)[0];
 
 // Piechart games
-$script = "<script src=\"//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js\"></script>";
-
 $canvasstring = "";
-$script .= "<script>var ctx = document.getElementById(\"chart\").getContext(\"2d\"); var data = [";
+$script = "<script>var ctx = document.getElementById(\"chart\").getContext(\"2d\"); var data = [";
 
 $query = "SELECT COUNT(*) FROM game";
 $result = $mysqli->query($query) or die($query);

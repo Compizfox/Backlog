@@ -6,7 +6,7 @@ $query = "SELECT name FROM game";
 $result = $mysqli->query($query) or die($query);
 $gamearray = json_encode(transpose($result->fetch_all(MYSQLI_ASSOC))[0]);
 
-$script = "<script src=\"//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js\"></script>
+$script = "
 <script>
 	$(function() {
 		var availableTags = $gamearray;

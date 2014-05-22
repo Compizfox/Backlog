@@ -285,8 +285,6 @@ function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime) 
 	}
 }
 
-
-
 function transpose($array) {
     array_unshift($array, null);
     return call_user_func_array('array_map', $array);

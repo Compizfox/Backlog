@@ -7,7 +7,7 @@ if(isset($_GET['page'])) {
 	$page = "overzicht";
 }
 
-$result = $mysqli->query(@"SELECT * FROM menu WHERE page='$page' AND scope='{$_GET['scope']}'");
+$result = $mysqli->query(@"SELECT * FROM menu LEFT JOIN library USING(library_id) WHERE page='$page' AND scope='{$_GET['scope']}'");
 $entries = $result->fetch_assoc();
 
 if (!empty($entries)) {
@@ -20,4 +20,7 @@ if (!empty($entries)) {
 }
 
 $currenturl = @"index.php?page=$page&scope={$_GET['scope']}";
+
+if(!empty($entries['css_url'])) $css = "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\">";
+if(!empty($entries['js_url'])) $js = "<script src=\"{$entries['js_url']}\"></script>";
 ?>
