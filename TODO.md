@@ -1,3 +1,5 @@
+- [ ] Logo (favicon)
+
 - [ ] Game scope input in menu
 
 - [ ] Horizontal menu dropbox active highlight
