@@ -2,12 +2,12 @@
 include "include/operations.php";
 include "include/message.php";
 
-$script = "$('#selectall').click (function () {
+$script = "<script>$('#selectall').click (function () {
      var checkedStatus = this.checked;
     $('.table tbody tr').find(':checkbox').each(function () {
         $(this).prop('checked', checkedStatus);
      });
-});"
+});</script>"
 ?>
 
 <div class="alert alert-warning .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Warning: </strong>Deleting a game will delete all of its DLC. <br />Empty purchases will be automatically deleted.</div>
