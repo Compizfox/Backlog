@@ -29,7 +29,7 @@
   - [ ] Add Steam library
 
 - [x] jQuery autocomplete on game name textbox on add page
-  - [ ] Autocomplete on all games on Steam (different color?)
+  - [x] Autocomplete on all games on Steam (different color?)
  
 - [x] Modify
 - [x] Inline modify
