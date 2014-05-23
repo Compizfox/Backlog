@@ -80,3 +80,10 @@ tr.dlc > td {
     margin-right: auto;
     display: block;
 }
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+}

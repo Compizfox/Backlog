@@ -2,17 +2,50 @@
 require_once("include/classes.php");
 require_once("include/connect.php");
 
+$query = "SELECT name FROM game LEFT JOIN xref_purchase_game USING(game_id) WHERE purchase_id IS NULL ";
+$result = $mysqli->query($query) or die($query);
+$gamelist = transpose($result->fetch_all(MYSQLI_ASSOC))[0];
+
+$gamearray = array(array());
+foreach ($gamelist as $label) {
+	$row['label'] = $label;
+	$row['category'] = "Orphaned";
+	$gamearray[] = $row;
+}
+
 $query = "SELECT name FROM game";
 $result = $mysqli->query($query) or die($query);
-$gamearray = json_encode(transpose($result->fetch_all(MYSQLI_ASSOC))[0]);
+$gamelist = transpose($result->fetch_all(MYSQLI_ASSOC))[0];
+
+foreach ($gamelist as $label) {
+	$row['label'] = $label;
+	$row['category'] = "Already in database";
+	if(!in_array(array('label' => $label, 'category' => 'Orphaned'), $gamearray)) $gamearray[] = $row;
+}
+
+$autocompletelist = json_encode($gamearray);
 
 $script = "
 <script>
+	$.widget( 'custom.catcomplete', $.ui.autocomplete, {
+		_renderMenu: function( ul, items ) {
+			var that = this,
+			currentCategory = '';
+			$.each( items, function( index, item ) {
+				if ( item.category != currentCategory ) {
+					ul.append( '<li class=\'ui-autocomplete-category\'>' + item.category + '</li>' );
+					currentCategory = item.category;
+				}
+				that._renderItemData( ul, item );
+			});
+		}
+	});
+
 	$(function() {
-		var availableTags = $gamearray;
+		var availableTags = $autocompletelist;
 		
 		$('body').delegate('.autocomplete', 'focusin', function() {
-			$( '.autocomplete' ).autocomplete({
+			$( '.autocomplete' ).catcomplete({
 				source: availableTags
 			});
 		});
