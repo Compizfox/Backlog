@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 22 mei 2014 om 21:25
+-- Gegenereerd op: 24 mei 2014 om 23:51
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   `img_icon_url` varchar(40) DEFAULT NULL,
   `img_logo_url` varchar(40) DEFAULT NULL,
   `appid_lock` tinyint(4) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=280 ;
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `dlc_id` int(11) DEFAULT NULL,
   `old_status` int(11) NOT NULL,
   `new_status` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
 
 -- --------------------------------------------------------
 
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `glyphicon` varchar(255) NOT NULL,
   `library_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=75 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
 
 -- --------------------------------------------------------
 
@@ -199,12 +199,12 @@ MODIFY `dlc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT voor een tabel `game`
 --
 ALTER TABLE `game`
-MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=45;
+MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=280;
 --
 -- AUTO_INCREMENT voor een tabel `history`
 --
 ALTER TABLE `history`
-MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT voor een tabel `library`
 --
@@ -214,7 +214,7 @@ MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT voor een tabel `menu`
 --
 ALTER TABLE `menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=75;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=76;
 --
 -- AUTO_INCREMENT voor een tabel `purchase`
 --
