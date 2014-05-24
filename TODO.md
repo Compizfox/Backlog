@@ -1,3 +1,5 @@
+- [ ] real_escape_string !
+
 - [ ] Glyphicon for summary
 
 - [ ] Logo (favicon)
@@ -14,7 +16,7 @@
   - [ ] Statuses
 
 - [ ] Game scopes
-  - [ ] Games not in a purchase
+  - [ ] Games not in a purchase (orphaned games)
 
 - [ ] DLC scopes
   - [x] Completed
@@ -22,11 +24,11 @@
   - [x] Game
   - [ ] Game completed, DLC uncompleted
  
-- [ ] Steam integration
+- [x] Steam integration
   - [x] Game icons (from Steam?)
   - [x] API
   - [x] Playtime
-  - [ ] Add Steam library
+  - [x] Add Steam library
 
 - [x] jQuery autocomplete on game name textbox on add page
   - [x] Autocomplete on all games on Steam (different color?)
