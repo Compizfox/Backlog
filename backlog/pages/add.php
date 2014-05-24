@@ -132,6 +132,6 @@ if(isset($_POST['submit'])) {
 		}
 	}
 	
-	SteamApiRequest(TRUE, TRUE, TRUE);
+	SteamApiRequest(TRUE, TRUE, TRUE, FALSE);
 }
 ?>
