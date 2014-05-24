@@ -289,4 +289,17 @@ function transpose($array) {
     array_unshift($array, null);
     return call_user_func_array('array_map', $array);
 }
+
+function getGameList($type = NULL) {
+	global $mysqli;
+	
+	if($type == "orphaned") {
+		$query = "SELECT name FROM game LEFT JOIN xref_purchase_game USING(game_id) WHERE purchase_id IS NULL ";
+	} else {
+		$query = "SELECT name FROM game";
+	}
+	
+	$result = $mysqli->query($query) or die($query);
+	return transpose($result->fetch_all(MYSQLI_ASSOC))[0];
+}
 ?>

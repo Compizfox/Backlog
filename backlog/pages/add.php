@@ -2,10 +2,7 @@
 require_once("include/classes.php");
 require_once("include/connect.php");
 
-$query = "SELECT name FROM game LEFT JOIN xref_purchase_game USING(game_id) WHERE purchase_id IS NULL ";
-$result = $mysqli->query($query) or die($query);
-$gamelist = transpose($result->fetch_all(MYSQLI_ASSOC))[0];
-
+$gamelist = getGameList("orphaned");
 $gamearray = array(array());
 foreach ($gamelist as $label) {
 	$row['label'] = $label;
@@ -13,10 +10,7 @@ foreach ($gamelist as $label) {
 	$gamearray[] = $row;
 }
 
-$query = "SELECT name FROM game";
-$result = $mysqli->query($query) or die($query);
-$gamelist = transpose($result->fetch_all(MYSQLI_ASSOC))[0];
-
+$gamelist = getGameList();
 foreach ($gamelist as $label) {
 	$row['label'] = $label;
 	$row['category'] = "Already in database";
