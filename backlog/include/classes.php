@@ -271,8 +271,7 @@ function getStatusOptions() {
 function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, $addGames) {
 	global $config, $mysqli;
 	
-	$json = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1");
-	$steamdata = json_decode($json);
+	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1"));
 	
 	if($syncSteamAppids == true) {
 		foreach ($steamdata->response->games as $game) {
@@ -316,7 +315,13 @@ function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, 
 			$query = "SELECT * FROM game WHERE name='$name' UNION ALL SELECT * FROM game WHERE appid={$game->appid}";
 			$result = $mysqli->query($query) or die($query);
 			if($result->num_rows == 0) {
-				$query = "INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES ('$name', 1, {$game->appid}, {$game->playtime_forever}, '{$game->img_icon_url}', '{$game->img_logo_url}')";
+				if($game->playtime_forever == 0) {
+					$status_id = 1;
+				} else {
+					$status_id = 2;
+				}
+				
+				$query = "INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES ('$name', $status_id, {$game->appid}, {$game->playtime_forever}, '{$game->img_icon_url}', '{$game->img_logo_url}')";
 				$mysqli->query($query) or die($query);
 			}
 		}
