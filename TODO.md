@@ -18,6 +18,7 @@
   - [ ] Statuses
   - [ ] Truncate database
   - [ ] Unhide games
+  - [ ] Default currency
 
 - [ ] Game scopes
   - [ ] Games not in a purchase (orphaned games)
