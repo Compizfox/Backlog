@@ -1,3 +1,7 @@
+- [ ] Hide games
+
+- [ ] Steam widget
+
 - [ ] real_escape_string !
 
 - [ ] Logo (favicon)
