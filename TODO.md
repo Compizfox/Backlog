@@ -1,7 +1,5 @@
 - [ ] real_escape_string !
 
-- [ ] Glyphicon for summary
-
 - [ ] Logo (favicon)
 
 - [ ] Game scope input in menu
@@ -47,3 +45,5 @@
   - [x] Statistieken (pie charts)
 
 - [x] History
+
+- [x] Glyphicon for summary
