@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 24 mei 2014 om 23:51
+-- Gegenereerd op: 25 mei 2014 om 18:44
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `dlc` (
   `status_id` int(11) NOT NULL,
   `note` varchar(255) CHARACTER SET latin1 NOT NULL,
   `game_id` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   `img_icon_url` varchar(40) DEFAULT NULL,
   `img_logo_url` varchar(40) DEFAULT NULL,
   `appid_lock` tinyint(4) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=280 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `dlc_id` int(11) DEFAULT NULL,
   `old_status` int(11) NOT NULL,
   `new_status` int(11) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -77,6 +77,14 @@ CREATE TABLE IF NOT EXISTS `library` (
   `css_url` varchar(255) NOT NULL,
   `js_url` varchar(255) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `library`
+--
+
+INSERT INTO `library` (`library_id`, `css_url`, `js_url`) VALUES
+(1, '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'),
+(2, '', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js');
 
 -- --------------------------------------------------------
 
@@ -93,7 +101,33 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `glyphicon` varchar(255) NOT NULL,
   `library_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=76 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=77 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `menu`
+--
+
+INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `glyphicon`, `library_id`) VALUES
+(50, 1, 'overzicht', '', '', 'Overzicht', 'glyphicon-stats', 2),
+(54, 1, 'purchases', '', '', 'Purchases', 'glyphicon-shopping-cart', NULL),
+(57, 61, 'games', 'uncompleted', '', 'Uncompleted games', 'glyphicon-exclamation-sign', NULL),
+(58, 61, 'games', 'completed', '', 'Completed games', 'glyphicon-ok-sign', NULL),
+(59, 0, 'add', '', '', 'Add', 'glyphicon-plus', 1),
+(61, 1, 'games', 'all', '', 'Games', 'glyphicon-play', NULL),
+(62, 1, 'dlc', 'all', '', 'DLC', 'glyphicon-download', NULL),
+(63, -1, 'modifygame', '', '', 'Modify game', '', NULL),
+(64, -1, 'games', 'purchase', '', 'Games in purchase', '', NULL),
+(66, -1, 'modifypurchase', '', '', 'Modify purchase', '', NULL),
+(67, -1, 'modifydlc', '', '', 'Modify DLC', '', NULL),
+(68, 62, 'dlc', 'uncompleted', '', 'Uncompleted DLC', 'glyphicon-exclamation-sign', NULL),
+(69, 62, 'dlc', 'completed', '', 'Completed DLC', 'glyphicon-ok-sign', NULL),
+(70, -1, 'dlc', 'game', '', 'DLC in game', '', NULL),
+(71, 0, 'steam', '', '', 'Steam', 'fa fa-steam', NULL),
+(72, 71, 'steam', '', '&syncappids', 'Link games with Steam', 'glyphicon-link', NULL),
+(73, 71, 'steam', '', '&syncplaytime', 'Sync playtime with Steam', 'glyphicon-time', NULL),
+(74, 71, 'steam', '', '&syncicons', 'Retrieve icons/logos', 'glyphicon-picture', NULL),
+(75, 71, 'steam', '', '&addgames', 'Import games from Steam', 'glyphicon-import', NULL),
+(76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench', NULL);
 
 -- --------------------------------------------------------
 
@@ -108,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `purchase` (
   `valuta` char(1) NOT NULL,
   `date` date NOT NULL,
   `note` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -122,6 +156,19 @@ CREATE TABLE IF NOT EXISTS `status` (
   `completed` tinyint(1) NOT NULL,
   `color` varchar(6) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `status`
+--
+
+INSERT INTO `status` (`status_id`, `name`, `completed`, `color`) VALUES
+(1, 'Untouched', 0, 'c0392b'),
+(2, 'Started playing', 0, 'f1c40f'),
+(3, 'Finished', 1, '2ecc71'),
+(4, 'Finished campaign', 1, '27ae60'),
+(5, 'Multiplayer/AI only', 1, 'f39c12'),
+(6, 'Gave up', 0, 'e74c3c'),
+(7, 'Prequel not finished yet', 0, 'e67e22');
 
 -- --------------------------------------------------------
 
@@ -194,17 +241,17 @@ ALTER TABLE `xref_purchase_game`
 -- AUTO_INCREMENT voor een tabel `dlc`
 --
 ALTER TABLE `dlc`
-MODIFY `dlc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `dlc_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT voor een tabel `game`
 --
 ALTER TABLE `game`
-MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=280;
+MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT voor een tabel `history`
 --
 ALTER TABLE `history`
-MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT voor een tabel `library`
 --
@@ -214,12 +261,12 @@ MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 -- AUTO_INCREMENT voor een tabel `menu`
 --
 ALTER TABLE `menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=76;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
 --
 -- AUTO_INCREMENT voor een tabel `purchase`
 --
 ALTER TABLE `purchase`
-MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT voor een tabel `status`
 --
