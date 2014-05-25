@@ -1,5 +1,7 @@
 <?php
 require_once("include/classes.php");
+require_once("include/connect.php");
+
 $result = $mysqli->query("SELECT game_id, game.name, status_id, completed, notes as note, appid, playtime, appid_lock FROM game JOIN status USING (status_id) WHERE game_id={$_GET['id']}");
 $data = $result->fetch_assoc();
 

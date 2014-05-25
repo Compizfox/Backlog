@@ -1,5 +1,7 @@
 <?php
-require_once "config.php";
+require_once("config.php");
+require_once("connect.php");
+
 class game {
 	private $id, $name, $status, $completed, $notes, $color, $purchase;
 

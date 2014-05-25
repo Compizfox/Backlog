@@ -1,4 +1,6 @@
 <?php
+require_once("connect.php");
+
 class menuitem {
 	public $id, $parentid, $page, $scope, $options, $title, $glyphicon = "", $active = "", $submenuitems = array(), $url;
 	

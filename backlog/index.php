@@ -1,6 +1,6 @@
 <?php
-include("include/pages.php");
-include("include/menu.php");
+require_once("include/pages.php");
+require_once("include/menu.php");
 ?>
 
 <!DOCTYPE html>

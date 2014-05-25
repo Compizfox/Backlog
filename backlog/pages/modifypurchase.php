@@ -1,4 +1,6 @@
 <?php
+require_once("include/connect.php");
+
 $result = $mysqli->query("SELECT * FROM purchase WHERE purchase_id={$_GET['id']}");
 $data = $result->fetch_assoc();
 

@@ -2,8 +2,9 @@
 <div class="alert alert-warning .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Warning: </strong>Empty purchases will be automatically deleted.</div>
 
 <?php
-include "include/operations.php";
-include "include/message.php";
+require_once("include/classes.php");
+require_once("include/operations.php");
+include("include/message.php");
 
 $script = "<script>$('#selectall').click (function () {
      var checkedStatus = this.checked;

@@ -1,6 +1,7 @@
 <?php
-include "include/operations.php";
-include "include/message.php";
+require_once("include/classes.php");
+require_once("include/operations.php");
+include("include/message.php");
 
 $script = "<script>$('#selectall').click (function () {
      var checkedStatus = this.checked;

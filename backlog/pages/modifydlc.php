@@ -1,5 +1,7 @@
 <?php
 require_once("include/classes.php");
+require_once("include/connect.php");
+
 $result = $mysqli->query("SELECT dlc_id, dlc.name, status_id, note FROM dlc JOIN status USING (status_id) WHERE dlc_id={$_GET['id']}");
 $data = $result->fetch_assoc();
 
