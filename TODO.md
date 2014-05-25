@@ -16,6 +16,8 @@
 
 - [ ] Settings
   - [ ] Statuses
+  - [ ] Truncate database
+  - [ ] Unhide games
 
 - [ ] Game scopes
   - [ ] Games not in a purchase (orphaned games)
