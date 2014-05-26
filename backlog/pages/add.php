@@ -25,50 +25,6 @@
 
 require_once("include/classes.php");
 require_once("include/connect.php");
-
-$gamelist = getGameList("orphaned");
-$gamearray = array(array());
-foreach ($gamelist as $label) {
-	$row['label'] = $label;
-	$row['category'] = "Orphaned";
-	$gamearray[] = $row;
-}
-
-$gamelist = getGameList();
-foreach ($gamelist as $label) {
-	$row['label'] = $label;
-	$row['category'] = "Already in database";
-	if(!in_array(array('label' => $label, 'category' => 'Orphaned'), $gamearray)) $gamearray[] = $row;
-}
-
-$autocompletelist = json_encode($gamearray);
-
-$script = "
-<script>
-	$.widget( 'custom.catcomplete', $.ui.autocomplete, {
-		_renderMenu: function( ul, items ) {
-			var that = this,
-			currentCategory = '';
-			$.each( items, function( index, item ) {
-				if ( item.category != currentCategory ) {
-					ul.append( '<li class=\'ui-autocomplete-category\'>' + item.category + '</li>' );
-					currentCategory = item.category;
-				}
-				that._renderItemData( ul, item );
-			});
-		}
-	});
-
-	$(function() {
-		var availableTags = $autocompletelist;
-		
-		$('body').delegate('.autocomplete', 'focusin', function() {
-			$( '.autocomplete' ).catcomplete({
-				source: availableTags
-			});
-		});
-	});
-</script>";
 ?>
 
 <script>
