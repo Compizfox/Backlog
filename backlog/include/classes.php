@@ -23,8 +23,8 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once("config.php");
-require_once("connect.php");
+require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/connect.php");
 
 class game {
 	private $id, $name, $status, $completed, $notes, $color, $purchase;
