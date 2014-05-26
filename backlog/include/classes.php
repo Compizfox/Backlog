@@ -271,32 +271,29 @@ function getStatusOptions() {
 function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, $addGames) {
 	global $config, $mysqli;
 	
-	$json = file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1");
-	$steamdata = json_decode($json);
+	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1"));
 	
 	if($syncSteamAppids == true) {
 		foreach ($steamdata->response->games as $game) {
-			$name = addslashes($game->name);
-			$appid = $game->appid;
+			$stmt = $mysqli->prepare("SELECT * FROM game WHERE name=?") or die($mysqli->error);
+			$stmt->bind_param("s", $game->name) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
 			
-			$query = "SELECT * FROM game WHERE name='$name'";
-			$result = $mysqli->query($query) or die($query);
 			$entries = $result->fetch_assoc();
-			if($entries['appid_lock'] == 0) {		
-				$query = "UPDATE game SET appid=$appid WHERE name='$name'";
-				$mysqli->query($query) or die($query);
+			if($entries['appid_lock'] == 0) {
+				$stmt = $mysqli->prepare("UPDATE game SET appid=? WHERE name=?") or die($mysqli->error);
+				$stmt->bind_param("is", $game->appid, $game->name) or die($stmt->error);
+				$stmt->execute() or die($stmt->error);
 			}
 		}
 	}
 	
 	if($syncSteamIcons == true) {
 		foreach ($steamdata->response->games as $game) {
-			$appid = $game->appid;
-			$icon = $game->img_icon_url;
-			$logo = $game->img_logo_url;
-			
-			$query = "UPDATE game SET img_icon_url='$icon', img_logo_url='$logo' WHERE appid=$appid";
-			$mysqli->query($query) or die($query); 
+			$stmt = $mysqli->prepare("UPDATE game SET img_icon_url=?, img_logo_url=? WHERE appid=?") or die($mysqli->error);
+			$stmt->bind_param("ssi", $game->img_icon_url, $game->img_logo_url, $game->appid) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
 		}
 	}
 	
@@ -312,12 +309,21 @@ function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, 
 	
 	if($addGames == true) {
 		foreach ($steamdata->response->games as $game) {
-			$name = $mysqli->real_escape_string($game->name);
-			$query = "SELECT * FROM game WHERE name='$name' UNION ALL SELECT * FROM game WHERE appid={$game->appid}";
-			$result = $mysqli->query($query) or die($query);
+			$stmt = $mysqli->prepare("SELECT * FROM game WHERE name=? UNION ALL SELECT * FROM game WHERE appid=?") or die($mysqli->error);
+			$stmt->bind_param("si", $game->name, $game->appid) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
+			
 			if($result->num_rows == 0) {
-				$query = "INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES ('$name', 1, {$game->appid}, {$game->playtime_forever}, '{$game->img_icon_url}', '{$game->img_logo_url}')";
-				$mysqli->query($query) or die($query);
+				if($game->playtime_forever == 0) {
+					$status_id = 1;
+				} else {
+					$status_id = 2;
+				}
+				
+				$stmt = $mysqli->prepare("INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES (?, ?, ?, ?, ?, ?)") or die($mysqli->error);
+				$stmt->bind_param("siiiss", $game->name, $status_id, $game->appid, $game->playtime_forever, $game->img_icon_url, $game->img_logo_url) or die($stmt->error);
+				$stmt->execute() or die($stmt->error);
 			}
 		}
 	}
