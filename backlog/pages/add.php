@@ -131,28 +131,41 @@ $script = "
 </div>
 <?php
 if(isset($_POST['submit'])) {
-	$query = "INSERT INTO purchase (shop, price, valuta, date, note) VALUES ('{$_POST['shop']}', {$_POST['price']}, '{$_POST['valuta']}', '{$_POST['date']}', '{$_POST['note']}')";
-	$mysqli->query($query) or die($query);
+	$price = str_replace(",", ".", $_POST['price']);
+	if($_POST['price'] == "") $price = NULL;
+	
+	$stmt = $mysqli->prepare("INSERT INTO purchase (shop, price, valuta, date, note) VALUES (?, ?, ?, ?, ?)") or die($mysqli->error);
+	$stmt->bind_param("sdsss", $_POST['shop'], $price, $_POST['valuta'], $_POST['date'], $_POST['note']) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
 	$purchase_id = $mysqli->insert_id;
-
+	
+	$stmt = $mysqli->prepare("SELECT * FROM game WHERE name = ?") or die($mysqli->error);
+	$stmt2 = $mysqli->prepare("INSERT INTO game (name, status_id, notes) VALUES (?, ?, ?)") or die($mysqli->error);
+	$stmt3 = $mysqli->prepare("INSERT INTO xref_purchase_game VALUES (?, ?)") or die($mysqli->error);
+	$stmt4 = $mysqli->prepare("INSERT INTO dlc (name, status_id, note, game_id) VALUES (?, ?, ?, ?)") or die($mysqli->error);
 	foreach($_POST['game'] as $game) {
-		$query = "SELECT * FROM game WHERE name = '{$game['name']}'";
-		$result = $mysqli->query($query) or die($query);
+		$stmt->bind_param("s", $game['name']) or die($stmt->error);
+		$stmt->execute() or die($stmt->error);
+		$result = $stmt->get_result();
+
 		if($entries = $result->fetch_assoc()) {
 			$game_id = $entries['game_id'];
 		} else {
-			$query = "INSERT INTO game (name, status_id, notes) VALUES ('{$game['name']}', {$game['status']}, '{$game['notes']}')";
-			$mysqli->query($query) or die($query);
+			$stmt2->bind_param("sis", $game['name'], $game['status'], $game['notes']) or die($stmt2->error);
+			$stmt2->execute() or die($stmt2->error);
+
 			$game_id = $mysqli->insert_id;
 		}
-
-		$query = "INSERT INTO xref_purchase_game VALUES ($purchase_id, $game_id)";
-		$mysqli->query($query) or die($query);
+		
+		$stmt3->bind_param("ii", $purchase_id, $game_id) or die($stmt3->error);
+		$stmt3->execute() or die($stmt3->error);
 		
 		for($i = 0; $i < count(array_filter(array_keys($game),'is_numeric')); $i++) {
 			$dlc = $game[$i];
-			$query = "INSERT INTO dlc (name, status_id, note, game_id) VALUES ('{$dlc['name']}', {$dlc['status']}, '{$dlc['notes']}', $game_id)";
-			$mysqli->query($query) or die($query);
+			
+			$stmt4->bind_param("sisi", $dlc['name'], $dlc['status'], $dlc['notes'], $game_id) or die($stmt4->error);
+			$stmt4->execute() or die($stmt4->error);
 		}
 	}
 	
