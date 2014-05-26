@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 26 mei 2014 om 21:34
+-- Gegenereerd op: 27 mei 2014 om 01:13
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `library` (
 `library_id` int(11) NOT NULL,
   `css_url` varchar(255) NOT NULL,
   `js_url` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `library`
@@ -85,7 +85,9 @@ CREATE TABLE IF NOT EXISTS `library` (
 INSERT INTO `library` (`library_id`, `css_url`, `js_url`) VALUES
 (1, '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'),
 (2, '', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js'),
-(3, '', 'js/autocorrect.php');
+(3, '', 'js/autocorrect.php'),
+(4, '', 'js/add.js'),
+(5, '', 'js/checkall.js');
 
 -- --------------------------------------------------------
 
@@ -109,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
 
 INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `glyphicon`) VALUES
 (50, 1, 'overzicht', '', '', 'Summary', 'glyphicon-stats'),
+(51, 1, 'history', '', '', 'History', 'fa fa-history'),
 (54, 1, 'purchases', '', '', 'Purchases', 'glyphicon-shopping-cart'),
 (57, 61, 'games', 'uncompleted', '', 'Uncompleted games', 'glyphicon-exclamation-sign'),
 (58, 61, 'games', 'completed', '', 'Completed games', 'glyphicon-ok-sign'),
@@ -188,7 +191,17 @@ CREATE TABLE IF NOT EXISTS `xref_menu_library` (
 INSERT INTO `xref_menu_library` (`menu_id`, `library_id`) VALUES
 (50, 2),
 (59, 1),
-(59, 3);
+(59, 3),
+(59, 4),
+(54, 5),
+(57, 5),
+(58, 5),
+(61, 5),
+(62, 5),
+(68, 5),
+(69, 5),
+(70, 5),
+(64, 5);
 
 -- --------------------------------------------------------
 
@@ -282,7 +295,7 @@ MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT voor een tabel `library`
 --
 ALTER TABLE `library`
-MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT voor een tabel `menu`
 --
