@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 	}
 	
 	$stmt = $mysqli->prepare("UPDATE dlc SET name=?, status_id=?, note=? WHERE dlc_id=?") or die($mysqli->error);
-	$stmt->bind_param("sis", $_POST['name'], $_POST['status'], $_POST['note'], $_GET['id']) or die($stmt->error);
+	$stmt->bind_param("sisi", $_POST['name'], $_POST['status'], $_POST['note'], $_GET['id']) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 	
 	header("Location: index.php?page=dlc&scope=all&message=dlcedited");
