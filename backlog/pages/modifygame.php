@@ -54,8 +54,10 @@ if(isset($_POST['submit'])) {
 		$appid_lock = 0;
 	}
 	
-	$query = "UPDATE game SET name='{$_POST['name']}', status_id={$_POST['status']}, notes='{$_POST['note']}', appid={$_POST['appid']}, playtime=$playtime, appid_lock=$appid_lock WHERE game_id={$_GET['id']}";
-	$mysqli->query($query) or die($query);
+	$stmt = $mysqli->prepare("UPDATE game SET name=?, status_id=?, notes=?, appid=?, playtime=?, appid_lock=? WHERE game_id=?") or die($mysqli->error);
+	$stmt->bind_param("sisiiii", $_POST['name'], $_POST['status'], $_POST['note'], $_POST['appid'], $playtime, $appid_lock, $_GET['id']) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
 	header("Location: index.php?page=games&scope=all&message=gameedited");
 }
 ?>
