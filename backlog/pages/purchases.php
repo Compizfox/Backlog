@@ -26,13 +26,6 @@
 require_once("include/classes.php");
 require_once("include/operations.php");
 include("include/message.php");
-
-$script = "<script>$('#selectall').click (function () {
-     var checkedStatus = this.checked;
-    $('.table tbody tr').find(':checkbox').each(function () {
-        $(this).prop('checked', checkedStatus);
-     });
-});</script>"
 ?>
 
 <div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember: </strong>removing games in <i>purchase view</i> unlinks the games from the purchase. To actually delete the game itself, remove it in <i>games view</i>.<br />Deleting a purchase doesn't remove the games in it.</div>

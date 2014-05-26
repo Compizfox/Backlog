@@ -26,13 +26,6 @@
 require_once("include/classes.php");
 require_once("include/operations.php");
 include("include/message.php");
-
-$script = "<script>$('#selectall').click (function () {
-     var checkedStatus = this.checked;
-    $('.table tbody tr').find(':checkbox').each(function () {
-        $(this).prop('checked', checkedStatus);
-     });
-});</script>"
 ?>
 
 <form class="form-horizontal" action="<?=htmlentities($_SERVER['REQUEST_URI'])?>" method="post">
