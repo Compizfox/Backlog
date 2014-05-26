@@ -1,3 +1,7 @@
+- [ ] Hide games
+
+- [ ] Steam widget
+
 - [ ] real_escape_string !
 
 - [ ] Logo (favicon)
@@ -12,6 +16,9 @@
 
 - [ ] Settings
   - [ ] Statuses
+  - [ ] Truncate database
+  - [ ] Unhide games
+  - [ ] Default currency
 
 - [ ] Game scopes
   - [ ] Games not in a purchase (orphaned games)
