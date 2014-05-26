@@ -130,7 +130,8 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 (73, 71, 'steam', '', '&syncplaytime', 'Sync playtime with Steam', 'glyphicon-time'),
 (74, 71, 'steam', '', '&syncicons', 'Retrieve icons/logos', 'glyphicon-picture'),
 (75, 71, 'steam', '', '&addgames', 'Import games from Steam', 'glyphicon-import'),
-(76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench');
+(76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench'),
+(77, 61, 'games', 'orphaned', '', 'Orphaned games', 'fa fa-chain-broken');
 
 -- --------------------------------------------------------
 

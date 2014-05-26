@@ -67,6 +67,12 @@ include("include/message.php");
 					$list->setCondition("purchase_id='{$_GET['purchase']}'");
 					echo($list->drawTable());
 					break;
+					
+				case "orphaned":
+					$list = new listGames;
+					$list->setCondition("purchase_id IS NULL");
+					echo($list->drawTable());
+					break;
 			}
 			?>
 		</tbody>
