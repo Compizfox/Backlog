@@ -111,7 +111,7 @@ $script = "
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Price:</label>
 				<div class="col-md-2">
-					<div class="input-group"><select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta"><option value="$">$</option><option value="€">€</option></select><span class="input-group-addon"></span><input class="form-control" type="text" name="price"></div>
+					<div class="input-group"><select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta"><option value="€">€</option><option value="$">$</option><option value="£">£</option></select><span class="input-group-addon"></span><input class="form-control" type="text" name="price"></div>
 				</div>
 			</div>
 			<div class="form-group">
