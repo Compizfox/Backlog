@@ -23,6 +23,9 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once("include/classes.php");
+require_once("include/connect.php");
+
 $query = "SELECT COUNT(*) FROM purchase";
 $result = $mysqli->query($query) or die($query);
 $numpurchases = $result->fetch_array(MYSQLI_NUM)[0];
@@ -87,15 +90,6 @@ while($row = $result->fetch_assoc()) {
 }
 
 $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
-
-// Status history
-$historystring = "";
-$query = "SELECT history_id, game.name as game, dlc.name as dlc, a.name as oldstatus, a.color as oldcolor, b.name as newstatus, b.color as newcolor FROM history JOIN status a ON history.old_status=a.status_id JOIN status b ON history.new_status=b.status_id LEFT JOIN game USING(game_id) LEFT JOIN dlc USING(dlc_id) ORDER BY history_id DESC";
-$result = $mysqli->query($query) or die($query);
-
-while($row = $result->fetch_assoc()) {
-	$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: #{$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td></tr>";
-}
 ?>
 
 <div class="row">
@@ -160,9 +154,9 @@ while($row = $result->fetch_assoc()) {
 	</div>
 	<div class="col-lg-4 col-md-6">
 		<div class="jumbotron statbox" style="height: 900px">
-			<p>Status history</p>
+			<p>Status history (latest 10)</p>
 			<table class="table"><tr><th>#</th><th>Game</th><th>DLC</th><th>Previous status</th><th>New status</th></tr>
-				<?=$historystring?>
+				<?=history(true)?>
 			</table>
 		</div><div class="clearfix visible-lg"></div>
 	</div>
