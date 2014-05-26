@@ -39,7 +39,7 @@ if(isset($_GET['scope'])) {
 
 $css = ""; $js = "";
 
-$stmt = $mysqli->prepare("SELECT * FROM menu LEFT JOIN xref_menu_library ON id=menu_id JOIN library USING(library_id) WHERE page=? AND scope=?") or die($mysqli->error);
+$stmt = $mysqli->prepare("SELECT * FROM menu LEFT JOIN xref_menu_library ON id=menu_id LEFT JOIN library USING(library_id) WHERE page=? AND scope=?") or die($mysqli->error);
 $stmt->bind_param("ss", $page, $scope) or die($stmt->error);
 $stmt->execute() or die($stmt->error);
 $result = $stmt->get_result();
