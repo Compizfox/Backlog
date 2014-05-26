@@ -168,7 +168,5 @@ if(isset($_POST['submit'])) {
 			$stmt4->execute() or die($stmt4->error);
 		}
 	}
-	
-	SteamApiRequest(TRUE, TRUE, TRUE, FALSE);
 }
 ?>
