@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 25 mei 2014 om 18:44
+-- Gegenereerd op: 26 mei 2014 om 17:20
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `dlc` (
   `status_id` int(11) NOT NULL,
   `note` varchar(255) CHARACTER SET latin1 NOT NULL,
   `game_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   `img_icon_url` varchar(40) DEFAULT NULL,
   `img_logo_url` varchar(40) DEFAULT NULL,
   `appid_lock` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -64,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `dlc_id` int(11) DEFAULT NULL,
   `old_status` int(11) NOT NULL,
   `new_status` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
 --
 
 INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `glyphicon`, `library_id`) VALUES
-(50, 1, 'overzicht', '', '', 'Overzicht', 'glyphicon-stats', 2),
+(50, 1, 'overzicht', '', '', 'Summary', 'glyphicon-stats', 2),
 (54, 1, 'purchases', '', '', 'Purchases', 'glyphicon-shopping-cart', NULL),
 (57, 61, 'games', 'uncompleted', '', 'Uncompleted games', 'glyphicon-exclamation-sign', NULL),
 (58, 61, 'games', 'completed', '', 'Completed games', 'glyphicon-ok-sign', NULL),
@@ -138,11 +138,11 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 CREATE TABLE IF NOT EXISTS `purchase` (
 `purchase_id` int(11) NOT NULL,
   `shop` varchar(255) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
   `valuta` char(1) NOT NULL,
   `date` date NOT NULL,
   `note` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -180,6 +180,7 @@ CREATE TABLE IF NOT EXISTS `xref_purchase_game` (
   `purchase_id` int(11) NOT NULL,
   `game_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Indexen voor geëxporteerde tabellen
