@@ -15,7 +15,9 @@ Backlog helps you answer a couple of questions:
 - Multiple statuses (not just finished/not finished!)
 - Support for DLC
 - Notes for purchases, DLC or games
-- Steam integration (get playtime and icons/logos from Steam!)
+- Steam integration
+  - Import games from Steam
+  - Get playtime and icons/logos from Steam
 - Stats page
 - History
 
@@ -24,11 +26,20 @@ Backlog is based around a purchase model; the idea is that when you buy a game, 
 
 ##### Statuses
 Every game has a status attached, like:
- - Finished
- - Untouched
- - Playing
- - Gave up (boring/too hard)
- - Unfinishable (multiplayer only)
+- Finished
+- Untouched
+- Playing
+- Gave up (boring/too hard)
+- Unfinishable (multiplayer only)
+
+### Installation
+
+##### Prerequisites
+- Webserver with PHP > 5.3 and mysqlnd driver
+- MySQL
+
+##### Instructions
+Download a stable release or clone the development branch (bleeding edge!). You only need to extract the inner _backlog_ folder to the docroot. Create a MySQL database and user and import the SQL file. Enter the database details in _config.php_. If you want Steam integration, you'll also need to enter your SteamID and API key.
 
 ### Used tools and libraries
 Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS. Besides jQuery, it also uses jQuery UI.
