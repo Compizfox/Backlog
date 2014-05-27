@@ -81,7 +81,7 @@ include("include/message.php");
 			<fieldset>
 				<input type="hidden" name="formsubmit" value="formsubmit" />
 				<div class="form-group">
-					<button type="button" type="submit" value="delete" class="btn btn-danger">Delete</button>
+					<button type="submit" name="submit" value="delete" class="btn btn-danger">Delete</button>
 					<label class="col-sm-3 control-label">Set status:</label>
 					<div class="col-sm-3"><select name="status" class="form-control" onchange="this.form.submit()"><option value="">Select a status</option><?php echo(getStatusOptions()) ?></select></div>
 				</div>
