@@ -23,6 +23,8 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
+ini_set('output_buffering', '1');
+
 require_once("include/pages.php");
 require_once("include/menu.php");
 ?>
