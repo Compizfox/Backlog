@@ -77,10 +77,11 @@ require_once("include/menu.php");
 					echo($menu->draw("v"));
 					?>
 				</ul>
+				<?php include("include/steamwidget.php")?>
 			</nav>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1><?=$pagename?></h1>
-				<?php include("pages/$include") ?>
+				<?php include("pages/$include")?>
 			</div>
 		</div>
 	</div>

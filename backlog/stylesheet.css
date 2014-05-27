@@ -65,6 +65,13 @@ tr.dlc > td {
     margin-right: 20px;
 }
 
+.steamwidget {
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 40px !important;
+    width: 100%;
+}
+
 .main {
     padding: 20px;
     padding-right: 40px;

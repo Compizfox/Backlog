@@ -61,4 +61,9 @@ if(isset($_GET['addgames'])) {
 		<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> This will import all your games that aren't in the database yet from Steam as orphaned games (no purchase). Do you want to continue? <a href="index.php?page=steam&addgames&sure=1" class="btn btn-primary">Alrighty!</a></div>
 	<?php }
 }
+
+if(isset($_GET['refreshuserstats'])) {
+	SteamUserApiRequest();
+	header("Location: index.php");
+}
 ?>

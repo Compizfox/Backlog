@@ -271,6 +271,8 @@ function getStatusOptions() {
 function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, $addGames) {
 	global $config, $mysqli;
 	
+	SteamUserApiRequest();
+	
 	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1"));
 	
 	if($syncSteamAppids == true) {
@@ -367,5 +369,39 @@ function history($limit = false) {
 	}
 	
 	return $historystring;
+}
+
+function SteamUserApiRequest() {
+	global $config, $mysqli;
+	
+	$steamdata = json_decode(file_get_contents("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={$config['steamapikey']}&steamids={$config['steamid']}"));
+	$steamdata2 = json_decode(file_get_contents("http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}"));
+	
+	$stmt = $mysqli->prepare("REPLACE INTO cache VALUES (?, ?)") or die($mysqli->error);
+	
+	$a = "personaname";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->personaname) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "profileurl";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->profileurl) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "avatarmedium";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->avatarmedium) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+//	$data = array();
+//	foreach($steamdata2->response->games as $game) {
+//		$data[] = array("appid" => $game->appid, "icon" => $game->img_icon_url);
+//	}
+	
+	$a = "games";
+	$stmt->bind_param("ss", $a, json_encode($steamdata2->response->games)) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "time";
+	$stmt->bind_param("ss", $a, time()) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
 }
 ?>

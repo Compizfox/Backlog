@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 27 mei 2014 om 01:13
+-- Gegenereerd op: 27 mei 2014 om 20:56
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -19,6 +19,17 @@ SET time_zone = "+00:00";
 --
 -- Databank: `backlog`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `cache`
+--
+
+CREATE TABLE IF NOT EXISTS `cache` (
+  `index` varchar(25) NOT NULL,
+  `value` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -103,7 +114,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `options` varchar(25) NOT NULL,
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `glyphicon` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=77 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `menu`
@@ -131,7 +142,8 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 (74, 71, 'steam', '', '&syncicons', 'Retrieve icons/logos', 'glyphicon-picture'),
 (75, 71, 'steam', '', '&addgames', 'Import games from Steam', 'glyphicon-import'),
 (76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench'),
-(77, 61, 'games', 'orphaned', '', 'Orphaned games', 'fa fa-chain-broken');
+(77, 61, 'games', 'orphaned', '', 'Orphaned games', 'fa fa-chain-broken'),
+(78, 71, 'steam', '', '&refreshuserstats', 'Refresh user stats', 'glyphicon-refresh');
 
 -- --------------------------------------------------------
 
@@ -220,6 +232,12 @@ CREATE TABLE IF NOT EXISTS `xref_purchase_game` (
 --
 
 --
+-- Indexen voor tabel `cache`
+--
+ALTER TABLE `cache`
+ ADD PRIMARY KEY (`index`);
+
+--
 -- Indexen voor tabel `dlc`
 --
 ALTER TABLE `dlc`
@@ -301,7 +319,7 @@ MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 -- AUTO_INCREMENT voor een tabel `menu`
 --
 ALTER TABLE `menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=77;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
 --
 -- AUTO_INCREMENT voor een tabel `purchase`
 --
