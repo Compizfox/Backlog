@@ -26,13 +26,18 @@
 require_once("include/classes.php");
 require_once("include/connect.php");
 
-$result = $mysqli->query("SELECT game_id, game.name, status_id, completed, notes as note, appid, playtime, appid_lock FROM game JOIN status USING (status_id) WHERE game_id={$_GET['id']}");
+$result = $mysqli->query("SELECT game_id, game.name, status_id, completed, notes as note, appid, playtime, appid_lock, hidden FROM game JOIN status USING (status_id) WHERE game_id={$_GET['id']}");
 $data = $result->fetch_assoc();
 
 if($data['appid_lock'] == 1) {
 	$appidlock = "checked";
 } else {
 	$appidlock = "";
+}
+if($data['hidden'] == 1) {
+	$hidden = "checked";
+} else {
+	$hidden = "";
 }
 
 if(isset($_POST['submit'])) {
@@ -53,9 +58,14 @@ if(isset($_POST['submit'])) {
 	} else {
 		$appid_lock = 0;
 	}
+	if(isset($_POST['hidden'])) {
+		$hidden = 1;
+	} else {
+		$hidden = 0;
+	}
 	
-	$stmt = $mysqli->prepare("UPDATE game SET name=?, status_id=?, notes=?, appid=?, playtime=?, appid_lock=? WHERE game_id=?") or die($mysqli->error);
-	$stmt->bind_param("sisiiii", $_POST['name'], $_POST['status'], $_POST['note'], $_POST['appid'], $playtime, $appid_lock, $_GET['id']) or die($stmt->error);
+	$stmt = $mysqli->prepare("UPDATE game SET name=?, status_id=?, notes=?, appid=?, playtime=?, appid_lock=?, hidden=? WHERE game_id=?") or die($mysqli->error);
+	$stmt->bind_param("sisiiiii", $_POST['name'], $_POST['status'], $_POST['note'], $_POST['appid'], $playtime, $appid_lock, $hidden, $_GET['id']) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 	
 	header("Location: index.php?page=games&scope=all&message=gameedited");
@@ -86,7 +96,16 @@ if(isset($_POST['submit'])) {
 				<label class="col-sm-2 control-label">Note:</label>
 				<div class="col-md-4"><input class="form-control" type="text" name="note" value="<?=$data['note']?>"></div>
 			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-4">
+					<div class="checkbox"><label><input name="hidden" type="checkbox" <?=$hidden?>>Hidden</label></div>
+				</div>
+			</div>
 		</fieldset>
-		<button class="btn btn-default" type="submit" name="submit">Submit</button>
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-4">
+				<button class="btn btn-default" type="submit" name="submit">Submit</button>
+			</div>
+		</div>
 	</form>
 </div>

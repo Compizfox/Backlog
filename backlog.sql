@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 27 mei 2014 om 20:56
+-- Gegenereerd op: 27 mei 2014 om 22:13
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -60,7 +60,8 @@ CREATE TABLE IF NOT EXISTS `game` (
   `playtime` int(11) NOT NULL,
   `img_icon_url` varchar(40) DEFAULT NULL,
   `img_logo_url` varchar(40) DEFAULT NULL,
-  `appid_lock` tinyint(4) NOT NULL
+  `appid_lock` tinyint(4) NOT NULL,
+  `hidden` tinyint(1) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -214,7 +215,8 @@ INSERT INTO `xref_menu_library` (`menu_id`, `library_id`) VALUES
 (68, 5),
 (69, 5),
 (70, 5),
-(64, 5);
+(64, 5),
+(76, 5);
 
 -- --------------------------------------------------------
 

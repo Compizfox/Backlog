@@ -133,14 +133,14 @@ class listGames {
 	private $condition, $query, $query2;
 	
 	public function setCondition($condition) {
-		$this->condition = "WHERE " . $condition;
+		$this->condition = "AND " . $condition;
 	}
 
 	public function drawTable() {
 		global $mysqli;
 		$string = "";
 		
-		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) {$this->condition} GROUP BY game.name ORDER BY game.game_id";
+		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 {$this->condition} GROUP BY game.name ORDER BY game.game_id";
 		$this->query2 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM dlc JOIN status USING (status_id)";
 		$result = $mysqli->query($this->query);
 

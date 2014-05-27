@@ -22,6 +22,43 @@
     You should have received a copy of the GNU General Public License
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
+
+require_once("include/connect.php");
+
+if(@$_GET['process'] == "hiddengames") {
+	$stmt = $mysqli->prepare("UPDATE game SET hidden=0 WHERE game_id=?") or die($mysqli->error);
+	
+	foreach($_POST['checkedgames'] as $game) {
+		$stmt->bind_param("i", $game) or die($stmt->error);
+		$stmt->execute() or die($stmt->error);
+	}
+}
 ?>
 
-stub
+<form class="panel panel-default" method="post" action="index.php?page=settings&process=hiddengames">
+	<div class="panel-heading">
+		<h2>Hidden games</h2>
+	</div>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th><input type="checkbox" id="selectall" /> unhide</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			$query = "SELECT game_id, name FROM game WHERE hidden=1";
+			$result = $mysqli->query($query);
+			
+			while($entries = $result->fetch_assoc()) {
+				echo("<tr><td><input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$entries['game_id']}\" /></td>");
+				echo("<td>{$entries['name']}</td></tr>");
+			}
+			?>
+		</tbody>
+	</table>
+	<div class="panel-footer">
+		<button class="btn btn-default" type="submit" name="submit">Submit</button>
+	</div>
+</form>

@@ -30,13 +30,21 @@ if(isset($_POST['formsubmit'])) {
 		foreach(@$_POST['checkedpurchases'] as $purchase) {
 			deletePurchase($purchase);
 		}
+		
 		foreach(@$_POST['checkedgames'] as $game) {
 			deleteGame($game);
 		}
+		
 		foreach(@$_POST['checkeddlc'] as $dlc) {
 			deleteDLC($dlc);
 		}
+	} elseif($_POST['submit'] == "hide") {
+		$stmt = $mysqli->prepare("UPDATE game SET hidden=1 WHERE game_id=?") or die($mysqli->error);
 		
+		foreach($_POST['checkedgames'] as $game) {
+			$stmt->bind_param("i", $game) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+		}
 	} elseif($_POST['status'] != "") {
 		foreach(@$_POST['checkedgames'] as $game) {
 			$query = "SELECT status_id FROM game WHERE game_id=$game";
