@@ -55,7 +55,7 @@ require_once("include/connect.php");
 		<fieldset id="dyn">
 			<legend>Games</legend>
 		</fieldset>
-			<button class="btn btn-default" onclick="addInput()"><span class="glyphicon glyphicon-plus"></span> New game</button> <button class="btn btn-default" type="submit" name="submit">Submit</button>
+			<button class="btn btn-default" type="button" onclick="addInput()"><span class="glyphicon glyphicon-plus"></span> New game</button> <button class="btn btn-default" type="submit" name="submit">Submit</button>
 	</form>
 </div>
 <?php
