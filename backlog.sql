@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `options` varchar(25) NOT NULL,
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `glyphicon` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=79 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=80 ;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `menu`
@@ -145,7 +145,8 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 (75, 71, 'steam', '', '&amp;addgames', 'Import games from Steam', 'glyphicon-import'),
 (76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench'),
 (77, 61, 'games', 'orphaned', '', 'Orphaned games', 'fa fa-chain-broken'),
-(78, 71, 'steam', '', '&amp;refreshuserstats', 'Refresh user stats', 'glyphicon-refresh');
+(78, 71, 'steam', '', '&amp;refreshuserstats', 'Refresh user stats', 'glyphicon-refresh'),
+(79, 71, 'steam', '', '&amp;all', 'Steam', 'fa fa-steam');
 
 -- --------------------------------------------------------
 
@@ -323,7 +324,7 @@ MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 -- AUTO_INCREMENT voor een tabel `menu`
 --
 ALTER TABLE `menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=79;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=80;
 --
 -- AUTO_INCREMENT voor een tabel `purchase`
 --
