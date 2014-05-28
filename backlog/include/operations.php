@@ -26,7 +26,7 @@
 require_once("include/classes.php");
 
 if(isset($_POST['formsubmit'])) {
-	if($_POST['submit'] == "delete") {
+	if($_POST['submitbtn'] == "delete") {
 		foreach(@$_POST['checkedpurchases'] as $purchase) {
 			deletePurchase($purchase);
 		}
@@ -38,7 +38,7 @@ if(isset($_POST['formsubmit'])) {
 		foreach(@$_POST['checkeddlc'] as $dlc) {
 			deleteDLC($dlc);
 		}
-	} elseif($_POST['submit'] == "hide") {
+	} elseif($_POST['submitbtn'] == "hide") {
 		$stmt = $mysqli->prepare("UPDATE game SET hidden=1 WHERE game_id=?") or die($mysqli->error);
 		
 		foreach($_POST['checkedgames'] as $game) {
@@ -52,7 +52,7 @@ if(isset($_POST['formsubmit'])) {
 			$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
 			$newstatus = $_POST['status'];
 			
-			$query = "INSERT INTO history (game_id, old_status, new_status) VALUES ($game, $oldstatus, $newstatus)";
+			$query = "INSERT INTO history (game_id, old_status, new_status, date) VALUES ($game, $oldstatus, $newstatus, CURDATE())";
 			$mysqli->query($query) or die($query);
 			
 			$query = "UPDATE game SET status_id=$newstatus WHERE game_id=$game";
@@ -65,7 +65,7 @@ if(isset($_POST['formsubmit'])) {
 			$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
 			$newstatus = $_POST['status'];
 			
-			$query = "INSERT INTO history (dlc_id, old_status, new_status) VALUES ($dlc, $oldstatus, $newstatus)";
+			$query = "INSERT INTO history (dlc_id, old_status, new_status, date) VALUES ($dlc, $oldstatus, $newstatus, CURDATE())";
 			$mysqli->query($query) or die($query);
 			
 			$query = "UPDATE dlc SET status_id={$_POST['status']} WHERE dlc_id=$dlc";
