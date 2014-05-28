@@ -374,8 +374,8 @@ function history($limit = false) {
 function SteamUserApiRequest() {
 	global $config, $mysqli;
 	
-	$steamdata = json_decode(file_get_contents("http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={$config['steamapikey']}&steamids={$config['steamid']}"));
-	$steamdata2 = json_decode(file_get_contents("http://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}"));
+	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={$config['steamapikey']}&steamids={$config['steamid']}"));
+	$steamdata2 = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}"));
 	
 	$stmt = $mysqli->prepare("REPLACE INTO cache VALUES (?, ?)") or die($mysqli->error);
 	
