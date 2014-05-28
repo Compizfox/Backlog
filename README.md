@@ -32,6 +32,9 @@ Every game has a status attached, like:
 - Gave up (boring/too hard)
 - Unfinishable (multiplayer only)
 
+### Demo
+There's a demo available at http://backlog.tuxplace.nl.
+
 ### Installation
 
 ##### Prerequisites
