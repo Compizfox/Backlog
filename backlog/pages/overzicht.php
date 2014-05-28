@@ -64,8 +64,8 @@ $result = $mysqli->query($query) or die($query);
 $i = 1;
 while($row = $result->fetch_assoc()) {
 	$share = round($row['count'] / $total * 100);
-	$canvasstring .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	$canvasstring .= "<tr><td style=\"background-color: {$row['color']};\">{$row['name']}</td><td style=\"background-color: {$row['color']};\">$share%</td>";
+	$script .= "{value: $share, color: \"{$row['color']}\" }";
 	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
@@ -76,15 +76,18 @@ $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 $canvasstring2 = "";
 $script .= "<script>var ctx = document.getElementById(\"chart2\").getContext(\"2d\"); var data = [";
 
+$query = "SELECT COUNT(*) FROM dlc";
+$result = $mysqli->query($query) or die($query);
+$total = $result->fetch_row()[0];
+
 $query = "SELECT status.name, COUNT(*) as count, color FROM dlc JOIN status USING(status_id) GROUP BY status_id";
 $result = $mysqli->query($query) or die($query);
-$numstatuses = $result->num_rows;
 
 $i = 1;
 while($row = $result->fetch_assoc()) {
-	$share = round($row['count'] / $numstatuses * 100);
-	$canvasstring2 .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	$share = round($row['count'] / $total * 100);
+	$canvasstring2 .= "<tr><td style=\"background-color: {$row['color']};\">{$row['name']}</td><td style=\"background-color: {$row['color']};\">$share%</td>";
+	$script .= "{value: $share, color: \"{$row['color']}\" }";
 	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
