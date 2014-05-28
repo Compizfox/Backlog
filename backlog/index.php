@@ -33,12 +33,15 @@ require_once("include/menu.php");
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel='stylesheet' type='text/css'>
-	<link href="stylesheet.css" rel="stylesheet">
+	<meta name="application-name" content="Backlog" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel="stylesheet" />
+	<link href="stylesheet.css" rel="stylesheet" />
 	<?=@$css?>
+	
 	<title><?="Backlog - $pagename"?></title>
 </head>
 

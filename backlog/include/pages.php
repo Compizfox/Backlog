@@ -55,12 +55,12 @@ if (!empty($entries)) {
 }
 
 
-if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\">";
+if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\" />";
 if(!empty($entries['js_url'])) $js .= "<script src=\"{$entries['js_url']}\"></script>";
 while($entries = $result->fetch_assoc()) {
-	if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\">";
+	if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\" />";
 	if(!empty($entries['js_url'])) $js .= "<script src=\"{$entries['js_url']}\"></script>";
 }
 
-$currenturl = @"index.php?page=$page&scope={$_GET['scope']}";
+$currenturl = htmlspecialchars(@"index.php?page=$page&scope={$_GET['scope']}");
 ?>

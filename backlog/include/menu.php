@@ -37,7 +37,7 @@ class menuitem {
 		$this->setGlyphicon($glyphicon);
 		$this->title = $title;
 		$this->url = "index.php?page=$page";
-		if(!empty($scope)) $this->url .= "&scope=$scope";
+		if(!empty($scope)) $this->url .= "&amp;scope=$scope";
 		if(!empty($options)) $this->url .= "$options";
 	}
 	

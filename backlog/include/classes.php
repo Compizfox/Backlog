@@ -63,16 +63,16 @@ class game {
 		$string = "";
 		if($beginrow) $string .= ("<tr>");
 		$string .= "<td>";
-		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" /> ";
+		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> ";
 		$string .= "{$this->name}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifygame&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=game&game={$this->id}";
-		if(isset($this->purchase)) $string .= "&purchase=" . $this->purchase;
-		$string .= "\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&scope=game&game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
+		$string .= "<a href=\"index.php?page=modifygame&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=game&amp;game={$this->id}";
+		if(isset($this->purchase)) $string .= "&amp;purchase=" . $this->purchase;
+		$string .= "\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&amp;scope=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -108,7 +108,7 @@ class dlc {
 		$string .= "<td>{$this->game}</td>";
 		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
 		$string .= "<td>{$this->notes}</td>";
-		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=dlc&dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -123,7 +123,7 @@ class dlc {
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifydlc&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=dlc&dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -249,7 +249,7 @@ class purchase {
 		
 		$string = "";
 		$string .= "<tr>";
-		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=games&scope=purchase&purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=purchase&purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=games&amp;scope=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->shop}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->price}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->date}</td>";

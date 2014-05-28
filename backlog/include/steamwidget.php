@@ -45,7 +45,7 @@ do {
 
 $rpgamesstring = "";
 foreach(json_decode($data['games']) as $game) {
-	$rpgamesstring .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$game->appid}/{$game->img_icon_url}.jpg\" title=\"{$game->name}\" />&nbsp;&nbsp;";
+	$rpgamesstring .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$game->appid}/{$game->img_icon_url}.jpg\" title=\"{$game->name}\" alt />&nbsp;&nbsp;";
 }
 ?>
 
@@ -53,7 +53,7 @@ foreach(json_decode($data['games']) as $game) {
 	<div class="panel-body">
 		<p>
 		<a href="<?=$data['profileurl']?>" target="_blank" style="text-decoration: none;">
-			<img src="<?=$data['avatarmedium']?>" />
+			<img src="<?=$data['avatarmedium']?>" alt />
 			<span style="font-size: 150%; margin-left: 5px;"><?=$data['personaname']?></span>
 		</a></p>
 		<p><?=$rpgamesstring?></p>
