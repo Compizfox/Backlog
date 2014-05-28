@@ -25,10 +25,13 @@
 
 require_once("include/classes.php");
 require_once("include/connect.php");
+
+if(isset($_POST['submit'])) {
 ?>
-
+<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember: </strong>Don't forget to sync with Steam after adding games!</div>
+<?php } else { ?>
 <div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember: </strong>If a game by the same name already exists, a copy will <b>not</b> be made. Instead, the existing game will be linked with the new purchase.</div>
-
+<?php } ?>
 <div class="well">
 	<form class="form-horizontal" role="form" action="index.php?page=add" method="post">
 		<fieldset>
