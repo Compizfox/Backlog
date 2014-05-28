@@ -61,4 +61,61 @@ if(isset($_GET['addgames'])) {
 		<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button> This will import all your games that aren't in the database yet from Steam as orphaned games (no purchase). Do you want to continue? <a href="index.php?page=steam&addgames&sure=1" class="btn btn-primary">Alrighty!</a></div>
 	<?php }
 }
+
+if(isset($_GET['refreshuserstats'])) {
+	SteamUserApiRequest();
+	header("Location: index.php");
+}
+
+if(isset($_POST['submit'])) {
+	if(isset($_POST['syncappids']) || isset($_POST['syncicons']) || isset($_POST['syncplaytime']) || isset($_POST['addgames'])) {
+		SteamApiRequest(isset($_POST['syncappids']), isset($_POST['syncicons']), isset($_POST['syncplaytime']), isset($_POST['addgames']));
+	}
+	
+	if(isset($_POST['refreshuserstats'])) {
+		SteamUserApiRequest();
+	}
+}
+
+if(isset($_GET['all'])) {
 ?>
+
+<form class="form-horizontal" role="form" method="post" action="index.php?page=steam">
+	<div class="well">
+		<div class="checkbox">
+			<label>
+				<input name="syncappids" type="checkbox"> Link games with Steam
+			</label>
+			<span class="help-block">This will link all games in the database to their Steam appids (if known).</span>
+		</div>
+		<div class="checkbox" name="syncplaytime">
+			<label>
+				<input type="checkbox"> Sync playtime with Steam
+			</label>
+			<span class="help-block">This will retrieve your played hours from Steam for all games in the database with linked Steam appids. This will potentially overwrite manually-set playtime.</span>
+		</div>
+		<div class="checkbox" name="syncicons">
+			<label>
+				<input type="checkbox"> Retrieve icons/logos
+			</label>
+			<span class="help-block">This will retrieve icons and logos from Steam for all games in the database with linked Steam appids.</span>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="addgames"> Import games from Steam
+			</label>
+			<span class="help-block">This will import all your games that aren't in the database yet from Steam as orphaned games (no purchases).</span>
+		</div>
+		<div class="checkbox">
+			<label>
+				<input type="checkbox" name="refreshuserstats"> Refresh user stats
+			</label>
+			<span class="help-block">This will manually update your Steam nickname, avatar and most played games (shown in bottom-left corner). It is automatically updated every 24 hours.</span>
+		</div>
+		<div class="form-group">
+			<button type="submit" name="submit" class="btn btn-default">Submit</button>
+		</div>
+	</div>
+</form>
+
+<?php } ?>

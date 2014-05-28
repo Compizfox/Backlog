@@ -23,8 +23,8 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once("config.php");
-require_once("connect.php");
+require_once(__DIR__ . "/../config.php");
+require_once(__DIR__ . "/connect.php");
 
 class game {
 	private $id, $name, $status, $completed, $notes, $color, $purchase;
@@ -63,16 +63,16 @@ class game {
 		$string = "";
 		if($beginrow) $string .= ("<tr>");
 		$string .= "<td>";
-		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" /> ";
+		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> ";
 		$string .= "{$this->name}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifygame&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=game&game={$this->id}";
-		if(isset($this->purchase)) $string .= "&purchase=" . $this->purchase;
-		$string .= "\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&scope=game&game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
+		$string .= "<a href=\"index.php?page=modifygame&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=game&amp;game={$this->id}";
+		if(isset($this->purchase)) $string .= "&amp;purchase=" . $this->purchase;
+		$string .= "\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&amp;scope=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -106,9 +106,9 @@ class dlc {
 		$string .= "<tr>";
 		$string .= "<td>{$this->name}</td>";
 		$string .= "<td>{$this->game}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		$string .= "<td>{$this->notes}</td>";
-		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=dlc&dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -118,12 +118,12 @@ class dlc {
 		$string = "";
 		$string .= "<tr class=\"dlc\">";
 		$string .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;{$this->name}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		if(!isset($this->purchase)) $string .= "<td></td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
 		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifydlc&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=dlc&dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
@@ -133,14 +133,14 @@ class listGames {
 	private $condition, $query, $query2;
 	
 	public function setCondition($condition) {
-		$this->condition = "WHERE " . $condition;
+		$this->condition = "AND " . $condition;
 	}
 
 	public function drawTable() {
 		global $mysqli;
 		$string = "";
 		
-		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) {$this->condition} GROUP BY game.name ORDER BY game.game_id";
+		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 {$this->condition} GROUP BY game.name ORDER BY game.game_id";
 		$this->query2 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM dlc JOIN status USING (status_id)";
 		$result = $mysqli->query($this->query);
 
@@ -249,7 +249,7 @@ class purchase {
 		
 		$string = "";
 		$string .= "<tr>";
-		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=games&scope=purchase&purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&delete=purchase&purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=games&amp;scope=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->shop}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->price}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->date}</td>";
@@ -271,31 +271,31 @@ function getStatusOptions() {
 function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, $addGames) {
 	global $config, $mysqli;
 	
+	SteamUserApiRequest();
+	
 	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}&format=json&include_appinfo=1&include_played_free_games=1"));
 	
 	if($syncSteamAppids == true) {
+		$stmt = $mysqli->prepare("SELECT * FROM game WHERE name=?") or die($mysqli->error);
+		$stmt2 = $mysqli->prepare("UPDATE game SET appid=? WHERE name=?") or die($mysqli->error);
 		foreach ($steamdata->response->games as $game) {
-			$name = addslashes($game->name);
-			$appid = $game->appid;
+			$stmt->bind_param("s", $game->name) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
 			
-			$query = "SELECT * FROM game WHERE name='$name'";
-			$result = $mysqli->query($query) or die($query);
 			$entries = $result->fetch_assoc();
-			if($entries['appid_lock'] == 0) {		
-				$query = "UPDATE game SET appid=$appid WHERE name='$name'";
-				$mysqli->query($query) or die($query);
+			if($entries['appid_lock'] == 0) {
+				$stmt2->bind_param("is", $game->appid, $game->name) or die($stmt2->error);
+				$stmt2->execute() or die($stmt2->error);
 			}
 		}
 	}
 	
 	if($syncSteamIcons == true) {
+		$stmt = $mysqli->prepare("UPDATE game SET img_icon_url=?, img_logo_url=? WHERE appid=?") or die($mysqli->error);
 		foreach ($steamdata->response->games as $game) {
-			$appid = $game->appid;
-			$icon = $game->img_icon_url;
-			$logo = $game->img_logo_url;
-			
-			$query = "UPDATE game SET img_icon_url='$icon', img_logo_url='$logo' WHERE appid=$appid";
-			$mysqli->query($query) or die($query); 
+			$stmt->bind_param("ssi", $game->img_icon_url, $game->img_logo_url, $game->appid) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
 		}
 	}
 	
@@ -310,10 +310,14 @@ function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, 
 	}
 	
 	if($addGames == true) {
+		$stmt = $mysqli->prepare("SELECT * FROM game WHERE name=? UNION ALL SELECT * FROM game WHERE appid=?") or die($mysqli->error);
+		$stmt2 = $mysqli->prepare("INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES (?, ?, ?, ?, ?, ?)") or die($mysqli->error);
+		
 		foreach ($steamdata->response->games as $game) {
-			$name = $mysqli->real_escape_string($game->name);
-			$query = "SELECT * FROM game WHERE name='$name' UNION ALL SELECT * FROM game WHERE appid={$game->appid}";
-			$result = $mysqli->query($query) or die($query);
+			$stmt->bind_param("si", $game->name, $game->appid) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
+			
 			if($result->num_rows == 0) {
 				if($game->playtime_forever == 0) {
 					$status_id = 1;
@@ -321,8 +325,8 @@ function SteamApiRequest($syncSteamAppids, $syncSteamIcons, $syncSteamPlaytime, 
 					$status_id = 2;
 				}
 				
-				$query = "INSERT INTO game (name, status_id, appid, playtime, img_icon_url, img_logo_url) VALUES ('$name', $status_id, {$game->appid}, {$game->playtime_forever}, '{$game->img_icon_url}', '{$game->img_logo_url}')";
-				$mysqli->query($query) or die($query);
+				$stmt2->bind_param("siiiss", $game->name, $status_id, $game->appid, $game->playtime_forever, $game->img_icon_url, $game->img_logo_url) or die($stmt2->error);
+				$stmt2->execute() or die($stmt2->error);
 			}
 		}
 	}
@@ -344,5 +348,60 @@ function getGameList($type = NULL) {
 	
 	$result = $mysqli->query($query) or die($query);
 	return transpose($result->fetch_all(MYSQLI_ASSOC))[0];
+}
+
+function history($limit = false) {
+	global $mysqli;
+	
+	$historystring = "";
+	
+	if($limit == true) {
+		$append = "LIMIT 10";
+	} else {
+		$append = "";
+	}
+	
+	$query = "SELECT history_id, game.name as game, dlc.name as dlc, a.name as oldstatus, a.color as oldcolor, b.name as newstatus, b.color as newcolor, date FROM history JOIN status a ON history.old_status=a.status_id JOIN status b ON history.new_status=b.status_id LEFT JOIN game USING(game_id) LEFT JOIN dlc USING(dlc_id) ORDER BY history_id DESC $append";
+	$result = $mysqli->query($query) or die($query);
+	
+	while($row = $result->fetch_assoc()) {
+		$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: {$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td><td>{$row['date']}</td></tr>";
+	}
+	
+	return $historystring;
+}
+
+function SteamUserApiRequest() {
+	global $config, $mysqli;
+	
+	$steamdata = json_decode(file_get_contents("https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key={$config['steamapikey']}&steamids={$config['steamid']}"));
+	$steamdata2 = json_decode(file_get_contents("https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?key={$config['steamapikey']}&steamid={$config['steamid']}"));
+	
+	$stmt = $mysqli->prepare("REPLACE INTO cache VALUES (?, ?)") or die($mysqli->error);
+	
+	$a = "personaname";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->personaname) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "profileurl";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->profileurl) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "avatarmedium";
+	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->avatarmedium) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+//	$data = array();
+//	foreach($steamdata2->response->games as $game) {
+//		$data[] = array("appid" => $game->appid, "icon" => $game->img_icon_url);
+//	}
+	
+	$a = "games";
+	$stmt->bind_param("ss", $a, json_encode($steamdata2->response->games)) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
+	$a = "time";
+	$stmt->bind_param("ss", $a, time()) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
 }
 ?>

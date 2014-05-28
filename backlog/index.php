@@ -23,6 +23,8 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
+ini_set('output_buffering', '1');
+
 require_once("include/pages.php");
 require_once("include/menu.php");
 ?>
@@ -31,12 +33,15 @@ require_once("include/menu.php");
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel='stylesheet' type='text/css'>
-	<link href="stylesheet.css" rel="stylesheet">
+	<meta name="application-name" content="Backlog" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen" />
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel="stylesheet" />
+	<link href="stylesheet.css" rel="stylesheet" />
 	<?=@$css?>
+	
 	<title><?="Backlog - $pagename"?></title>
 </head>
 
@@ -77,10 +82,11 @@ require_once("include/menu.php");
 					echo($menu->draw("v"));
 					?>
 				</ul>
+				<?php include("include/steamwidget.php")?>
 			</nav>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1><?=$pagename?></h1>
-				<?php include("pages/$include") ?>
+				<?php include("pages/$include")?>
 			</div>
 		</div>
 	</div>

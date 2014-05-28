@@ -23,10 +23,17 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
-require_once(__DIR__ . "/../config.php");
-
-$mysqli = new mysqli($config['host'], $config['user'], $config['pass'], $config['db']);
-$mysqli->query("SET NAMES utf8");
-ini_set("display_errors", 1);
-error_reporting(E_ALL);
+require_once("include/classes.php");
 ?>
+
+<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Game</th>
+		<th>DLC</th>
+		<th>Previous status</th>
+		<th>New status</th>
+		<th>Date</th>
+	</tr>
+	<?=history()?>
+</table>

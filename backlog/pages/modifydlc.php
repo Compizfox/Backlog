@@ -36,12 +36,14 @@ if(isset($_POST['submit'])) {
 	$newstatus = $_POST['status'];
 	
 	if($oldstatus != $newstatus) {
-		$query = "INSERT INTO history (dlc_id, old_status, new_status) VALUES ({$_GET['id']}, $oldstatus, $newstatus)";
+		$query = "INSERT INTO history (dlc_id, old_status, new_status, date) VALUES ({$_GET['id']}, $oldstatus, $newstatus, CURDATE())";
 		$mysqli->query($query) or die($query);
 	}
 	
-	$query = "UPDATE dlc SET name='{$_POST['name']}', status_id={$_POST['status']}, note='{$_POST['note']}' WHERE dlc_id={$_GET['id']}";
-	$mysqli->query($query) or die($query);
+	$stmt = $mysqli->prepare("UPDATE dlc SET name=?, status_id=?, note=? WHERE dlc_id=?") or die($mysqli->error);
+	$stmt->bind_param("sisi", $_POST['name'], $_POST['status'], $_POST['note'], $_GET['id']) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
 	header("Location: index.php?page=dlc&scope=all&message=dlcedited");
 }
 ?>

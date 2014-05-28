@@ -31,9 +31,20 @@ if(isset($_GET['page'])) {
 	$page = "overzicht";
 }
 
-$result = $mysqli->query(@"SELECT * FROM menu LEFT JOIN library USING(library_id) WHERE page='$page' AND scope='{$_GET['scope']}'");
-$entries = $result->fetch_assoc();
+if(isset($_GET['scope'])) {
+	$scope = $_GET['scope'];
+} else {
+	$scope = "";
+}
 
+$css = ""; $js = "";
+
+$stmt = $mysqli->prepare("SELECT * FROM menu LEFT JOIN xref_menu_library ON id=menu_id LEFT JOIN library USING(library_id) WHERE page=? AND scope=?") or die($mysqli->error);
+$stmt->bind_param("ss", $page, $scope) or die($stmt->error);
+$stmt->execute() or die($stmt->error);
+$result = $stmt->get_result();
+
+$entries = $result->fetch_assoc();
 if (!empty($entries)) {
 	$pagename = $entries['title'];
 	$include = $entries['page'] . ".php";
@@ -43,8 +54,13 @@ if (!empty($entries)) {
 	$include = "404.html";
 }
 
-$currenturl = @"index.php?page=$page&scope={$_GET['scope']}";
 
-if(!empty($entries['css_url'])) $css = "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\">";
-if(!empty($entries['js_url'])) $js = "<script src=\"{$entries['js_url']}\"></script>";
+if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\" />";
+if(!empty($entries['js_url'])) $js .= "<script src=\"{$entries['js_url']}\"></script>";
+while($entries = $result->fetch_assoc()) {
+	if(!empty($entries['css_url'])) $css .= "<link href=\"{$entries['css_url']}\" rel=\"stylesheet\" media=\"screen\" />";
+	if(!empty($entries['js_url'])) $js .= "<script src=\"{$entries['js_url']}\"></script>";
+}
+
+$currenturl = htmlspecialchars(@"index.php?page=$page&scope={$_GET['scope']}");
 ?>

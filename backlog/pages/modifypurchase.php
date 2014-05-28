@@ -28,18 +28,22 @@ require_once("include/connect.php");
 $result = $mysqli->query("SELECT * FROM purchase WHERE purchase_id={$_GET['id']}");
 $data = $result->fetch_assoc();
 
-$dollarselected = ""; $euroselected = "";
+$dollarselected = ""; $euroselected = ""; $poundselected = "";
 switch($data['valuta']) {
 	case '$':
 		$dollarselected = " selected";
 		break;
 	case '€':
 		$euroselected = " selected";
+	case '£':
+		$poundselected = " selected";
 }
 
 if(isset($_POST['submit'])) {
-	$query = "UPDATE purchase SET shop='{$_POST['shop']}', price={$_POST['price']}, valuta='{$_POST['valuta']}', date='{$_POST['date']}', note='{$_POST['note']}' WHERE purchase_id={$_GET['id']}";
-	$mysqli->query($query) or die($query);
+	$stmt = $mysqli->prepare("UPDATE purchase SET shop=?, price=?, valuta=?, date=?, note=? WHERE purchase_id=?") or die($mysqli->error);
+	$stmt->bind_param("sdsssi", $_POST['shop'], $_POST['price'], $_POST['valuta'], $_POST['date'], $_POST['note'], $_GET['id']) or die($stmt->error);
+	$stmt->execute() or die($stmt->error);
+	
 	header("Location: index.php?page=purchases&message=purchaseedited");
 }
 ?>
@@ -54,7 +58,7 @@ if(isset($_POST['submit'])) {
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Price:</label>
 				<div class="col-md-2">
-					<div class="input-group"><select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta"><option value="$"<?=$dollarselected?>>$</option><option value="€"<?=$euroselected?>>€</option></select><span class="input-group-addon"></span><input class="form-control" type="text" name="price" value="<?=$data['price']?>"></div>
+					<div class="input-group"><select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta"><option value="€"<?=$euroselected?>>€</option><option value="$"<?=$dollarselected?>>$</option><option value="£"<?=$poundselected?>>£</option></select><span class="input-group-addon"></span><input class="form-control" type="text" name="price" value="<?=$data['price']?>"></div>
 				</div>
 			</div>
 			<div class="form-group">

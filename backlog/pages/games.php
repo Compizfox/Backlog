@@ -26,13 +26,6 @@
 require_once("include/classes.php");
 require_once("include/operations.php");
 include("include/message.php");
-
-$script = "<script>$('#selectall').click (function () {
-     var checkedStatus = this.checked;
-    $('.table tbody tr').find(':checkbox').each(function () {
-        $(this).prop('checked', checkedStatus);
-     });
-});</script>"
 ?>
 
 <div class="alert alert-warning .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Warning: </strong>Deleting a game will delete all of its DLC. <br />Empty purchases will be automatically deleted.</div>
@@ -74,6 +67,12 @@ $script = "<script>$('#selectall').click (function () {
 					$list->setCondition("purchase_id='{$_GET['purchase']}'");
 					echo($list->drawTable());
 					break;
+					
+				case "orphaned":
+					$list = new listGames;
+					$list->setCondition("purchase_id IS NULL");
+					echo($list->drawTable());
+					break;
 			}
 			?>
 		</tbody>
@@ -84,7 +83,8 @@ $script = "<script>$('#selectall').click (function () {
 			<fieldset>
 				<input type="hidden" name="formsubmit" value="formsubmit" />
 				<div class="form-group">
-					<button type="button" type="submit" value="delete" class="btn btn-danger">Delete</button>
+					<button type="submit" name="submitbtn" value="delete" class="btn btn-danger">Delete</button>
+					<button type="submit" name="submitbtn" value="hide" class="btn btn-default">Hide</button>
 					<label class="col-sm-3 control-label">Set status:</label>
 					<div class="col-sm-3"><select name="status" class="form-control" onchange="this.form.submit()"><option value="">Select a status</option><?php echo(getStatusOptions()) ?></select></div>
 				</div>

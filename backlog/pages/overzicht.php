@@ -23,6 +23,9 @@
     along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
 
+require_once("include/classes.php");
+require_once("include/connect.php");
+
 $query = "SELECT COUNT(*) FROM purchase";
 $result = $mysqli->query($query) or die($query);
 $numpurchases = $result->fetch_array(MYSQLI_NUM)[0];
@@ -61,8 +64,8 @@ $result = $mysqli->query($query) or die($query);
 $i = 1;
 while($row = $result->fetch_assoc()) {
 	$share = round($row['count'] / $total * 100);
-	$canvasstring .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	$canvasstring .= "<tr><td style=\"background-color: {$row['color']};\">{$row['name']}</td><td style=\"background-color: {$row['color']};\">$share%</td>";
+	$script .= "{value: $share, color: \"{$row['color']}\" }";
 	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
@@ -73,28 +76,39 @@ $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 $canvasstring2 = "";
 $script .= "<script>var ctx = document.getElementById(\"chart2\").getContext(\"2d\"); var data = [";
 
+$query = "SELECT COUNT(*) FROM dlc";
+$result = $mysqli->query($query) or die($query);
+$total = $result->fetch_row()[0];
+
 $query = "SELECT status.name, COUNT(*) as count, color FROM dlc JOIN status USING(status_id) GROUP BY status_id";
 $result = $mysqli->query($query) or die($query);
-$numstatuses = $result->num_rows;
 
 $i = 1;
 while($row = $result->fetch_assoc()) {
-	$share = round($row['count'] / $numstatuses * 100);
-	$canvasstring2 .= "<tr><td style=\"background-color: #{$row['color']};\">{$row['name']}</td><td style=\"background-color: #{$row['color']};\">$share%</td>";
-	$script .= "{value: $share, color: \"#{$row['color']}\" }";
+	$share = round($row['count'] / $total * 100);
+	$canvasstring2 .= "<tr><td style=\"background-color: {$row['color']};\">{$row['name']}</td><td style=\"background-color: {$row['color']};\">$share%</td>";
+	$script .= "{value: $share, color: \"{$row['color']}\" }";
 	if($i != $result->num_rows) $script .= ",";
 	$i++;
 }
 
 $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 
-// Status history
-$historystring = "";
-$query = "SELECT history_id, game.name as game, dlc.name as dlc, a.name as oldstatus, a.color as oldcolor, b.name as newstatus, b.color as newcolor FROM history JOIN status a ON history.old_status=a.status_id JOIN status b ON history.new_status=b.status_id LEFT JOIN game USING(game_id) LEFT JOIN dlc USING(dlc_id) ORDER BY history_id DESC";
+
+// Shops
+$canvasstring3 = "";
+
+$query = "SELECT COUNT(*) FROM purchase";
+$result = $mysqli->query($query) or die($query);
+$total = $result->fetch_row()[0];
+
+$query = "SELECT shop, COUNT(*) as count FROM purchase GROUP BY shop ORDER BY count DESC LIMIT 20";
 $result = $mysqli->query($query) or die($query);
 
+$i = 1;
 while($row = $result->fetch_assoc()) {
-	$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: #{$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td></tr>";
+	$share = round($row['count'] / $total * 100);
+	$canvasstring3 .= "<tr><td>{$row['shop']}</td><td>$share%</td>";
 }
 ?>
 
@@ -160,10 +174,13 @@ while($row = $result->fetch_assoc()) {
 	</div>
 	<div class="col-lg-4 col-md-6">
 		<div class="jumbotron statbox" style="height: 900px">
-			<p>Status history</p>
-			<table class="table"><tr><th>#</th><th>Game</th><th>DLC</th><th>Previous status</th><th>New status</th></tr>
-				<?=$historystring?>
-			</table>
+			<p>Shop breakdown</p>
+			<div style="height: 350px">
+				<table class="table"><tr><th>Shop</th><th>Share</th></tr>
+					<?=$canvasstring3?>
+				</table>
+			</div>
+			<canvas id="chart3" width="400" height="400"></canvas>
 		</div><div class="clearfix visible-lg"></div>
 	</div>
 </div>
