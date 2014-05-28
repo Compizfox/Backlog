@@ -365,7 +365,7 @@ function history($limit = false) {
 	$result = $mysqli->query($query) or die($query);
 	
 	while($row = $result->fetch_assoc()) {
-		$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: {$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td><td>{$row['date']}</td></tr>";
+		$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: {$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: {$row['newcolor']};\">{$row['newstatus']}</td><td>{$row['date']}</td></tr>";
 	}
 	
 	return $historystring;
