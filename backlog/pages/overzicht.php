@@ -93,6 +93,23 @@ while($row = $result->fetch_assoc()) {
 }
 
 $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
+
+
+// Shops
+$canvasstring3 = "";
+
+$query = "SELECT COUNT(*) FROM purchase";
+$result = $mysqli->query($query) or die($query);
+$total = $result->fetch_row()[0];
+
+$query = "SELECT shop, COUNT(*) as count FROM purchase GROUP BY shop ORDER BY count DESC LIMIT 20";
+$result = $mysqli->query($query) or die($query);
+
+$i = 1;
+while($row = $result->fetch_assoc()) {
+	$share = round($row['count'] / $total * 100);
+	$canvasstring3 .= "<tr><td>{$row['shop']}</td><td>$share%</td>";
+}
 ?>
 
 <div class="row">
@@ -157,10 +174,13 @@ $script .= "]; var myNewChart = new Chart(ctx).Pie(data);</script>";
 	</div>
 	<div class="col-lg-4 col-md-6">
 		<div class="jumbotron statbox" style="height: 900px">
-			<p>Status history (latest 10)</p>
-			<table class="table"><tr><th>#</th><th>Game</th><th>DLC</th><th>Previous status</th><th>New status</th></tr>
-				<?=history(true)?>
-			</table>
+			<p>Shop breakdown</p>
+			<div style="height: 350px">
+				<table class="table"><tr><th>Shop</th><th>Share</th></tr>
+					<?=$canvasstring3?>
+				</table>
+			</div>
+			<canvas id="chart3" width="400" height="400"></canvas>
 		</div><div class="clearfix visible-lg"></div>
 	</div>
 </div>
