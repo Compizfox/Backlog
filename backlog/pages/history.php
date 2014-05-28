@@ -26,6 +26,14 @@
 require_once("include/classes.php");
 ?>
 
-<table class="table"><tr><th>#</th><th>Game</th><th>DLC</th><th>Previous status</th><th>New status</th></tr>
+<table class="table">
+	<tr>
+		<th>#</th>
+		<th>Game</th>
+		<th>DLC</th>
+		<th>Previous status</th>
+		<th>New status</th>
+		<th>Date</th>
+	</tr>
 	<?=history()?>
 </table>

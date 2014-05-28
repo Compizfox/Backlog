@@ -47,7 +47,7 @@ if(isset($_POST['submit'])) {
 	$newstatus = $_POST['status'];
 	
 	if($oldstatus != $newstatus) {
-		$query = "INSERT INTO history (game_id, old_status, new_status) VALUES ({$_GET['id']}, $oldstatus, $newstatus)";
+		$query = "INSERT INTO history (game_id, old_status, new_status, date) VALUES ({$_GET['id']}, $oldstatus, $newstatus, CURDATE())";
 		$mysqli->query($query) or die($query);
 	}
 	
