@@ -65,7 +65,7 @@ class game {
 		$string .= "<td>";
 		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> ";
 		$string .= "{$this->name}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
@@ -106,7 +106,7 @@ class dlc {
 		$string .= "<tr>";
 		$string .= "<td>{$this->name}</td>";
 		$string .= "<td>{$this->game}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		$string .= "<td>{$this->notes}</td>";
 		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
@@ -118,7 +118,7 @@ class dlc {
 		$string = "";
 		$string .= "<tr class=\"dlc\">";
 		$string .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;{$this->name}</td>";
-		$string .= "<td style=\"background-color: #{$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
 		if(!isset($this->purchase)) $string .= "<td></td>";
 		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
 		$string .= "<td>";
@@ -365,7 +365,7 @@ function history($limit = false) {
 	$result = $mysqli->query($query) or die($query);
 	
 	while($row = $result->fetch_assoc()) {
-		$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: #{$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td></tr>";
+		$historystring .= "<tr><td>{$row['history_id']}</td><td>{$row['game']}</td><td>{$row['dlc']}</td><td style=\"background-color: {$row['oldcolor']};\">{$row['oldstatus']}</td><td style=\"background-color: #{$row['newcolor']};\">{$row['newstatus']}</td></tr>";
 	}
 	
 	return $historystring;

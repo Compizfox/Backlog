@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Machine: localhost
--- Gegenereerd op: 27 mei 2014 om 22:13
+-- Gegenereerd op: 28 mei 2014 om 21:44
 -- Serverversie: 5.5.37-1
 -- PHP-versie: 5.5.12-2
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `library` (
 `library_id` int(11) NOT NULL,
   `css_url` varchar(255) NOT NULL,
   `js_url` varchar(255) NOT NULL
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
 -- Gegevens worden geëxporteerd voor tabel `library`
@@ -99,7 +99,8 @@ INSERT INTO `library` (`library_id`, `css_url`, `js_url`) VALUES
 (2, '', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js'),
 (3, '', 'js/autocorrect.php'),
 (4, '', 'js/add.js'),
-(5, '', 'js/checkall.js');
+(5, '', 'js/checkall.js'),
+(6, '', 'js/statuses.js');
 
 -- --------------------------------------------------------
 
@@ -138,13 +139,13 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 (69, 62, 'dlc', 'completed', '', 'Completed DLC', 'glyphicon-ok-sign'),
 (70, -1, 'dlc', 'game', '', 'DLC in game', ''),
 (71, 0, 'steam', '', '', 'Steam', 'fa fa-steam'),
-(72, 71, 'steam', '', '&syncappids', 'Link games with Steam', 'glyphicon-link'),
-(73, 71, 'steam', '', '&syncplaytime', 'Sync playtime with Steam', 'glyphicon-time'),
-(74, 71, 'steam', '', '&syncicons', 'Retrieve icons/logos', 'glyphicon-picture'),
-(75, 71, 'steam', '', '&addgames', 'Import games from Steam', 'glyphicon-import'),
+(72, 71, 'steam', '', '&amp;syncappids', 'Link games with Steam', 'glyphicon-link'),
+(73, 71, 'steam', '', '&amp;syncplaytime', 'Sync playtime with Steam', 'glyphicon-time'),
+(74, 71, 'steam', '', '&amp;syncicons', 'Retrieve icons/logos', 'glyphicon-picture'),
+(75, 71, 'steam', '', '&amp;addgames', 'Import games from Steam', 'glyphicon-import'),
 (76, 0, 'settings', '', '', 'Settings', 'glyphicon-wrench'),
 (77, 61, 'games', 'orphaned', '', 'Orphaned games', 'fa fa-chain-broken'),
-(78, 71, 'steam', '', '&refreshuserstats', 'Refresh user stats', 'glyphicon-refresh');
+(78, 71, 'steam', '', '&amp;refreshuserstats', 'Refresh user stats', 'glyphicon-refresh');
 
 -- --------------------------------------------------------
 
@@ -157,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `purchase` (
   `shop` varchar(255) NOT NULL,
   `price` decimal(10,2) DEFAULT NULL,
   `valuta` char(1) NOT NULL,
-  `date` date NOT NULL,
+  `date` date DEFAULT NULL,
   `note` varchar(255) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -171,7 +172,7 @@ CREATE TABLE IF NOT EXISTS `status` (
 `status_id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
   `completed` tinyint(1) NOT NULL,
-  `color` varchar(6) NOT NULL
+  `color` varchar(7) NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
 
 --
@@ -179,13 +180,13 @@ CREATE TABLE IF NOT EXISTS `status` (
 --
 
 INSERT INTO `status` (`status_id`, `name`, `completed`, `color`) VALUES
-(1, 'Untouched', 0, 'c0392b'),
-(2, 'Started playing', 0, 'f1c40f'),
-(3, 'Finished', 1, '2ecc71'),
-(4, 'Finished campaign', 1, '27ae60'),
-(5, 'Multiplayer/AI only', 1, 'f39c12'),
-(6, 'Gave up', 0, 'e74c3c'),
-(7, 'Prequel not finished yet', 0, 'e67e22');
+(1, 'Untouched', 0, '#c0392b'),
+(2, 'Started playing', 0, '#f1c40f'),
+(3, 'Finished', 1, '#2ecc71'),
+(4, 'Finished campaign', 1, '#27ae60'),
+(5, 'Multiplayer/AI only', 1, '#f39c12'),
+(6, 'Gave up', 0, '#e74c3c'),
+(7, 'Prequel not finished yet', 0, '#e67e22');
 
 -- --------------------------------------------------------
 
@@ -216,7 +217,8 @@ INSERT INTO `xref_menu_library` (`menu_id`, `library_id`) VALUES
 (69, 5),
 (70, 5),
 (64, 5),
-(76, 5);
+(76, 5),
+(76, 6);
 
 -- --------------------------------------------------------
 
@@ -316,7 +318,7 @@ MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT voor een tabel `library`
 --
 ALTER TABLE `library`
-MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT voor een tabel `menu`
 --
