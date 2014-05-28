@@ -75,7 +75,8 @@ CREATE TABLE IF NOT EXISTS `history` (
   `game_id` int(11) DEFAULT NULL,
   `dlc_id` int(11) DEFAULT NULL,
   `old_status` int(11) NOT NULL,
-  `new_status` int(11) NOT NULL
+  `new_status` int(11) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
