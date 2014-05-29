@@ -51,7 +51,7 @@ Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatc
 ![](http://srv.tuxplace.nl/hosted/backlog_screenshots/Screenshot_7.png)
 
 ### Development status
-As you might have guessed, Backlog is heavily in development. There is no stable/ready for use release yet. You should regard it as WIP/alpha.
+As you might have guessed, Backlog is heavily in development. You should regard it as WIP/alpha. Even in the releases, there are undoubtedly bugs I missed. If you encounter a bug, please report it using the [issues page on Github](https://github.com/Compizfox/Backlog/issues)
 
 This project wasn't originally intended for public distribution, but rather as an (small) school project. Hence the lack comments in the code and so on.
 
