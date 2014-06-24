@@ -140,7 +140,7 @@ class listGames {
 		global $mysqli;
 		$string = "";
 		
-		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 {$this->condition} GROUP BY game.name ORDER BY game.game_id";
+		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 {$this->condition} GROUP BY game.name ORDER BY game.name";
 		$this->query2 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM dlc JOIN status USING (status_id)";
 		$result = $mysqli->query($this->query);
 
@@ -188,7 +188,7 @@ class listPurchases {
 	private $query, $query2, $query3;
 
 	function __construct() {
-		$this->query = "SELECT * FROM purchase";
+		$this->query = "SELECT * FROM purchase ORDER BY date, purchase_id";
 		$this->query2 = "SELECT game.game_id, game.name, game.notes, game.appid, game.img_icon_url, status.name AS status, status.completed, status.color FROM purchase JOIN xref_purchase_game USING (purchase_id) JOIN game USING (game_id) JOIN status USING (status_id)";
 		$this->query3 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM game JOIN dlc USING (game_id) JOIN status on dlc.status_id=status.status_id";
 	}
