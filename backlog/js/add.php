@@ -1,3 +1,4 @@
+<?php
 /*
 Date: 2014-05-25
 Author: Lars Veldscholte
@@ -21,6 +22,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Backlog. If not, see <http://www.gnu.org/licenses/>.
 */
+
+require_once("../include/classes.php");
+?>
 
 window.onload = addInput;
 
