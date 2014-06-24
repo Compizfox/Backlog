@@ -48,7 +48,7 @@ if(isset($_POST['submit'])) {
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Date:</label>
-				<div class="col-md-2"><input class="form-control" type="date" name="date" value="<?=date("d-m-Y")?>"></div>
+				<div class="col-md-2"><input class="form-control" type="date" name="date" value="<?=date("Y-m-d")?>"></div>
 			</div>
 			<div class="form-group">
 				<label class="col-sm-2 control-label">Note:</label>
