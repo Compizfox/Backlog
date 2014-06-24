@@ -40,8 +40,11 @@ switch($data['valuta']) {
 }
 
 if(isset($_POST['submit'])) {
+	$price = str_replace(",", ".", $_POST['price']);
+	if($_POST['price'] == "") $price = NULL;
+	
 	$stmt = $mysqli->prepare("UPDATE purchase SET shop=?, price=?, valuta=?, date=?, note=? WHERE purchase_id=?") or die($mysqli->error);
-	$stmt->bind_param("sdsssi", $_POST['shop'], $_POST['price'], $_POST['valuta'], $_POST['date'], $_POST['note'], $_GET['id']) or die($stmt->error);
+	$stmt->bind_param("sdsssi", $_POST['shop'], $price, $_POST['valuta'], $_POST['date'], $_POST['note'], $_GET['id']) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 	
 	header("Location: index.php?page=purchases&message=purchaseedited");
