@@ -45,7 +45,7 @@ do {
 
 $rpgamesstring = "";
 foreach(json_decode($data['games']) as $game) {
-	$rpgamesstring .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$game->appid}/{$game->img_icon_url}.jpg\" title=\"{$game->name}\" alt />&nbsp;&nbsp;";
+	$rpgamesstring .= "<img style=\"margin: 4px\" src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$game->appid}/{$game->img_icon_url}.jpg\" title=\"{$game->name}\" alt />";
 }
 ?>
 
