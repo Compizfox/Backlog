@@ -391,17 +391,14 @@ function SteamUserApiRequest() {
 	$stmt->bind_param("ss", $a, $steamdata->response->players[0]->avatarmedium) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 	
-//	$data = array();
-//	foreach($steamdata2->response->games as $game) {
-//		$data[] = array("appid" => $game->appid, "icon" => $game->img_icon_url);
-//	}
-	
 	$a = "games";
-	$stmt->bind_param("ss", $a, json_encode($steamdata2->response->games)) or die($stmt->error);
+	$b = json_encode($steamdata2->response->games);
+	$stmt->bind_param("ss", $a, $b) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 	
 	$a = "time";
-	$stmt->bind_param("ss", $a, time()) or die($stmt->error);
+	$b = time();
+	$stmt->bind_param("ss", $a, $b) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
 }
 ?>
