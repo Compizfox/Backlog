@@ -26,7 +26,7 @@
 require_once("include/classes.php");
 
 if(isset($_POST['formsubmit'])) {
-	if($_POST['submitbtn'] == "delete") {
+	if(@$_POST['submitbtn'] == "delete") {
 		foreach(@$_POST['checkedpurchases'] as $purchase) {
 			deletePurchase($purchase);
 		}
@@ -38,7 +38,7 @@ if(isset($_POST['formsubmit'])) {
 		foreach(@$_POST['checkeddlc'] as $dlc) {
 			deleteDLC($dlc);
 		}
-	} elseif($_POST['submitbtn'] == "hide") {
+	} elseif(@$_POST['submitbtn'] == "hide") {
 		$stmt = $mysqli->prepare("UPDATE game SET hidden=1 WHERE game_id=?") or die($mysqli->error);
 		
 		foreach($_POST['checkedgames'] as $game) {
@@ -46,30 +46,34 @@ if(isset($_POST['formsubmit'])) {
 			$stmt->execute() or die($stmt->error);
 		}
 	} elseif($_POST['status'] != "") {
-		foreach(@$_POST['checkedgames'] as $game) {
-			$query = "SELECT status_id FROM game WHERE game_id=$game";
-			$result = $mysqli->query($query) or die($query);
-			$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
-			$newstatus = $_POST['status'];
-			
-			$query = "INSERT INTO history (game_id, old_status, new_status, date) VALUES ($game, $oldstatus, $newstatus, CURDATE())";
-			$mysqli->query($query) or die($query);
-			
-			$query = "UPDATE game SET status_id=$newstatus WHERE game_id=$game";
-			$mysqli->query($query) or die($query);
+		if(isset($_POST['checkedgames'])) {
+			foreach($_POST['checkedgames'] as $game) {
+				$query = "SELECT status_id FROM game WHERE game_id=$game";
+				$result = $mysqli->query($query) or die($query);
+				$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
+				$newstatus = $_POST['status'];
+
+				$query = "INSERT INTO history (game_id, old_status, new_status, date) VALUES ($game, $oldstatus, $newstatus, CURDATE())";
+				$mysqli->query($query) or die($query);
+
+				$query = "UPDATE game SET status_id=$newstatus WHERE game_id=$game";
+				$mysqli->query($query) or die($query);
+			}
 		}
-	
-		foreach(@$_POST['checkeddlc'] as $dlc) {
-			$query = "SELECT status_id FROM dlc WHERE dlc_id=$dlc";
-			$result = $mysqli->query($query) or die($query);
-			$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
-			$newstatus = $_POST['status'];
-			
-			$query = "INSERT INTO history (dlc_id, old_status, new_status, date) VALUES ($dlc, $oldstatus, $newstatus, CURDATE())";
-			$mysqli->query($query) or die($query);
-			
-			$query = "UPDATE dlc SET status_id={$_POST['status']} WHERE dlc_id=$dlc";
-			$mysqli->query($query) or die($query);
+
+		if(isset($_POST['checkeddlc'])) {
+			foreach($_POST['checkeddlc'] as $dlc) {
+				$query = "SELECT status_id FROM dlc WHERE dlc_id=$dlc";
+				$result = $mysqli->query($query) or die($query);
+				$oldstatus = $result->fetch_array(MYSQLI_NUM)[0];
+				$newstatus = $_POST['status'];
+
+				$query = "INSERT INTO history (dlc_id, old_status, new_status, date) VALUES ($dlc, $oldstatus, $newstatus, CURDATE())";
+				$mysqli->query($query) or die($query);
+
+				$query = "UPDATE dlc SET status_id={$_POST['status']} WHERE dlc_id=$dlc";
+				$mysqli->query($query) or die($query);
+			}
 		}
 		echo("<div class=\"alert alert-success alert-dismissable fade in\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><strong>Status(es) updated.</strong></div>");
 	}
