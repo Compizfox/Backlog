@@ -27,221 +27,203 @@ require_once(__DIR__ . "/../config.php");
 require_once(__DIR__ . "/connect.php");
 
 class game {
-	private $id, $name, $status, $completed, $notes, $color, $purchase;
+	private $id, $name, $status, $completed, $notes, $color, $appid, $playtime, $img_icon_url, $img_logo_url, $purchase, $img_url;
 
-	function __construct($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $img_icon_url, $img_logo_url, $purchase=NULL) {
-		$this->setData($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $img_icon_url, $img_logo_url, $purchase);
-	}
+	function __construct($id) {
+		global $mysqli;
 
-	private function getColor() {
-		return $this->color;
-	}
+		$result = $mysqli->query("SELECT game.name, game.notes, game.appid, game.img_icon_url, game.img_logo_url, playtime, status.name AS status, status.completed, status.color FROM game JOIN status USING (status_id) WHERE game_id=$id") or die($mysqli->error);
+		$row = $result->fetch_assoc();
 
-	public function setData($id, $name, $status, $completed, $notes, $color, $appid, $playtime, $img_icon_url, $img_logo_url, $purchase) {
 		$this->id = $id;
-		$this->name = $name;
-		$this->status = $status;
-		$this->completed = $completed;
-		$this->notes = $notes;
-		$this->color = $color;
-		$this->appid = $appid;
-		$this->playtime = round($playtime / 60, 2);
-		$this->img_icon_url = $img_icon_url;
-		$this->img_logo_url = $img_logo_url;
+		$this->name = $row['name'];
+		$this->status = $row['status'];
+		$this->completed = $row['completed'];
+		$this->notes = $row['notes'];
+		$this->color = $row['color'];
+		$this->appid = $row['appid'];
+		$this->playtime = round($row['playtime'] / 60, 2);
+		$this->img_icon_url = $row['img_icon_url'];
+		$this->img_logo_url = $row['img_logo_url'];
+	}
+
+	public function setPurchase($purchase) {
 		$this->purchase = $purchase;
 	}
 
-	public function drawRow($beginrow = 1) {
+	public function drawPurchaseRow($beginrow = 1) {
 		global $currenturl;
-		
-		if(isset($this->purchase)) {
-			$this->img_url = $this->img_icon_url;
-		} else {
-			$this->img_url = $this->img_logo_url;
-		}
-		
+		$this->img_url = $this->img_icon_url;
+
 		$string = "";
 		if($beginrow) $string .= ("<tr>");
-		$string .= "<td>";
+		$string .= "<td colspan=\"2\">";
 		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> ";
 		$string .= "{$this->name}</td>";
-		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
-		if(!isset($this->purchase)) $string .= "<td>{$this->playtime}</td>";
-		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
-		$string .= "<td>";
-		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifygame&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=game&amp;game={$this->id}";
-		if(isset($this->purchase)) $string .= "&amp;purchase=" . $this->purchase;
-		$string .= "\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&amp;scope=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
+		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
+		$string .= "<td><a href=\"index.php?page=modifygame&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=game&amp;game={$this->id}&amp;purchase={$this->purchase}\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&amp;scope=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
+		$string .= "</tr>";
+		return $string;
+	}
+
+	public function drawGameRow() {
+		global $currenturl;
+		$this->img_url = $this->img_logo_url;
+
+		$string = "<tr><td>";
+		if($this->appid != 0) $string .= "<img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> ";
+		$string .= "{$this->name}</td>";
+		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
+		$string .= "<td>{$this->playtime}</td>";
+		$string .= "<td>{$this->notes}</td>";
+		$string .= "<td><input type=\"checkbox\" name=\"checkedgames[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifygame&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=dlc&amp;scope=game&amp;game={$this->id}\"><span class=\"glyphicon glyphicon-download\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
 }
 
 class dlc {
-	private $id, $name, $status, $completed, $notes, $color;
+	private $id, $name, $status, $completed, $notes, $color, $game, $purchase, $appid, $img_url;
 
-	function __construct($id, $name, $status, $completed, $notes, $color, $game=NULL, $purchase=NULL) {
-		$this->setData($id, $name, $status, $completed, $notes, $color, $game, $purchase);
-	}
+	function __construct($id) {
+		global $mysqli;
+		$result = $mysqli->query("SELECT dlc.name, status.name AS status, status.completed, dlc.note, status.color, game.name AS gamename, img_icon_url, appid FROM game JOIN dlc USING(game_id) JOIN status ON dlc.status_id=status.status_id WHERE dlc_id=$id") or die($mysqli->error);
+		$row = $result->fetch_assoc();
 
-	private function getColor() {
-		return $this->color;
-	}
-
-	public function setData($id, $name, $status, $completed, $notes, $color, $game, $purchase) {
 		$this->id = $id;
-		$this->name = $name;
-		$this->status = $status;
-		$this->completed = $completed;
-		$this->notes = $notes;
-		$this->color = $color;
-		$this->game = $game;
+		$this->name = $row['name'];
+		$this->status = $row['status'];
+		$this->completed = $row['completed'];
+		$this->notes = $row['note'];
+		$this->color = $row['color'];
+		$this->game = $row['gamename'];
+		$this->img_url = $row['img_icon_url'];
+		$this->appid = $row['appid'];
+	}
+
+	public function setPurchase($purchase) {
 		$this->purchase = $purchase;
 	}
 
-	public function drawRow() {
+	public function drawDLCRow() {
 		global $currenturl;
 		$string = "";
 		$string .= "<tr>";
 		$string .= "<td>{$this->name}</td>";
-		$string .= "<td>{$this->game}</td>";
-		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
+		$string .= "<td><img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> {$this->game}</td>";
+		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
 		$string .= "<td>{$this->notes}</td>";
 		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
-	
-	public function drawSubRow() {
+
+	public function drawPurchaseRow($beginrow = 1) {
 		global $currenturl;
+
+		$string = "";
+		if($beginrow) $string .= ("<tr>");
+		$string .= "<td><img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> {$this->game}</td>";
+		$string .= "<td>{$this->name}</td>";
+		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
+		$string .= "<td><a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "</tr>";
+		return $string;
+	}
+
+	public function drawGameRow() {
+		global $currenturl;
+
 		$string = "";
 		$string .= "<tr class=\"dlc\">";
-		$string .= "<td>&nbsp;&nbsp;&nbsp;&nbsp;{$this->name}</td>";
-		$string .= "<td style=\"background-color: {$this->getColor()}\">{$this->status}</td>";
-		if(!isset($this->purchase)) $string .= "<td></td>";
-		if(!isset($this->purchase)) $string .= "<td>{$this->notes}</td>";
-		$string .= "<td>";
-		if(!isset($this->purchase)) $string .= "<input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;";
-		$string .= "<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td style=\"padding-left: 200px;\">{$this->name}</td>";
+		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
+		$string .= "<td></td>";
+		$string .= "<td>{$this->notes}</td>";
+		$string .= "<td><input type=\"checkbox\" name=\"checkeddlc[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}
 }
 
-class listGames {
-	private $condition, $query, $query2;
-	
-	public function setCondition($condition) {
-		$this->condition = "AND " . $condition;
-	}
+function listGames($condition, $listDLC=true) {
+	global $mysqli;
+	$string = "";
 
-	public function drawTable() {
-		global $mysqli;
-		$string = "";
-		
-		$this->query = "SELECT purchase_id, game.game_id, game.name, status.name AS status, status.completed, game.notes, status.color, game.appid, game.playtime, game.img_logo_url FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 {$this->condition} GROUP BY game.name ORDER BY game.name";
-		$this->query2 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM dlc JOIN status USING (status_id)";
-		$result = $mysqli->query($this->query);
+	$result = $mysqli->query("SELECT game_id FROM purchase JOIN xref_purchase_game USING(purchase_id) RIGHT JOIN game USING(game_id) JOIN status USING(status_id) WHERE hidden=0 $condition GROUP BY game.name ORDER BY game.name");
+	while($entries = $result->fetch_assoc()) {
+		$game = new game($entries['game_id']);
+		$string .= $game->drawGameRow();
 
-		while($entries = $result->fetch_assoc()) {
-			$game = new game($entries['game_id'], $entries['name'], $entries['status'], $entries['completed'], $entries['notes'], $entries['color'], $entries['appid'], $entries['playtime'], NULL, $entries['img_logo_url']);
-			$string .= $game->drawRow();
-
-			$game_id = $entries['game_id'];
-			$result2 = $mysqli->query($this->query2 . " WHERE dlc.game_id='$game_id'");
+		if($listDLC) {
+			$result2 = $mysqli->query("SELECT dlc_id FROM dlc WHERE game_id='{$entries['game_id']}'");
 			while($entries2 = $result2->fetch_assoc()) {
-				$dlc = new dlc($entries2['dlc_id'], $entries2['name'], $entries2['status'], $entries2['completed'], $entries2['note'], $entries2['color']);
-				$string .= $dlc->drawSubRow();
+				$dlc = new dlc($entries2['dlc_id']);
+				$string .= $dlc->drawGameRow();
 			}
 		}
-		return $string;
 	}
+	return $string;
 }
 
-class listDLC {
-	private $query;
-	
-	function __construct() {
-		$this->query = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color, game.name AS game FROM game JOIN dlc USING(game_id) JOIN status ON dlc.status_id=status.status_id";
+function listDLC($condition) {
+	global $mysqli;
+	$string = "";
+
+	$result = $mysqli->query("SELECT dlc_id FROM purchase JOIN xref_purchase_dlc USING(purchase_id) RIGHT JOIN (SELECT dlc_id, game_id, dlc.name AS dlcname, dlc.status_id, completed, game.name AS gamename FROM game JOIN dlc USING(game_id) JOIN status ON dlc.status_id=status.status_id) AS dlc USING(dlc_id) $condition GROUP BY dlcname ORDER BY gamename");
+	while($entries = $result->fetch_assoc()) {
+		$dlc = new dlc($entries['dlc_id']);
+		$string .= $dlc->drawDLCRow();
 	}
-	
-	public function setCondition($condition) {
-		$this->query .= " WHERE " . $condition;
-	}
-	
-	public function drawTable() {
-		global $mysqli;
-		$string = "";
-		
-		$result = $mysqli->query($this->query);
-		while($entries = $result->fetch_assoc()) {
-			$dlc = new dlc($entries['dlc_id'], $entries['name'], $entries['status'], $entries['completed'], $entries['note'], $entries['color'], $entries['game']);
-			$string .= $dlc->drawRow();
-		}
-		
-		return $string;
-	}
+
+	return $string;
 }
 
-class listPurchases {
-	private $query, $query2, $query3;
+function listPurchases() {
+	global $mysqli;
+	$string = "";
 
-	function __construct() {
-		$this->query = "SELECT * FROM purchase ORDER BY date, purchase_id";
-		$this->query2 = "SELECT game.game_id, game.name, game.notes, game.appid, game.img_icon_url, status.name AS status, status.completed, status.color FROM purchase JOIN xref_purchase_game USING (purchase_id) JOIN game USING (game_id) JOIN status USING (status_id)";
-		$this->query3 = "SELECT dlc.dlc_id, dlc.name, status.name AS status, status.completed, dlc.note, status.color FROM game JOIN dlc USING (game_id) JOIN status on dlc.status_id=status.status_id";
-	}
-	
-	private function getNumGamesDLC($purchaseid) {
-		global $mysqli;
-		$gamesresult = $mysqli->query("SELECT * FROM purchase JOIN xref_purchase_game USING (purchase_id) JOIN game USING (game_id) WHERE purchase.purchase_id=$purchaseid");
-		$dlcresult = $mysqli->query("SELECT * FROM purchase JOIN xref_purchase_game USING (purchase_id) JOIN game USING (game_id) JOIN dlc USING (game_id) WHERE purchase.purchase_id=$purchaseid");
-		return $gamesresult->num_rows + $dlcresult->num_rows;
-	}
+	$result = $mysqli->query("SELECT purchase_id FROM purchase");
+	while($entries = $result->fetch_assoc()) {
+		$purchase = new purchase($entries['purchase_id']);
+		$string .= $purchase->drawRow();
 
-	public function drawTable() {
-		global $mysqli;
-		$string = "";
-		
-		$result = $mysqli->query($this->query);
-		while($entries = $result->fetch_assoc()) {
-			$numrows = $this->getNumGamesDLC($entries['purchase_id']);
-			$purchase = new purchase($entries['purchase_id'], $entries['shop'], $entries['price'], $entries['valuta'], $entries['date'], $entries['note'], $numrows);
-			$string .= $purchase->drawRow();
-
-			$result2 = $mysqli->query($this->query2 . " WHERE purchase.purchase_id={$entries['purchase_id']}");
-			$j = 0; // draw first game without <tr>
-			while($entries2 = $result2->fetch_assoc()) {
-				$game = new game($entries2['game_id'], $entries2['name'], $entries2['status'], $entries2['completed'], $entries2['notes'], $entries2['color'], $entries2['appid'], NULL, $entries2['img_icon_url'], NULL, $entries['purchase_id']);
-				$string .= $game->drawRow($j);
-
-				$result3 = $mysqli->query($this->query3 . " WHERE game_id={$entries2['game_id']}");
-				while($entries3 = $result3->fetch_assoc()) {
-					$dlc = new dlc($entries3['dlc_id'], $entries3['name'], $entries3['status'], $entries3['completed'], $entries3['note'], $entries3['color'], NULL, $entries['purchase_id']);
-					$string .= $dlc->drawSubRow();
-				}
-				$j = 1;
-			}
+		$result2 = $mysqli->query("SELECT game_id FROM xref_purchase_game WHERE purchase_id={$entries['purchase_id']}");
+		$j = 0; // draw first game without <tr>
+		while($entries2 = $result2->fetch_assoc()) {
+			$game = new game($entries2['game_id']);
+			$game->setPurchase($entries['purchase_id']);
+			$string .= $game->drawPurchaseRow($j);
+			$j = 1;
 		}
-		return $string;
+
+		$result3 = $mysqli->query("SELECT dlc_id FROM xref_purchase_dlc WHERE purchase_id={$entries['purchase_id']}");
+		while($entries3 = $result3->fetch_assoc()) {
+			$dlc = new dlc($entries3['dlc_id']);
+			$dlc->setPurchase($entries['purchase_id']);
+			$string .= $dlc->drawPurchaseRow($j);
+			$j = 1;
+		}
 	}
+	return $string;
 }
 
 class purchase {
-	private $id, $shop, $price, $date, $note, $numGames;
+	private $id, $shop, $price, $valuta, $date, $note, $numGames;
 
-	function __construct($id, $shop, $price, $valuta, $date, $note, $numGames) {
-		$this->setData($id, $shop, $price, $valuta, $date, $note, $numGames);
-	}
+	function __construct($id) {
+		global $mysqli;
 
-	public function setData($id, $shop, $price, $valuta, $date, $note, $numGames) {
+		$result = $mysqli->query("SELECT * FROM purchase WHERE purchase_id=$id") or die($mysqli->error);
+		$row = $result->fetch_assoc();
+
 		$this->id = $id;
-		$this->shop = $shop;
-		$this->price = $valuta . $price;
-		$this->date = $date;
-		$this->note = $note;
-		$this->numGames = $numGames;
+		$this->shop = $row['shop'];
+		$this->price = $row['valuta'] . $row['price'];
+		$this->date = $row['date'];
+		$this->note = $row['note'];
+
+		$this->numGames = $mysqli->query("SELECT l1.count + l2.count FROM (SELECT COUNT(*) AS count FROM purchase JOIN xref_purchase_game USING (purchase_id) JOIN game USING (game_id) WHERE purchase.purchase_id=$id) AS l1, (SELECT COUNT(*) AS count FROM purchase JOIN xref_purchase_dlc USING (purchase_id) JOIN dlc USING (dlc_id) WHERE purchase.purchase_id=$id) AS l2")->fetch_row()[0];
 	}
 
 	public function drawRow() {
@@ -249,7 +231,7 @@ class purchase {
 		
 		$string = "";
 		$string .= "<tr>";
-		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=games&amp;scope=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td rowspan=\"{$this->numGames}\"><input type=\"checkbox\" name=\"checkedpurchases[]\" value=\"{$this->id}\" />&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=purchasedetail&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-search\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"index.php?page=modifypurchase&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=purchase&amp;purchase={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->shop}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->price}</td>";
 		$string .= "<td rowspan=\"{$this->numGames}\">{$this->date}</td>";

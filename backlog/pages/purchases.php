@@ -40,16 +40,13 @@ include("include/message.php");
 				<th>Price</th>
 				<th>Date</th>
 				<th>Note</th>
-				<th>Game(s)</th>
+				<th colspan="2">Games/DLC</th>
 				<th>Status</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<?php
-			$list = new listPurchases;
-			echo($list->drawTable());
-			?>
+			<?=listPurchases()?>
 		</tbody>
 	</table>
 

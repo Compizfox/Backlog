@@ -58,14 +58,32 @@ if(isset($_POST['submit'])) {
 		<fieldset id="dyn">
 			<legend>Games</legend>
 		</fieldset>
-			<button class="btn btn-default" type="button" onclick="addInput()"><span class="glyphicon glyphicon-plus"></span> New game</button> <button class="btn btn-default" type="submit" name="submit">Submit</button>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button class="btn btn-default" type="button" onclick="addGame()"><span class="glyphicon glyphicon-plus"></span> New game</button>
+			</div>
+		</div>
+		<fieldset id="dyn2">
+			<legend>DLC</legend>
+		</fieldset>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button class="btn btn-default" type="button" onclick="addDLC()"><span class="glyphicon glyphicon-plus"></span> New DLC</button>
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="col-sm-12">
+				<button class="btn btn-default" type="submit" name="submit">Submit</button>
+			</div>
+		</div>
 	</form>
 </div>
 <?php
 if(isset($_POST['submit'])) {
 	$price = str_replace(",", ".", $_POST['price']);
 	if($_POST['price'] == "") $price = NULL;
-	
+
+	// insert purchase
 	$stmt = $mysqli->prepare("INSERT INTO purchase (shop, price, valuta, date, note) VALUES (?, ?, ?, ?, ?)") or die($mysqli->error);
 	$stmt->bind_param("sdsss", $_POST['shop'], $price, $_POST['valuta'], $_POST['date'], $_POST['note']) or die($stmt->error);
 	$stmt->execute() or die($stmt->error);
@@ -75,28 +93,65 @@ if(isset($_POST['submit'])) {
 	$stmt = $mysqli->prepare("SELECT * FROM game WHERE name = ?") or die($mysqli->error);
 	$stmt2 = $mysqli->prepare("INSERT INTO game (name, status_id, notes) VALUES (?, ?, ?)") or die($mysqli->error);
 	$stmt3 = $mysqli->prepare("INSERT INTO xref_purchase_game VALUES (?, ?)") or die($mysqli->error);
-	$stmt4 = $mysqli->prepare("INSERT INTO dlc (name, status_id, note, game_id) VALUES (?, ?, ?, ?)") or die($mysqli->error);
-	foreach($_POST['game'] as $game) {
-		$stmt->bind_param("s", $game['name']) or die($stmt->error);
-		$stmt->execute() or die($stmt->error);
-		$result = $stmt->get_result();
+	if(isset($_POST['game'])) {
+		foreach($_POST['game'] as $game) {
+			$stmt->bind_param("s", $game['name']) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
 
-		if($entries = $result->fetch_assoc()) {
-			$game_id = $entries['game_id'];
-		} else {
-			$stmt2->bind_param("sis", $game['name'], $game['status'], $game['notes']) or die($stmt2->error);
-			$stmt2->execute() or die($stmt2->error);
+			// if game exists in database, get game_id for linking with purchase. Otherwise, insert game and get game_id for linking with purchase
+			if($entries = $result->fetch_assoc()) {
+				$game_id = $entries['game_id'];
+			} else {
+				$stmt2->bind_param("sis", $game['name'], $game['status'], $game['notes']) or die($stmt2->error);
+				$stmt2->execute() or die($stmt2->error);
 
-			$game_id = $mysqli->insert_id;
+				$game_id = $mysqli->insert_id;
+			}
+
+			// link game with purchase
+			$stmt3->bind_param("ii", $purchase_id, $game_id) or die($stmt3->error);
+			$stmt3->execute() or die($stmt3->error);
 		}
-		
-		$stmt3->bind_param("ii", $purchase_id, $game_id) or die($stmt3->error);
-		$stmt3->execute() or die($stmt3->error);
-		
-		for($i = 0; $i < count(array_filter(array_keys($game),'is_numeric')); $i++) {
-			$dlc = $game[$i];
-			
-			$stmt4->bind_param("sisi", $dlc['name'], $dlc['status'], $dlc['notes'], $game_id) or die($stmt4->error);
+	}
+
+	$stmt = $mysqli->prepare("SELECT * FROM dlc WHERE name = ?") or die($mysqli->error);
+	$stmt2 = $mysqli->prepare("SELECT * FROM game WHERE name = ?") or die($mysqli->error);
+	$stmt3 = $mysqli->prepare("INSERT INTO dlc (name, status_id, note, game_id) VALUES (?, ?, ?, ?)") or die($mysqli->error);
+	$stmt4 = $mysqli->prepare("INSERT INTO xref_purchase_dlc VALUES (?, ?)") or die($mysqli->error);
+	if(isset($_POST['dlc'])) {
+		print_r($_POST['dlc']);
+
+		foreach($_POST['dlc'] as $dlc) {
+			$stmt->bind_param("s", $dlc['name']) or die($stmt->error);
+			$stmt->execute() or die($stmt->error);
+			$result = $stmt->get_result();
+
+			// if DLC exists in database, get dlc_id for linking with purchase. Otherwise, insert DLC and get dlc_id for linking with purchase
+			if($entries = $result->fetch_assoc()) {
+				$dlc_id = $entries['dlc_id'];
+			} else {
+				// check if game exists
+				$stmt2->bind_param("s", $dlc['game']) or die($stmt2->error);
+				$stmt2->execute() or die($stmt2->error);
+				$result = $stmt2->get_result();
+
+				// if game exists, get game_id. Otherwise, game is invalid
+				if($entries = $result->fetch_assoc()) {
+					$game_id = $entries['game_id'];
+				} else {
+					$game_id = 0;
+				}
+
+				// insert DLC
+				$stmt3->bind_param("sisi", $dlc['name'], $dlc['status'], $dlc['notes'], $game_id) or die($stmt3->error);
+				$stmt3->execute() or die($stmt3->error);
+
+				$dlc_id = $mysqli->insert_id;
+			}
+
+			// link DLC with purchase
+			$stmt4->bind_param("ii", $purchase_id, $dlc_id) or die($stmt4->error);
 			$stmt4->execute() or die($stmt4->error);
 		}
 	}

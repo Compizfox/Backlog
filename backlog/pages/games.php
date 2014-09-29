@@ -45,33 +45,23 @@ include("include/message.php");
 			<?php
 			switch($_GET['scope']) {
 				case "all":
-					$list = new listGames;
-					echo($list->drawTable());
+					echo(listGames(""));
 					break;
 
 				case "uncompleted":
-					$list = new listGames;
-					$list->setCondition("completed=0");
-					echo($list->drawTable());
+					echo(listGames("AND completed=0"));
 					break;
 
 				case "completed":
-					$list = new listGames;
-					$list->setCondition("completed=1");
-					echo($list->drawTable());
+					echo(listGames("AND completed=1"));
 					break;
 					
 				case "purchase":
-					echo("<h3>#{$_GET['purchase']}");
-					$list = new listGames;
-					$list->setCondition("purchase_id='{$_GET['purchase']}'");
-					echo($list->drawTable());
+					echo(listGames("AND purchase_id='{$_GET['purchase']}'", false));
 					break;
 					
 				case "orphaned":
-					$list = new listGames;
-					$list->setCondition("purchase_id IS NULL");
-					echo($list->drawTable());
+					echo(listGames("AND purchase_id IS NULL"));
 					break;
 			}
 			?>

@@ -43,33 +43,24 @@ include("include/message.php");
 			<?php
 			switch($_GET['scope']) {
 				case "all":
-					$list = new listDLC;
-					echo($list->drawTable());
+					echo(listDLC(""));
 					break;
 
 				case "uncompleted":
-					$list = new listDLC;
-					$list->setCondition("completed=0");
-					echo($list->drawTable());
+					echo(listDLC("WHERE completed=0"));
 					break;
 
 				case "completed":
-					$list = new listDLC;
-					$list->setCondition("completed=1");
-					echo($list->drawTable());
+					echo(listDLC("WHERE completed=1"));
 					break;
 					
 				case "purchase":
-					$list = new listDLC;
-					$list->setCondition("purchase_id='{$_GET['purchase']}'");
-					echo($list->drawTable());
+					echo(listDLC("WHERE purchase_id='{$_GET['purchase']}'"));
 					break;
 					
 				case "game":
 					echo("<h3>#{$_GET['game']}");
-					$list = new listDLC;
-					$list->setCondition("game_id='{$_GET['game']}'");
-					echo($list->drawTable());
+					echo(listDLC("WHERE game_id='{$_GET['game']}'"));
 					break;
 			}
 			?>
