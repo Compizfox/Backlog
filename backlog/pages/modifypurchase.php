@@ -35,8 +35,10 @@ switch($data['valuta']) {
 		break;
 	case '€':
 		$euroselected = " selected";
+		break;
 	case '£':
 		$poundselected = " selected";
+		break;
 }
 
 if(isset($_POST['submit'])) {
