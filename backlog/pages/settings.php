@@ -24,6 +24,7 @@
 */
 
 require_once("include/connect.php");
+require_once("include/operations.php");
 
 if(@$_GET['process'] == "hiddengames") {
 	$stmt = $mysqli->prepare("UPDATE game SET hidden=0 WHERE game_id=?") or die($mysqli->error);
@@ -60,6 +61,10 @@ if(@$_GET['process'] == "dbops") {
 	if(isset($_POST['truncate'])) {
 		$query = "DELETE FROM xref_purchase_game; DELETE FROM purchase; DELETE FROM history; DELETE FROM dlc; DELETE FROM game;";
 		$mysqli->query($query) or die($query);
+	}
+
+	if(isset($_POST['cleanup'])) {
+		cleanEmptyPurchases();
 	}
 }
 ?>
@@ -139,5 +144,6 @@ if(@$_GET['process'] == "dbops") {
 	</div>
 	<div class="panel-body">
 		<button class="btn btn-default" type="submit" name="truncate">Truncate database</button>
+		<button class="btn btn-default" type="submit" name="cleanup">Cleanup database (remove empty purchases)</button>
 	</div>
 </form>
