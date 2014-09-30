@@ -61,8 +61,7 @@ tr.dlc > td {
     line-height: 20px;
     height: 20px;
     padding: 15px;
-    margin: 0px;
-    margin-right: 20px;
+    margin: 0 20px 0 0;
 }
 
 .steamwidget {
@@ -73,10 +72,7 @@ tr.dlc > td {
 }
 
 .main {
-    padding: 20px;
-    padding-right: 40px;
-    padding-left: 40px;
-    padding-bottom: 50px;
+    padding: 20px 40px 50px;
 }
 
 .statbox > p,h1 {
