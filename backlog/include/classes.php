@@ -126,7 +126,7 @@ class dlc {
 		$string .= "<td><img src=\"http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_url}.jpg\" alt /> {$this->game}</td>";
 		$string .= "<td>{$this->name}</td>";
 		$string .= "<td style=\"background-color: {$this->color}\">{$this->status}</td>";
-		$string .= "<td><a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
+		$string .= "<td><a href=\"index.php?page=modifydlc&amp;id={$this->id}\"><span class=\"glyphicon glyphicon-pencil\"></span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href=\"$currenturl&amp;delete=dlc&amp;dlc={$this->id}&amp;purchase={$this->purchase}\"><span class=\"glyphicon glyphicon-trash\"></span></a></td>";
 		$string .= "</tr>";
 		return $string;
 	}

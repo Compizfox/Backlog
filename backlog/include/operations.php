@@ -125,26 +125,41 @@ function deleteGame($gameid, $purchaseid=NULL) {
 		$mysqli->query($query) or die($query);
 	}
 	
-	// check for empty purchases
-	$query = "SELECT * FROM purchase LEFT JOIN xref_purchase_game USING(purchase_id) WHERE xref_purchase_game.purchase_id=NULL";
-	$result = $mysqli->query($query) or die($query);
-	if($result->num_rows > 0) {
-		$query = "DELETE FROM purchase where purchase_id IN (SELECT purchase_id FROM (SELECT * FROM purchase) AS a LEFT JOIN xref_purchase_game USING(purchase_id) WHERE xref_purchase_game.purchase_id=NULL)";
-		$mysqli->query($query) or die($query);
-		
-		echo("<div class=\"alert alert-info alert-dismissable fade in\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><strong>Deleted empty purchase(s).</strong></div>");
-	}
+	cleanEmptyPurchases();
 	
 	echo("<div class=\"alert alert-success alert-dismissable fade in\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><strong>Game(s) deleted.</strong></div>");
 }
 
-function deleteDLC($dlcid) {
+function deleteDLC($dlcid, $purchaseid=NULL) {
 	global $mysqli;
-	
-	$query = "DELETE FROM dlc WHERE dlc_id=$dlcid";
-	$mysqli->query($query) or die($query);
+
+	if(isset($purchaseid)) {
+		$query = "DELETE FROM xref_purchase_dlc WHERE dlc_id=$dlcid AND purchase_id=$purchaseid";
+		$mysqli->query($query) or die($query);
+	} else {
+		$query = "DELETE FROM xref_purchase_dlc WHERE dlc_id=$dlcid";
+		$mysqli->query($query) or die($query);
+
+		$query = "DELETE FROM dlc WHERE dlc_id=$dlcid";
+		$mysqli->query($query) or die($query);
+	}
+
+	cleanEmptyPurchases();
 	
 	echo("<div class=\"alert alert-success alert-dismissable fade in\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><strong>DLC deleted.</strong></div>");
+}
+
+function cleanEmptyPurchases() {
+	global $mysqli;
+
+	$query = "SELECT * FROM xref_purchase_dlc RIGHT JOIN purchase USING(purchase_id) LEFT JOIN xref_purchase_game USING(purchase_id) WHERE game_id IS NULL AND dlc_id IS NULL";
+	$result = $mysqli->query($query) or die($query);
+	if($result->num_rows > 0) {
+		$query = "DELETE FROM purchase WHERE purchase_id IN (SELECT purchase_id FROM xref_purchase_dlc RIGHT JOIN (SELECT * FROM purchase) AS a USING(purchase_id) LEFT JOIN xref_purchase_game USING(purchase_id) WHERE game_id IS NULL AND dlc_id IS NULL)";
+		$mysqli->query($query) or die($query);
+
+		echo("<div class=\"alert alert-info alert-dismissable fade in\"><button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-hidden=\"true\">&times;</button><strong>Deleted empty purchase(s).</strong></div>");
+	}
 }
 
 ?>
