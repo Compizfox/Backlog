@@ -209,7 +209,7 @@ function listPurchases() {
 }
 
 class purchase {
-	private $id, $shop, $price, $valuta, $date, $note, $numGames;
+	private $id, $shop, $price, $date, $note, $numGames;
 
 	function __construct($id) {
 		global $mysqli;
