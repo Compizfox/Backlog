@@ -36,7 +36,7 @@ function removeRow(caller) {
 }
 
 function checkboxes() {
-    $( "#dyn input:checked" ).each(function( index ) {
+    $( "#dyn").find("input:checked" ).each(function() {
         this.previousElementSibling.value = 1;
     });
 }
