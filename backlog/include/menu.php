@@ -76,7 +76,8 @@ class menu {
 			}
 		}
 	}
-	
+
+	/** @noinspection PhpInconsistentReturnPointsInspection */
 	public function draw($style) {
 		switch($style) {
 			case 'h':
