@@ -26,7 +26,7 @@
 require_once("../include/classes.php");
 
 $gamelist = getGameList("orphaned");
-$gamearray = array(array());
+$gamearray = [[]];
 foreach ($gamelist as $label) {
     $row['label'] = $label;
     $row['category'] = "Orphaned";
@@ -37,7 +37,7 @@ $gamelist = getGameList();
 foreach ($gamelist as $label) {
     $row['label'] = $label;
     $row['category'] = "Already in database";
-    if(!in_array(array('label' => $label, 'category' => 'Orphaned'), $gamearray)) $gamearray[] = $row;
+    if(!in_array(['label' => $label, 'category' => 'Orphaned'], $gamearray)) $gamearray[] = $row;
 }
 
 $autocompletelist = json_encode($gamearray);
