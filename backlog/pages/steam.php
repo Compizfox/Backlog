@@ -88,15 +88,15 @@ if(isset($_GET['all'])) {
 			</label>
 			<span class="help-block">This will link all games in the database to their Steam appids (if known).</span>
 		</div>
-		<div class="checkbox" name="syncplaytime">
+		<div class="checkbox">
 			<label>
-				<input type="checkbox"> Sync playtime with Steam
+				<input type="checkbox" name="syncplaytime"> Sync playtime with Steam
 			</label>
 			<span class="help-block">This will retrieve your played hours from Steam for all games in the database with linked Steam appids. This will potentially overwrite manually-set playtime.</span>
 		</div>
-		<div class="checkbox" name="syncicons">
+		<div class="checkbox" >
 			<label>
-				<input type="checkbox"> Retrieve icons/logos
+				<input type="checkbox" name="syncicons"> Retrieve icons/logos
 			</label>
 			<span class="help-block">This will retrieve icons and logos from Steam for all games in the database with linked Steam appids.</span>
 		</div>
