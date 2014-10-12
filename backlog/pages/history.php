@@ -26,14 +26,18 @@
 require_once("include/classes.php");
 ?>
 
-<table class="table">
-	<tr>
-		<th>#</th>
-		<th>Game</th>
-		<th>DLC</th>
-		<th>Previous status</th>
-		<th>New status</th>
-		<th>Date</th>
-	</tr>
-	<?=history()?>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Game</th>
+			<th>DLC</th>
+			<th>Previous status</th>
+			<th>New status</th>
+			<th>Date</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?=history()?>
+	</tbody>
 </table>
