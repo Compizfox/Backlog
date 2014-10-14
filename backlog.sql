@@ -166,7 +166,7 @@ ADD CONSTRAINT `xref_purchase_game_ibfk_2` FOREIGN KEY (`game_id`) REFERENCES `g
 
 INSERT INTO `library` (`library_id`, `css_url`, `js_url`) VALUES
 (1, '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/css/jquery-ui.min.css', '//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js'),
-(2, '', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/0.2.0/Chart.min.js'),
+(2, '', '//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.1-beta.2/Chart.min.js'),
 (3, '', 'js/autocorrect.php'),
 (4, '', 'js/add.php'),
 (5, '', 'js/checkall.js'),
