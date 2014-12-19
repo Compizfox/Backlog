@@ -45,7 +45,7 @@ while($row = $result->fetch_assoc()) {
 }
 
 $begin = new DateTime(date("Y-m-d"));
-$end = $begin->modify('-30 days'); // sample size = one month
+$begin = $begin->modify('-30 days'); // sample size = one month
 $end = new DateTime(date("Y-m-d"));
 $end = $end->modify('+1 day'); // include the last date aswell
 
@@ -93,6 +93,7 @@ $firstdate = key($rows); // no pun intended
 
 $begin = new DateTime($firstdate);
 $end = new DateTime(date("Y-m"));
+$end = $end->modify('+1 month'); // include the last date aswell
 
 $interval = new DateInterval('P1M');
 $daterange = new DatePeriod($begin, $interval ,$end);
