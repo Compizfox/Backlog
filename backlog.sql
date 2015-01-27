@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `game` (
   `img_logo_url` varchar(40) DEFAULT NULL,
   `appid_lock` tinyint(4) NOT NULL,
   `hidden` tinyint(1) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=318 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=326 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `history` (
 `history_id` int(11) NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `history` (
   `old_status` int(11) NOT NULL,
   `new_status` int(11) NOT NULL,
   `date` date NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=157 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `library` (
 `library_id` int(11) NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `menu` (
   `options` varchar(25) NOT NULL,
   `title` varchar(255) CHARACTER SET latin1 NOT NULL,
   `glyphicon` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `purchase` (
 `purchase_id` int(11) NOT NULL,
@@ -65,14 +65,14 @@ CREATE TABLE IF NOT EXISTS `purchase` (
   `valuta` char(1) NOT NULL,
   `date` date DEFAULT NULL,
   `note` varchar(255) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `status` (
 `status_id` int(11) NOT NULL,
   `name` varchar(255) CHARACTER SET latin1 NOT NULL,
   `completed` tinyint(1) NOT NULL,
   `color` varchar(7) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `xref_menu_library` (
   `menu_id` int(11) NOT NULL,
@@ -127,17 +127,17 @@ ALTER TABLE `xref_purchase_game`
 ALTER TABLE `dlc`
 MODIFY `dlc_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=32;
 ALTER TABLE `game`
-MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=318;
+MODIFY `game_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=326;
 ALTER TABLE `history`
-MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=129;
+MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=157;
 ALTER TABLE `library`
 MODIFY `library_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 ALTER TABLE `menu`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=82;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=83;
 ALTER TABLE `purchase`
-MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=132;
+MODIFY `purchase_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=138;
 ALTER TABLE `status`
-MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+MODIFY `status_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 
 ALTER TABLE `dlc`
 ADD CONSTRAINT `dlc_ibfk_1` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
@@ -172,23 +172,6 @@ INSERT INTO `library` (`library_id`, `css_url`, `js_url`) VALUES
 (5, '', 'js/checkall.js'),
 (6, '', 'js/statuses.js');
 
-INSERT INTO `xref_menu_library` (`menu_id`, `library_id`) VALUES
-(59, 1),
-(50, 2),
-(59, 3),
-(59, 4),
-(54, 5),
-(57, 5),
-(58, 5),
-(61, 5),
-(62, 5),
-(68, 5),
-(69, 5),
-(70, 5),
-(76, 5),
-(80, 5),
-(76, 6);
-
 INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `glyphicon`) VALUES
 (50, 1, 'overzicht', '', '', 'Summary', 'glyphicon-stats'),
 (51, 1, 'history', '', '', 'History', 'fa fa-history'),
@@ -214,7 +197,7 @@ INSERT INTO `menu` (`id`, `parent_id`, `page`, `scope`, `options`, `title`, `gly
 (78, 71, 'steam', '', '&amp;refreshuserstats', 'Refresh user stats', 'glyphicon-refresh'),
 (79, 71, 'steam', '', '&amp;all', 'Steam', 'fa fa-steam'),
 (80, -1, 'purchasedetail', '', '', 'Purchase detail', ''),
-(81, -1, 'dlc', 'purchase', '', 'DLC in purchase', '');
+(82, -1, 'search', '', '', 'Search', '');
 
 INSERT INTO `status` (`status_id`, `name`, `completed`, `color`) VALUES
 (1, 'Untouched', 0, '#c0392b'),
@@ -223,7 +206,25 @@ INSERT INTO `status` (`status_id`, `name`, `completed`, `color`) VALUES
 (4, 'Finished campaign', 1, '#27ae60'),
 (5, 'Multiplayer/AI only', 1, '#f39c12'),
 (6, 'Gave up', 0, '#e74c3c'),
-(7, 'Prequel not finished yet', 0, '#e67e22');
+(7, 'Prequel not finished yet', 0, '#e67e22'),
+(8, 'Savegame lost/corrupt', 0, '#000000');
+
+INSERT INTO `xref_menu_library` (`menu_id`, `library_id`) VALUES
+(59, 1),
+(50, 2),
+(59, 3),
+(59, 4),
+(54, 5),
+(57, 5),
+(58, 5),
+(61, 5),
+(62, 5),
+(68, 5),
+(69, 5),
+(70, 5),
+(76, 5),
+(80, 5),
+(76, 6);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

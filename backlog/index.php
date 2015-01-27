@@ -65,8 +65,9 @@ require_once("include/menu.php");
 						echo($menu->draw("h"));
 						?>
 					</ul>
-					<form class="navbar-form navbar-right">
-						<input type="text" class="form-control" placeholder="Search...">
+					<form class="navbar-form navbar-right" action="index.php" method="get">
+						<input type="text" name="query" class="form-control" placeholder="Search...">
+						<input type="hidden" name="page" value="search">
 					</form>
 				</div>
 			</div>

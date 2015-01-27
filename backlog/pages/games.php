@@ -63,6 +63,10 @@ include("include/message.php");
 				case "orphaned":
 					echo(listGames("AND purchase_id IS NULL"));
 					break;
+
+				case "search":
+					echo(listGames("AND game.name LIKE '%{$_GET['query']}%'"));
+					break;
 			}
 			?>
 		</tbody>
