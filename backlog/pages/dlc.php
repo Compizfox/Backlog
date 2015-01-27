@@ -62,6 +62,10 @@ include("include/message.php");
 					echo("<h3>#{$_GET['game']}");
 					echo(listDLC("WHERE game_id='{$_GET['game']}'"));
 					break;
+
+				case "search":
+					echo(listDLC("WHERE dlcname LIKE '%{$_GET['query']}%'"));
+					break;
 			}
 			?>
 		</tbody>
