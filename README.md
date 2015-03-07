@@ -45,7 +45,7 @@ There's a demo available at http://backlog.tuxplace.nl.
 Download a stable release or clone the development branch (bleeding edge!). You only need to extract the inner _backlog_ folder to the docroot. Create a MySQL database and user and import the SQL file. Enter the database details in _config.php_. If you want Steam integration, you'll also need to enter your SteamID and API key.
 
 ### Used tools and libraries
-Bootstrap is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS. Besides jQuery, it also uses jQuery UI.
+Backlog is written in PHP. The design is based on Bootstrap with the Bootswatch Slate theme. Charts are powered by ChartJS. Besides jQuery, it also uses jQuery UI.
 
 ### Database design
 ![](http://srv.tuxplace.nl/hosted/backlog_screenshots/Screenshot_8.png)
