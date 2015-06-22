@@ -51,7 +51,11 @@ Backlog is written in PHP. The design is based on Bootstrap with the Bootswatch 
 ![](http://srv.tuxplace.nl/hosted/backlog_screenshots/Screenshot_8.png)
 
 ### Development status
+##### Start of project
 As you might have guessed, Backlog is heavily in development. You should regard it as WIP/alpha. Even in the releases, there are undoubtedly bugs I missed. If you encounter a bug, please report it using the [issues page on Github](https://github.com/Compizfox/Backlog/issues)
+
+##### 2015-1-27 - Backlog v0.4
+Backlog is pretty usuable in this state. It still hasn't been thoroughly tested though. Although most features are there, you should still regard it as beta.
 
 This project wasn't originally intended for public distribution, but rather as an (small) school project. Hence the lack comments in the code and so on.
 
