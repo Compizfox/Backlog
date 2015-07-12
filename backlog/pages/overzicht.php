@@ -26,8 +26,8 @@
 require_once("include/classes.php");
 require_once("include/connect.php");
 
-// Daily linechart
-$query = "SELECT date, COUNT(*) AS count FROM history JOIN status ON status_id = new_status WHERE date != 0000-00-00 AND completed = 1 GROUP BY date";
+// Weekly linechart
+$query = "SELECT DATE_FORMAT(date, '%Y-%u') AS date, SUM(count) AS count FROM (SELECT date, COUNT(*) AS count FROM history JOIN status ON status_id = new_status WHERE date != 0000-00-00 AND completed = 1 GROUP BY date) AS a GROUP BY DATE_FORMAT(date, '%Y%u')";
 $result = $mysqli->query($query) or die($query);
 
 $chartdata = [];
@@ -44,16 +44,16 @@ while($row = $result->fetch_assoc()) {
 	$rows[$row['date']] = $row['count'];
 }
 
-$begin = new DateTime(date("Y-m-d"));
-$begin = $begin->modify('-30 days'); // sample size = one month
-$end = new DateTime(date("Y-m-d"));
-$end = $end->modify('+1 day'); // include the last date aswell
+$begin = new DateTime(date("Y-M-d"));
+$begin = $begin->modify('-1 year'); // sample size = one year
+$end = new DateTime(date("Y-M-d"));
+$end = $end->modify('+1 week'); // include the last datapoint aswell
 
-$interval = new DateInterval('P1D');
+$interval = new DateInterval('P1W');
 $daterange = new DatePeriod($begin, $interval ,$end);
 
 foreach($daterange as $date){
-	$formatteddate = $date->format("Y-m-d");
+	$formatteddate = $date->format("Y-W");
 
 	if(array_key_exists($formatteddate, $rows)){
 		$count = $rows[$formatteddate];
@@ -192,7 +192,7 @@ $result = $mysqli->query($query) or die($query);
 
 $i = 1;
 while($row = $result->fetch_assoc()) {
-	$share = round($row['count'] / $numgames * 100);
+	$share = round($row['count'] / $numgames * 100, 1);
 	$canvasstring3 .= "<tr><td>{$row['shop']}</td><td>$share%</td>";
 }
 ?>
