@@ -115,6 +115,52 @@ $json = json_encode($chartdata);
 
 $script .= "<script>var ctx = document.getElementById(\"linechart2\").getContext(\"2d\"); var data = $json; var myLineChart = new Chart(ctx).Line(data);</script>";
 
+// Purchase linechart
+$query = "SELECT DATE_FORMAT(date, '%Y-%m') AS date, SUM(count) AS count FROM (SELECT date, COUNT(*) AS count FROM game JOIN xref_purchase_game USING(game_id) JOIN purchase USING(purchase_id) WHERE date != 0000-00-00 GROUP BY date) AS a GROUP BY DATE_FORMAT(date, '%Y%m')";
+$result = $mysqli->query($query) or die($query);
+
+$chartdata = [];
+$chartdata['datasets'][0]['fillColor'] = "rgba(151,187,205,0.2)";
+$chartdata['datasets'][0]['strokeColor'] = "rgba(151,187,205,1)";
+$chartdata['datasets'][0]['pointColor'] = "rgba(151,187,205,1)";
+$chartdata['datasets'][0]['pointStrokeColor'] = "#fff";
+$chartdata['datasets'][0]['pointHighlightFill'] = "#fff";
+$chartdata['datasets'][0]['pointHighlightStroke'] = "rgba(220,220,220,1)";
+
+// put results into array $rows with data as key
+$rows = [];
+while($row = $result->fetch_assoc()) {
+	$rows[$row['date']] = $row['count'];
+}
+
+// get first date
+reset($rows);
+$firstdate = key($rows); // no pun intended
+
+$begin = new DateTime($firstdate);
+$end = new DateTime(date("Y-m"));
+$end = $end->modify('+1 month'); // include the last date aswell
+
+$interval = new DateInterval('P1M');
+$daterange = new DatePeriod($begin, $interval ,$end);
+
+foreach($daterange as $date){
+	$formatteddate = $date->format("Y-m");
+
+	if(array_key_exists($formatteddate, $rows)){
+		$count = (int) $rows[$formatteddate];
+	} else {
+		$count = 0;
+	}
+
+	$chartdata['labels'][] = $formatteddate;
+	$chartdata['datasets'][0]['data'][] = $count;
+}
+
+$json = json_encode($chartdata);
+
+$script .= "<script>var ctx = document.getElementById(\"linechart3\").getContext(\"2d\"); var data = $json; var myLineChart = new Chart(ctx).Line(data);</script>";
+
 $query = "SELECT COUNT(*) FROM purchase";
 $result = $mysqli->query($query) or die($query);
 $numpurchases = $result->fetch_array(MYSQLI_NUM)[0];
@@ -201,6 +247,13 @@ while($row = $result->fetch_assoc()) {
 	<p>Completion history</p>
 	<canvas id="linechart" style="width: 100%;" width="1400" height="400"></canvas>
 	<canvas id="linechart2" style="width: 100%;" width="1400" height="400"></canvas>
+</div>
+
+<div class="jumbotron statbox">
+	<p>Purchase history</p>
+	<canvas id="linechart3" style="width: 100%;" width="1400" height="400"></canvas>
+	<br>
+	<span>Number of games purchased per month</span>
 </div>
 
 <div class="row">
