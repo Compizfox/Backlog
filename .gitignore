@@ -1,0 +1,23 @@
+### JetBrains template
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries/
+
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+### Composer
+vendor/
+composer.phar
+
+### Laravel
+.env
+_ide_helper.php
+# Other files are gitignored using per-directory .gitignore files
+
+.directory
