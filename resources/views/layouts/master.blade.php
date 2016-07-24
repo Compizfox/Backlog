@@ -30,10 +30,11 @@
 	<meta name="application-name" content="Backlog">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link href="//netdna.bootstrapcdn.com/bootswatch/3.1.0/slate/bootstrap.min.css" rel="stylesheet" media="screen">
-	<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="//maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic" rel="stylesheet">
 	<link href="{{asset('stylesheet.css')}}" rel="stylesheet">
+	@stack('links')
 
 	<title>Backlog</title>
 </head>
@@ -82,7 +83,8 @@
 		<p class="text-center"><a href="https://github.com/Compizfox/Backlog">Made by Lars Veldscholte</a></p>
 	</footer>
 
-	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
-	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.1.0/js/bootstrap.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js"></script>
+	@stack('scripts')
 </body>
 </html>
