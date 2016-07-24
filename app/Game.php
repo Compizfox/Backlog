@@ -25,11 +25,17 @@ class Game extends Model {
 	    return round($this->playtime / 60, 2);
     }
 
-    public function getIconUrl() {
-    	return "http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_icon_url}.jpg";
+    public function getImageUrl(string $type = 'icon') : string {
+    	$steamUrl = "http://media.steampowered.com/steamcommunity/public/images/apps/";
+    	// Check if the game is linked to Steam
+    	if(!empty($this->appid)) {
+    		if($type == 'icon') return $steamUrl . "{$this->appid}/{$this->img_icon_url}.jpg";
+		    elseif($type == 'logo') return $steamUrl . "{$this->appid}/{$this->img_logo_url}.jpg";
+		    else throw new \InvalidArgumentException;
+	    } else {
+		    if($type == 'icon') return asset('images/game-icon.png');
+		    elseif($type == 'logo') return asset('images/game-logo.png');
+		    else throw new \InvalidArgumentException;
+	    }
     }
-
-	public function getLogoUrl() {
-		return "http://media.steampowered.com/steamcommunity/public/images/apps/{$this->appid}/{$this->img_logo_url}.jpg";
-	}
 }

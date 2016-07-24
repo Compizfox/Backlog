@@ -56,7 +56,10 @@
 						<td>{{$purchase->note}}</td>
 						<td>
 							@foreach($purchase->games as $game)
-								<img src="{{$game->getIconUrl()}}" title="{{$game->name}}">&nbsp;
+								<a href="{{action('GameController@show', ['id' => $game->id])}}"><img src="{{$game->getImageUrl()}}" title="{{$game->name}}" width="32px" height="32px"></a>&nbsp;
+							@endforeach
+							@foreach($purchase->dlc as $dlc)
+								<a href="{{action('DlcController@show', ['id' => $dlc->id])}}"><img src="{{$dlc->game->getImageUrl()}}" title="{{$dlc->name}}" width="32px" height="32px"><img src="{{asset('images/dlc-icon.png')}}" title="{{$dlc->name}}"></a>&nbsp;
 							@endforeach
 						</td>
 					</tr>

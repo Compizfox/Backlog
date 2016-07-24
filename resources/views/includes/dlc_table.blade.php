@@ -37,8 +37,8 @@
 		<tbody>
 			@foreach($dlcs as $dlc)
 				<tr>
-					<td>{{$this->name}}</td>
-					<td><img src="http://media.steampowered.com/steamcommunity/public/images/apps/{{$dlc->game->appid}}/{{$dlc->game->img_logo_url}}.jpg"> {{$dlc->game->name}}</td>
+					<td>{{$dlc->name}}</td>
+					<td><img src="{{$dlc->game->getImageUrl('logo')}}"><img src="{{asset('images/dlc-logo.png')}}"> {{$dlc->game->name}}</td>
 					<td style="background-color: {{$dlc->status->color}}">{{$dlc->status->name}}</td>
 					<td>{{$dlc->notes}}</td>
 					<td>

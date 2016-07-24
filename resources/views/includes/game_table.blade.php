@@ -39,7 +39,7 @@
 		<tbody>
 			@foreach($games as $game)
 				<tr>
-					<td><img src="{{$game->getLogoUrl()}}"> {{$game->name}}</td>
+					<td><img src="{{$game->getImageUrl('logo')}}"> {{$game->name}}</td>
 					<td style="background-color: {{$game->status->color}}">{{$game->status->name}}</td>
 					<td>{{$game->getFormattedPlaytime()}}</td>
 					<td>{{$game->notes}}</td>
