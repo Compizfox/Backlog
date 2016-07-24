@@ -17,6 +17,10 @@ class Game extends Model {
     	return $this->belongsTo(Status::class);
     }
 
+    public function playthroughs() {
+	    return $this->morphMany(Playthrough::class, 'playable');
+    }
+
     public function getFormattedPlaytime() {
 	    return round($this->playtime / 60, 2);
     }

@@ -18,4 +18,8 @@ class Dlc extends Model {
 	public function status() {
 		return $this->belongsTo(Status::class);
 	}
+
+	public function playthroughs() {
+		return $this->morphMany(Playthrough::class, 'playable');
+	}
 }
