@@ -11,7 +11,8 @@ use App\Status;
 
 class PurchaseController extends Controller {
 	public function index() {
-		return view('purchase.index', ['purchases' => Purchase::all()]);
+		// Retrieve all purchases (eager load games and dlc) and pass it to the view
+		return view('purchase.index', ['purchases' => Purchase::with('games', 'dlc')->get()]);
 	}
 
 	public function create() {
