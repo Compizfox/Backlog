@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Dlc extends Model {
 	protected $table = 'dlc';
+	protected $guarded = [];
 
 	public function purchases() {
 		return $this->belongsToMany(Purchase::class);
