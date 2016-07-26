@@ -46,9 +46,9 @@
 					<tr>
 						<td>
 							<input type="checkbox" name="checkedpurchases[]" value="1">&nbsp;
-							<a href="purchase/{{$purchase->id}}"><span class="glyphicon glyphicon-search"></span></a>&nbsp;
-							<a href="purchase/{{$purchase->id}}/edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
-							<a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+							<a href="{{action('PurchaseController@show', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-search"></span></a>&nbsp;
+							<a href="{{action('PurchaseController@edit', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
+							<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PurchaseController@destroy', ['id' => $purchase->id])}}"></span>
 						</td>
 						<td>{{$purchase->shop}}</td>
 						<td>{{$purchase->getFormattedPrice()}}</td>
@@ -73,4 +73,9 @@
 			</div>
 		</div>
 	</form>
+	@include('includes.delete_modal')
 @endsection
+
+@push('scripts')
+	<script src="{{asset('js/deleteRow.js')}}"></script>
+@endpush

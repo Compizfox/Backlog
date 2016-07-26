@@ -88,7 +88,9 @@ class PurchaseController extends Controller {
 		//
 	}
 
-	public function destroy($id) {
-		//
+	public function destroy(Purchase $purchase) {
+		$purchase->delete();
+
+		return redirect()->action('PurchaseController@index')->with('status', 'Purchase deleted!');
 	}
 }

@@ -91,3 +91,8 @@ tr.dlc > td {
     margin: .8em 0 .2em;
     line-height: 1.5;
 }
+
+.clickable {
+    cursor:pointer;
+    color: #ffffff;
+}
