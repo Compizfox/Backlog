@@ -26,8 +26,6 @@
 @extends('layouts.master')
 
 @section('content')
-	@include('includes.errors')
-
 	<div class="alert alert-info .alert-dismissable fade in">
 		<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 		<strong>Remember: </strong>If a game by the same name already exists, a copy will <b>not</b> be made. Instead, the existing game will be linked with the new purchase.

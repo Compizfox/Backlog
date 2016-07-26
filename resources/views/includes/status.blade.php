@@ -1,6 +1,6 @@
 {{--
-	Filename:   errors.blade.php
-	Date:       2016-07-24
+	Filename:   status.blade.php
+	Date:       2016-07-27
 	Author:     Lars Veldscholte
 	            lars@veldscholte.eu
 	            http://lars.veldscholte.eu
@@ -23,14 +23,8 @@
 	along with Backlog2. If not, see <http://www.gnu.org/licenses/>.
 --}}
 
-@if (count($errors) > 0)
-	<div class="alert alert-danger">
-		<strong>Validation errors</strong>
-		<br><br>
-		<ul>
-			@foreach ($errors->all() as $error)
-				<li>{{ $error }}</li>
-			@endforeach
-		</ul>
+@if (session('status'))
+	<div class="alert alert-success">
+		{{session('status')}}
 	</div>
 @endif

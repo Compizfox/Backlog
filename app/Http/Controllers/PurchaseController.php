@@ -71,8 +71,7 @@ class PurchaseController extends Controller {
 			$dlcModel->purchases()->attach($purchase->id);
 		}
 
-		// PRG redirect
-		return redirect()->action('PurchaseController@index');
+		return redirect()->action('PurchaseController@index')->with('status', 'Purchase inserted!');
 	}
 
 	public function show($id) {
