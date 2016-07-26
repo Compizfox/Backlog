@@ -16,8 +16,10 @@ Route::get('/', function() {
 });
 
 // Purchase
-Route::resource('purchase', 'PurchaseController');
+Route::resource('purchase', PurchaseController::class);
 
 // Game
-Route::get('game/completed', 'PhotoController@method');
-Route::resource('game', 'GameController');
+Route::resource('game', GameController::class);
+
+// DLC
+Route::resource('dlc', DlcController::class);
