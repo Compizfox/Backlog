@@ -23,7 +23,6 @@ class PurchaseController extends Controller {
 		$this->validate($request, [
 			'shop' => 'required|string',
 			'valuta' => 'required|in:€,$,£',
-			'price' => 'required|numeric',
 			'date' => 'required|date',
 			'note' => 'string',
 
