@@ -129,5 +129,7 @@
 @push('scripts')
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
 	<script src="{{asset('js/createPurchase.js')}}"></script>
-	{{--TODO: jQuery UI autocorrect--}}
+	<script>
+		$.getJSON('{{action('GameController@getCategorisedJson')}}', registerAutocomplete);
+	</script>
 @endpush

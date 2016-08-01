@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function() {
-    return view('welcome');
+	return view('welcome');
 });
 
 // Purchase
@@ -23,3 +23,8 @@ Route::resource('game', GameController::class);
 
 // DLC
 Route::resource('dlc', DlcController::class);
+
+// API
+Route::group(['prefix' => 'api'], function() {
+	Route::get('games', 'GameController@getCategorisedJson');
+});
