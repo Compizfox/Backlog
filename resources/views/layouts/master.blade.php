@@ -54,7 +54,7 @@
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 					<ul class="nav navbar-nav">
-						<!-- Navbar Contents -->
+						@include('includes.top_menu')
 					</ul>
 					<form class="navbar-form navbar-right" action="index.php" method="get">
 						<input type="text" name="query" class="form-control" placeholder="Search...">
@@ -69,7 +69,7 @@
 		<div class="row">
 			<nav class="col-sm-3 col-md-2 sidebar">
 				<ul class="nav nav-sidebar">
-					<!-- Navbar Contents -->
+					@include('includes.side_menu')
 				</ul>
 				<!-- Steam widget -->
 			</nav>
