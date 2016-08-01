@@ -11,15 +11,17 @@
 |
 */
 
+Route::singularResourceParameters();
+
 Route::get('/', function() {
 	return view('welcome');
 });
 
 // Purchase
-Route::resource('purchase', PurchaseController::class);
+Route::resource('purchases', PurchaseController::class);
 
 // Game
-Route::resource('game', GameController::class);
+Route::resource('games', GameController::class);
 
 // DLC
 Route::resource('dlc', DlcController::class);
