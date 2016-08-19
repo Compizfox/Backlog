@@ -14,7 +14,7 @@
 Route::singularResourceParameters();
 
 Route::get('/', function() {
-	return view('welcome');
+	return view('summary');
 });
 
 // Purchase
@@ -29,4 +29,6 @@ Route::resource('dlc', DlcController::class);
 // API
 Route::group(['prefix' => 'api'], function() {
 	Route::get('games', 'GameController@getCategorisedJson');
+
+	Route::get('statistics/purchases', 'StatisticsController@getPurchases');
 });
