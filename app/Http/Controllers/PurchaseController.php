@@ -74,8 +74,8 @@ class PurchaseController extends Controller {
 		return redirect()->action('PurchaseController@index')->with('status', 'Purchase inserted!');
 	}
 
-	public function show($id) {
-		return view('purchase.show', ['purchase' => Purchase::find($id)]);
+	public function show(Purchase $purchase) {
+		return view('purchase.show', ['purchase' => $purchase]);
 	}
 
 	public function edit($id) {
