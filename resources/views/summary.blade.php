@@ -139,6 +139,9 @@
 						}],
 						yAxes: [{
 							type: "linear",
+							ticks: {
+								min: 0
+							},
 							scaleLabel: {
 								display: true,
 								labelString: "Games per month"
