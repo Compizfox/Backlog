@@ -12,7 +12,7 @@ class StatisticsController extends Controller {
 		    ->join('game_purchase', 'games.id' , '=', 'game_purchase.game_id')
 		    ->join('purchases', 'game_purchase.game_id', '=', 'purchases.id')
 		    ->select(DB::raw("count(*) AS count, DATE_FORMAT(purchased_at, '%Y-%m') AS date"))
-		    ->where('purchased_at', '!=', '0000-00-00')
+		    ->where('purchased_at', '!=', NULL)
 		    ->groupBy(DB::raw('YEAR(purchased_at), MONTH(purchased_at)'))
 		    ->get();
 
