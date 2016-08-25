@@ -118,24 +118,21 @@
 		var ctx = document.getElementById("purchaseChart").getContext("2d");
 
 		$.getJSON('{{action('StatisticsController@getPurchases')}}', function(chartdata) {
-			chartdata.datasets[0].backgroundColor = 'rgba(151,187,205,0.2)';
-			chartdata.datasets[0].borderColor = 'rgba(151,187,205,1)';
-			chartdata.datasets[0].hoverBackgroundColor = 'rgba(220,220,220,1)';
-			chartdata.datasets[0].hoverBorderColor = 'rgba(220,220,220,1)';
-
-			console.log(chartdata);
+			chartdata.datasets[0].backgroundColor = '#5bc0de';
+			chartdata.datasets[0].hoverBackgroundColor = '#BAEAF8';
 
 			var myBarChart = new Chart(ctx, {
 				type: 'bar',
 				data: chartdata,
 				options: {
 					responsive: true,
+					legend: {
+						display: false
+					},
 					scales: {
 						xAxes: [{
 							type: "time",
-							time: {
-								format: 'YYYY-MM'
-							}
+							categoryPercentage: 0.5
 						}],
 						yAxes: [{
 							type: "linear",
