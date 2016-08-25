@@ -23,8 +23,8 @@
 	along with Backlog2. If not, see <http://www.gnu.org/licenses/>.
 --}}
 
-<li class="{{Request::is('summary') ? 'active' : ''}}">
-	<a href="{{url('summary')}}"><span class="glyphicon glyphicon-stats"></span> Summary</a>
+<li class="{{Request::is('/') ? 'active' : ''}}">
+	<a href="{{url('/')}}"><span class="glyphicon glyphicon-stats"></span> Summary</a>
 </li>
 <li class="{{Request::is('playthroughs') ? 'active' : ''}}">
 	<a href="{{url('playthroughs')}}"><span class="glyphicon fa fa-history"></span> Playthroughs</a>
