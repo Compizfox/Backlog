@@ -38,20 +38,20 @@ class GameController extends Controller {
 	}
 	
 	public function getCategorisedJson() {
-		// Retrieve array of orphaned and non-orphaned game names
-		$orphanedGames = Game::has('purchases', '<', 1)->orderBy('name')->pluck('name')->toArray();
-		$ownedGames = Game::has('purchases', '>=', 1)->orderBy('name')->pluck('name')->toArray();
+		// Retrieve array of games with purchase count (for determinging owned/orphaned status)
+		$games = Game::withCount('purchases')
+			->orderBy('name')
+			->get();
 
-		// Generate array of assoc array with label (name) and category (orphaned or not) as keys
-		$mapFunction = function($label) use(&$category) {
-			return ['label' => $label, 'category' => $category];
-		};
+		$gamesArray = $games->map(function($game) {
+			if($game->purchases_count == 0) $category = 'Orphaned';
+			else $category = 'Already purchased';
 
-		$category = 'Orphaned';
-		$aOrphanedGames = array_map($mapFunction, $orphanedGames);
-		$category = 'Already purchased';
-		$aOwnedGames = array_map($mapFunction, $ownedGames);
+			return ['label'    => $game->name,
+			        'category' => $category,
+			        'id'       => $game->id];
+		});
 
-		return response()->json(array_merge($aOrphanedGames, $aOwnedGames));
+		return response()->json($gamesArray);
 	}
 }
