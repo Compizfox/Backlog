@@ -34,4 +34,15 @@ class DlcController extends Controller {
 	public function destroy($id) {
 		//
 	}
+
+	public function getJson() {
+		$dlc = Dlc::orderBy('name')->get();
+
+		$dlcArray = $dlc->map(function($dlc) {
+			return ['label' => $dlc->name,
+			        'id'    => $dlc->id];
+		});
+
+		return response()->json($dlcArray);
+	}
 }

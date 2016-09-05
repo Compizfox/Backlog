@@ -78,12 +78,31 @@ class PurchaseController extends Controller {
 		return view('purchase.show', ['purchase' => $purchase]);
 	}
 
-	public function edit($id) {
-		//
+	public function edit(Purchase $purchase) {
+		return view('purchase.edit', ['purchase' => $purchase]);
 	}
 
-	public function update(Request $request, $id) {
-		//
+	public function update(Request $request, Purchase $purchase) {
+		$this->validate($request, [
+			'shop' => 'required|string',
+			'valuta' => 'required|in:€,$,£',
+			'date' => 'required|date',
+			'note' => 'string',
+		]);
+
+		// Update properties
+		$purchase->shop = $request->shop;
+		$purchase->valuta = $request->valuta;
+		$purchase->price = str_replace(",", ".", $request->price);
+		$purchase->purchased_at = $request->date;
+		$purchase->note = $request->note;
+		$purchase->save();
+
+		// Sync members
+		$purchase->games()->sync($request->games);
+		$purchase->dlc()->sync($request->dlc);
+
+		return redirect()->action('PurchaseController@edit', ['id' => $purchase->id])->with('status', 'Purchase modified!');
 	}
 
 	public function destroy(Purchase $purchase) {

@@ -29,6 +29,7 @@ Route::resource('dlc', DlcController::class);
 // API
 Route::group(['prefix' => 'api'], function() {
 	Route::get('games', 'GameController@getCategorisedJson');
+	Route::get('dlc', 'DlcController@getJson');
 
 	Route::get('statistics/purchases', 'StatisticsController@getPurchases');
 });
