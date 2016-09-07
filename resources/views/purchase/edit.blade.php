@@ -42,9 +42,9 @@
 				<div class="col-md-6">
 					<div class="input-group">
 						<select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta">
-							<option value="€">€</option>
-							<option value="$">$</option>
-							<option value="£">£</option>
+							<option value="€"{{$purchase->valuta == '€' ? 'selected' : ''}}>€</option>
+							<option value="$"{{$purchase->valuta == '$' ? 'selected' : ''}}>$</option>
+							<option value="£"{{$purchase->valuta == '£' ? 'selected' : ''}}>£</option>
 						</select>
 						<span class="input-group-addon"></span>
 						<input class="form-control" type="text" name="price" value="{{$purchase->price}}">
