@@ -20,6 +20,6 @@ class Purchase extends Model {
 	}
 
 	public function getFormattedPrice() {
-		return '€ ' . number_format($this->price, 2, ',', ' ');
+		return $this->valuta . ' ' . number_format($this->price, 2, ',', ' ');
 	}
 }
