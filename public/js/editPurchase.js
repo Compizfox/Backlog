@@ -9,7 +9,7 @@ $(document).ready(function() {
 	});
 
 	// Add members
-	$('select').on('change', function() {
+	$('#game, #dlc').on('change', function() {
 		// Don't add the default placeholder
 		if($(this).val() === "") return;
 
