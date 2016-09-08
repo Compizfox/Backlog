@@ -27,6 +27,7 @@
 
 @section('content')
 	<h1>Edit purchase #{{$purchase->id}}</h1>
+	<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember:</strong> Empty purchases will be deleted.</div>
 	<form class="form-horizontal" role="form" action="{{action('PurchaseController@update', ['id' => $purchase->id])}}" method="post" style="max-width: 800px;">
 		{{method_field('PUT')}}
 		{{csrf_field()}}

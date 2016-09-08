@@ -26,8 +26,7 @@
 @extends('layouts.master')
 
 @section('content')
-	<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember: </strong>removing games in <i>purchase view</i> unlinks the games from the purchase. To actually delete the game itself, remove it in <i>games view</i>.<br />Deleting a purchase doesn't remove the games in it.</div>
-	<div class="alert alert-warning .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Warning: </strong>Empty purchases will be automatically deleted.</div>
+	<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember:</strong> Deleting a purchase doesn't remove the games in it.</div>
 
 	<form class="form-horizontal" action="" method="post">
 		<table class="table table-bordered table-hover">
