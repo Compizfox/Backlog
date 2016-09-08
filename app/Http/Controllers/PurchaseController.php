@@ -21,19 +21,19 @@ class PurchaseController extends Controller {
 
 	public function store(Request $request) {
 		$this->validate($request, [
-			'shop' => 'required|string',
-			'valuta' => 'required|in:€,$,£',
-			'date' => 'required|date',
-			'note' => 'string',
+			'shop'           => 'required|string',
+			'valuta'         => 'required|in:€,$,£',
+			'date'           => 'required|date',
+			'note'           => 'string',
 
-			'games.*.name' => 'required|string',
+			'games.*.name'   => 'required|string',
 			'games.*.status' => 'required|exists:statuses,id',
-			'games.*.note' => 'string',
+			'games.*.note'   => 'string',
 
-			'dlc.*.game' => 'required|exists:games,name',
-			'dlc.*.name' => 'required|string',
-			'dlc.*.status' => 'required|exists:statuses,id',
-			'dlc.*.note' => 'string',
+			'dlc.*.game'     => 'required|exists:games,name',
+			'dlc.*.name'     => 'required|string',
+			'dlc.*.status'   => 'required|exists:statuses,id',
+			'dlc.*.note'     => 'string',
 		]);
 
 		// Create new Purchase from request
@@ -84,10 +84,10 @@ class PurchaseController extends Controller {
 
 	public function update(Request $request, Purchase $purchase) {
 		$this->validate($request, [
-			'shop' => 'required|string',
-			'valuta' => 'required|in:€,$,£',
-			'date' => 'required|date',
-			'note' => 'string',
+			'shop'      => 'required|string',
+			'valuta'    => 'required|in:€,$,£',
+			'date'      => 'required|date',
+			'note'      => 'string',
 		]);
 
 		// Update properties
