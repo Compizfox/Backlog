@@ -90,6 +90,13 @@ class PurchaseController extends Controller {
 			'note'      => 'string',
 		]);
 
+		// Delete purchase if it has no children
+		if((count($request->games) + count($request->dlc)) == 0) {
+			$purchase->delete();
+
+			return redirect()->action('PurchaseController@index')->with('status', 'Purchase deleted!');
+		}
+
 		// Update properties
 		$purchase->shop = $request->shop;
 		$purchase->valuta = $request->valuta;
