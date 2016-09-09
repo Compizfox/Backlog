@@ -112,7 +112,12 @@ class PurchaseController extends Controller {
 		return redirect()->action('PurchaseController@edit', ['id' => $purchase->id])->with('status', 'Purchase modified!');
 	}
 
-	public function destroy(Purchase $purchase) {
+	public function destroy(Request $request, Purchase $purchase) {
+		if(isset($request->deleteChildren)) {
+			$purchase->games()->delete();
+			$purchase->dlc()->delete();
+		}
+
 		$purchase->delete();
 
 		return redirect()->action('PurchaseController@index')->with('status', 'Purchase deleted!');

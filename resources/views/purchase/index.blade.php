@@ -26,8 +26,6 @@
 @extends('layouts.master')
 
 @section('content')
-	<div class="alert alert-info .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Remember:</strong> Deleting a purchase doesn't remove the games in it.</div>
-
 	<form class="form-horizontal" action="" method="post">
 		<table class="table table-bordered table-hover">
 			<thead>
@@ -72,9 +70,5 @@
 			</div>
 		</div>
 	</form>
-	@include('includes.delete_modal')
+	@include('includes.delete_purchase')
 @endsection
-
-@push('scripts')
-	<script src="{{asset('js/deleteRow.js')}}"></script>
-@endpush
