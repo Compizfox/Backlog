@@ -6,6 +6,5 @@ $(document).ready(function() {
 	$('.delete').click(function() {
 		$('#modalForm').attr('action', $(this).data('url'));
 		$('#myModal').modal();
-		console.log('Trigger');
 	});
 });
