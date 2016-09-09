@@ -26,7 +26,7 @@
 @extends('layouts.master')
 
 @section('content')
-	<form class="form-horizontal" action="" method="post">
+	<form class="form-horizontal" action="{{action('PurchaseController@destroyMany')}}" method="post">
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
@@ -42,7 +42,7 @@
 				@foreach($purchases as $purchase)
 					<tr>
 						<td>
-							<input type="checkbox" name="checkedpurchases[]" value="1">&nbsp;
+							<input type="checkbox" name="checkedPurchases[]" value="{{$purchase->id}}">&nbsp;
 							<a href="{{action('PurchaseController@show', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-search"></span></a>&nbsp;
 							<a href="{{action('PurchaseController@edit', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
 							<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PurchaseController@destroy', ['id' => $purchase->id])}}"></span>
@@ -69,6 +69,8 @@
 				<button type="submit" name="submit" value="delete" class="btn btn-danger">Delete</button>
 			</div>
 		</div>
+		{{method_field('DELETE')}}
+		{{csrf_field()}}
 	</form>
 	@include('includes.delete_purchase')
 @endsection

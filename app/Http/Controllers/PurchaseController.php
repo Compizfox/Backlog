@@ -122,4 +122,10 @@ class PurchaseController extends Controller {
 
 		return redirect()->action('PurchaseController@index')->with('status', 'Purchase deleted!');
 	}
+
+	public function destroyMany(Request $request) {
+		Purchase::destroy($request->checkedPurchases);
+
+		return redirect()->action('PurchaseController@index')->with('status', 'Purchases deleted!');
+	}
 }

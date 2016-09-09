@@ -18,6 +18,7 @@ Route::get('/', function() {
 });
 
 // Purchase
+Route::delete('purchases', 'PurchaseController@destroyMany');
 Route::resource('purchases', PurchaseController::class);
 
 // Game
