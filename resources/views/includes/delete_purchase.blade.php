@@ -37,7 +37,7 @@
 @section('inputs')
 	<div class="checkbox">
 		<label>
-			<input type="hidden" name="_method" value="DELETE">
+			{{method_field('DELETE')}}
 			<input type="checkbox" name="deleteChildren"> Delete games and DLC in this purchase
 		</label>
 	</div>
