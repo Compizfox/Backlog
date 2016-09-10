@@ -32,3 +32,7 @@
 	<h3>DLC in purchase #{{$purchase->id}}</h3>
 	@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
 @endsection
+
+@push('scripts')
+	<script src="{{asset('js/checkall.js')}}"></script>
+@endpush
