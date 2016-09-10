@@ -67,6 +67,11 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<button type="submit" name="submit" value="delete" class="btn btn-danger">Delete</button>
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="deleteChildren"> Delete games and DLC in purchase
+					</label>
+				</div>
 			</div>
 		</div>
 		{{method_field('DELETE')}}

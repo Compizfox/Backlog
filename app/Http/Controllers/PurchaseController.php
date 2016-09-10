@@ -124,7 +124,10 @@ class PurchaseController extends Controller {
 	}
 
 	public function destroyMany(Request $request) {
-		Purchase::destroy($request->checkedPurchases);
+		// Pass every purchase to $this->destroy()
+		foreach($request->checkedPurchases as $purchaseId) {
+			$this->destroy($request, Purchase::find($purchaseId));
+		}
 
 		return redirect()->action('PurchaseController@index')->with('status', 'Purchases deleted!');
 	}
