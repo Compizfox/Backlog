@@ -27,9 +27,13 @@
 
 @section('content')
 	<h1>Purchase #{{$purchase->id}}</h1>
-	@include('includes.game_table', ['games' => $purchase->games])
+	@if(!$purchase->games->isEmpty())
+		@include('includes.game_table', ['games' => $purchase->games])
+	@endif
 
-	@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
+	@if(!$purchase->dlc->isEmpty())
+		@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
+	@endif
 
 	@include('includes.delete_game')
 @endsection
