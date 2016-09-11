@@ -7,7 +7,6 @@ use App\Http\Requests;
 use App\Purchase;
 use App\Game;
 use App\Dlc;
-use App\Status;
 
 class PurchaseController extends Controller {
 	public function index() {
@@ -16,7 +15,7 @@ class PurchaseController extends Controller {
 	}
 
 	public function create() {
-		return view('purchase.create', ['statuses' => Status::all()]);
+		return view('purchase.create');
 	}
 
 	public function store(Request $request) {
