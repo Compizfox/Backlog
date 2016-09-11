@@ -30,7 +30,7 @@
 		<table class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th><input type="checkbox" id="selectall"></th>
+					<th><input type="checkbox" class="selectall"></th>
 					<th>Shop</th>
 					<th>Price</th>
 					<th>Date</th>

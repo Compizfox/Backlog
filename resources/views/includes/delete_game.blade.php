@@ -1,6 +1,6 @@
 {{--
-	Filename:   show.blade.php
-	Date:       2016-07-22
+	Filename:   delete_game.blade.php
+	Date:       2016-09-11
 	Author:     Lars Veldscholte
 	            lars@veldscholte.eu
 	            http://lars.veldscholte.eu
@@ -23,18 +23,20 @@
 	along with Backlog2. If not, see <http://www.gnu.org/licenses/>.
 --}}
 
-@extends('layouts.master')
+@extends('layouts.modal')
 
-@section('content')
-	<h1>Purchase #{{$purchase->id}}</h1>
-	@include('includes.game_table', ['games' => $purchase->games])
+@section('title')
+	Delete confirmation
+@endsection
 
-	@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
+@section('body')
+	Are you sure you want to delete this? This cannot be undone.
+@endsection
 
-	@include('includes.delete_game')
+@section('inputs')
+	{{method_field('DELETE')}}
 @endsection
 
 @push('scripts')
-	<script src="{{asset('js/checkall.js')}}"></script>
-	<script src="{{asset('js/batchOperations.js')}}"></script>
+	<script src="{{asset('js/deleteRow.js')}}"></script>
 @endpush

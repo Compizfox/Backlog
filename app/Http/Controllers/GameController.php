@@ -33,8 +33,31 @@ class GameController extends Controller {
 		//
 	}
 
-	public function destroy($id) {
-		//
+	public function destroy(Game $game) {
+		$game->delete();
+
+		return redirect()->back()->with('status', 'Game deleted!');
+	}
+
+	public function destroyMany(Request $request) {
+		Game::destroy($request->checkedGames);
+
+		return redirect()->back()->with('status', 'Games deleted!');
+	}
+
+	public function patchMany(Request $request) {
+		// Get game query builder from array of IDs
+		$games = Game::whereIn('id', $request->checkedGames);
+
+		if(isset($request->updateStatus)) {
+			$games->update(['status_id' => $request->status]);
+		}
+
+		if(isset($request->setHidden)) {
+			$games->update(['hidden' => true]);
+		}
+
+		return redirect()->back()->with('status', 'Games updated!');
 	}
 	
 	public function getCategorisedJson() {

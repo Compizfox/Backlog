@@ -22,6 +22,8 @@ Route::delete('purchases', 'PurchaseController@destroyMany');
 Route::resource('purchases', PurchaseController::class);
 
 // Game
+Route::delete('games', 'GameController@destroyMany');
+Route::patch('games', 'GameController@patchMany');
 Route::resource('games', GameController::class);
 
 // DLC
