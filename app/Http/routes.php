@@ -27,6 +27,8 @@ Route::patch('games', 'GameController@patchMany');
 Route::resource('games', GameController::class);
 
 // DLC
+Route::delete('dlc', 'DlcController@destroyMany');
+Route::patch('dlc', 'DlcController@patchMany');
 Route::resource('dlc', DlcController::class);
 
 // API

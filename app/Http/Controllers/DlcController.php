@@ -31,8 +31,31 @@ class DlcController extends Controller {
 		//
 	}
 
-	public function destroy($id) {
-		//
+	public function destroy(Dlc $dlc) {
+		$dlc->delete();
+
+		return redirect()->back()->with('status', 'DLC deleted!');
+	}
+
+	public function destroyMany(Request $request) {
+		Dlc::destroy($request->checkedDlc);
+
+		return redirect()->back()->with('status', 'DLC deleted!');
+	}
+
+	public function patchMany(Request $request) {
+		// Get DLC query builder from array of IDs
+		$dlc = Dlc::whereIn('id', $request->checkedDlc);
+
+		if(isset($request->updateStatus)) {
+			$dlc->update(['status_id' => $request->status]);
+		}
+
+		if(isset($request->setHidden)) {
+			$dlc->update(['hidden' => true]);
+		}
+
+		return redirect()->back()->with('status', 'DLC updated!');
 	}
 
 	public function getJson() {
