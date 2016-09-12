@@ -66,14 +66,19 @@ class GameController extends Controller {
 			->orderBy('name')
 			->get();
 
-		$gamesArray = $games->map(function($game) {
-			if($game->purchases_count == 0) $category = 'Orphaned';
-			else $category = 'Already purchased';
+		$gamesArray = $games
+			->map(function ($game) {
+				if($game->purchases_count == 0) $category = 'Orphaned';
+				else $category = 'Already purchased';
 
-			return ['label'    => $game->name,
-			        'category' => $category,
-			        'id'       => $game->id];
-		});
+				return [
+					'label' => $game->name,
+					'category' => $category,
+					'id' => $game->id
+				];
+			})->sortBy(function($row) {
+				return $row['category'] . " " . $row['label'];
+			})->values();
 
 		return response()->json($gamesArray);
 	}
