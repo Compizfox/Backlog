@@ -26,6 +26,8 @@
 @extends('layouts.master')
 
 @section('content')
+	<h1>Purchases</h1>
+
 	<form class="form-horizontal" action="{{action('PurchaseController@destroyMany')}}" method="post">
 		<table class="table table-bordered table-hover">
 			<thead>
