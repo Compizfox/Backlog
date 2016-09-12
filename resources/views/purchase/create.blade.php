@@ -45,7 +45,15 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Price:</label>
 					<div class="col-md-2">
-						<div class="input-group"><select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta"><option value="€">€</option><option value="$">$</option><option value="£">£</option></select><span class="input-group-addon"></span><input class="form-control" type="text" name="price"></div>
+						<div class="input-group">
+							<select style="width: 40px; padding-left: 1px; padding-right: 1px;" class="form-control" name="valuta">
+								<option value="€">€</option>
+								<option value="$">$</option>
+								<option value="£">£</option>
+							</select>
+							<span class="input-group-addon"></span>
+							<input class="form-control" type="text" name="price">
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -57,16 +65,43 @@
 					<div class="col-md-4"><input class="form-control" type="text" name="note"></div>
 				</div>
 			</fieldset>
-			<fieldset id="gameContainer">
+			<fieldset>
 				<legend>Games</legend>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Game</th>
+							<th>Status</th>
+							<th>Note</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="gameContainer">
+
+					</tbody>
+				</table>
 			</fieldset>
 			<div class="form-group">
 				<div class="col-sm-12">
 					<button class="btn btn-default" type="button" id="addGame"><span class="glyphicon glyphicon-plus"></span> New game</button>
 				</div>
 			</div>
-			<fieldset id="dlcContainer">
+			<fieldset>
 				<legend>DLC</legend>
+				<table class="table">
+					<thead>
+						<tr>
+							<th>Game</th>
+							<th>DLC</th>
+							<th>Status</th>
+							<th>Note</th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody id="dlcContainer">
+
+					</tbody>
+				</table>
 			</fieldset>
 			<div class="form-group">
 				<div class="col-sm-12">
@@ -80,48 +115,21 @@
 			</div>
 		</form>
 	</div>
-	<div id="gameTemplate" style="display:none;">
-		<label class="col-sm-1 control-label">Game:</label>
-		<div class="col-md-3">
-			<input class="form-control autocomplete" type="text" name="games[$i][name]" required autofocus>
-		</div>
-		<label class="col-sm-1 control-label">Status:</label>
-		<div class="col-md-2">
-			<select class="form-control" name="games[$i][status]">@include('includes.status_options')</select>
-		</div>
-		<label class="col-sm-1 control-label">Note:</label>
-		<div class="col-md-3">
-			<input class="form-control" type="text" name="games[$i][note]">
-		</div>
-		<label class="control-label">
-			<a href="#" class="deleteRow">
-				<span class="glyphicon glyphicon-remove-sign"></span>
-			</a>
-		</label>
-	</div>
-	<div id="dlcTemplate" style="display: none;">
-		<label class="col-sm-1 control-label">Game:</label>
-		<div class="col-md-2">
-			<input class="form-control autocomplete" type="text" name="dlc[$i][game]" required autofocus>
-		</div>
-		<label class="col-sm-1 control-label">DLC:</label>
-		<div class="col-md-2">
-			<input class="form-control" type="text" name="dlc[$i][name]" required autofocus>
-		</div>
-		<label class="col-sm-1 control-label">Status:</label>
-		<div class="col-md-1">
-			<select class="form-control" name="dlc[$i][status]">@include('includes.status_options')</select>
-		</div>
-		<label class="col-sm-1 control-label">Note:</label>
-		<div class="col-md-2">
-			<input class="form-control" type="text" name="dlc[$i][note]">
-		</div>
-		<label class="control-label">
-			<a href="#" class="deleteRow">
-				<span class="glyphicon glyphicon-remove-sign"></span>
-			</a>
-		</label>
-	</div>
+	<table style="display:none;">
+		<tr id="gameTemplate">
+			<td><input class="form-control autocomplete" type="text" name="games[$i][name]" required autofocus></td>
+			<td><select class="form-control" name="games[$i][status]">@include('includes.status_options')</select></td>
+			<td><input class="form-control" type="text" name="games[$i][note]"></td>
+			<td><span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span></td>
+		</tr>
+		<tr id="dlcTemplate">
+			<td><input class="form-control autocomplete" type="text" name="dlc[$i][game]" required autofocus></td>
+			<td><input class="form-control" type="text" name="dlc[$i][name]" required autofocus></td>
+			<td><select class="form-control" name="dlc[$i][status]">@include('includes.status_options')</select></td>
+			<td><input class="form-control" type="text" name="dlc[$i][note]"></td>
+			<td><span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span></td>
+		</tr>
+	</table>
 @endsection
 
 @push('links')
