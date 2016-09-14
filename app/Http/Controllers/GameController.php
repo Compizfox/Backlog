@@ -7,18 +7,23 @@ use App\Http\Requests;
 use App\Game;
 
 class GameController extends Controller {
-	public function index() {
-		$games = Game::all();
+	public function index(Request $request) {
+		// Start Eloquent query
+		$gamesQuery = Game::with('status');
 
-		return view('game.index', ['games' => $games]);
-	}
+		// Completion filter
+		if($request->has('completion')) {
+			$gamesQuery = $gamesQuery->whereHas('status', function($q) use($request) {
+				$q->where('completed', '=', $request->completion);
+			});
+		}
 
-	public function create() {
-		return view('game.create');
-	}
+		// Orphaned filter
+		if($request->has('purchased')) {
+			$gamesQuery = $gamesQuery->has('purchases');
+		}
 
-	public function store(Request $request) {
-		//
+		return view('game.index', ['games' => $gamesQuery->get()]);
 	}
 
 	public function show($id) {

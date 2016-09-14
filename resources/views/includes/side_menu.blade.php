@@ -42,7 +42,7 @@
 			<a href="{{url('games?completion=1')}}"><span class="glyphicon glyphicon-ok-sign"></span> Completed games</a>
 		</li>
 		<li class="{{Request::is('games?purchases=0') ? 'active' : ''}}">
-			<a href="{{url('games?purchases=0')}}"><span class="glyphicon fa fa-chain-broken"></span> Orphaned games</a>
+			<a href="{{url('games?purchased=0')}}"><span class="glyphicon fa fa-chain-broken"></span> Orphaned games</a>
 		</li>
 	</ul>
 </li>
