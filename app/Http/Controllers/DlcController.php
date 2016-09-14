@@ -45,14 +45,14 @@ class DlcController extends Controller {
 
 	public function patchMany(Request $request) {
 		// Get DLC query builder from array of IDs
-		$dlc = Dlc::whereIn('id', $request->checkedDlc);
+		$dlcQuery = Dlc::whereIn('id', $request->checkedDlc);
 
 		if(isset($request->updateStatus)) {
-			$dlc->update(['status_id' => $request->status]);
+			$dlcQuery->update(['status_id' => $request->status]);
 		}
 
 		if(isset($request->setHidden)) {
-			$dlc->update(['hidden' => true]);
+			$dlcQuery->update(['hidden' => true]);
 		}
 
 		return redirect()->back()->with('status', 'DLC updated!');

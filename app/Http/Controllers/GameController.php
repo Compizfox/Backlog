@@ -47,14 +47,14 @@ class GameController extends Controller {
 
 	public function patchMany(Request $request) {
 		// Get game query builder from array of IDs
-		$games = Game::whereIn('id', $request->checkedGames);
+		$gamesQuery = Game::whereIn('id', $request->checkedGames);
 
 		if(isset($request->updateStatus)) {
-			$games->update(['status_id' => $request->status]);
+			$gamesQuery->update(['status_id' => $request->status]);
 		}
 
 		if(isset($request->setHidden)) {
-			$games->update(['hidden' => true]);
+			$gamesQuery->update(['hidden' => true]);
 		}
 
 		return redirect()->back()->with('status', 'Games updated!');
