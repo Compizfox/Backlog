@@ -24,5 +24,5 @@
 --}}
 
 @foreach($statuses as $status)
-	<option value="{{$status->id}}">{{$status->name}}</option>
+	<option value="{{$status->id}}"{{(isset($selected) and $selected == $status->id) ? ' selected' : ''}}>{{$status->name}}</option>
 @endforeach
