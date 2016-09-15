@@ -33,6 +33,11 @@ Every game has a status attached, like:
 - Unfinishable (multiplayer only)
 
 ### Development status
+##### 2016-9-15
+The most important features of the new Laravel-based rewrite of Backlog are working and the `rewrite` branch will be set as the default branch. You can track the current development progress [here](https://github.com/Compizfox/Backlog/projects/1).
+
+This is still beta, however, and the legacy branch will be more stable and complete for the time being.
+
 ##### 2016-9-7
 Because the codebase of the current version of Backlog is old, crappy and unmaintainable, I'm working on a Laravel-based rewrite of Backlog. You can follow the progress at https://github.com/Compizfox/Backlog/tree/rewrite. When the rewrite has all the features of the old version and is ready for use, it will become the main branch of the project.
 
