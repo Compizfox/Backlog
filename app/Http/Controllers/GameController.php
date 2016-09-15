@@ -30,12 +30,30 @@ class GameController extends Controller {
 		//
 	}
 
-	public function edit($id) {
-		//
+	public function edit(Game $game) {
+		return view('game.edit', ['game' => $game]);
 	}
 
-	public function update(Request $request, $id) {
-		//
+	public function update(Request $request, Game $game) {
+		$this->validate($request, [
+			'name'      => 'required|string',
+			'status'    => 'required|exists:statuses,id',
+			'appid'     => 'integer',
+			'playtime'  => 'integer',
+			'note'      => 'string',
+		]);
+
+		// Update properties
+		$game->name = $request->name;
+		$game->status_id = $request->status;
+		$game->appid = $request->appid;
+		$game->appid_lock = $request->appid_lock;
+		$game->playtime = $request->playtime;
+		$game->note = $request->note;
+		$game->hidden = $request->hidden;
+		$game->save();
+
+		return redirect()->action('GameController@edit', ['id' => $game->id])->with('status', 'Game modified!');
 	}
 
 	public function destroy(Game $game) {

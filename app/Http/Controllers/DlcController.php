@@ -25,12 +25,24 @@ class DlcController extends Controller {
 
 	}
 
-	public function edit($id) {
-		//
+	public function edit(Dlc $dlc) {
+		return view('dlc.edit', ['dlc' => $dlc]);
 	}
 
-	public function update(Request $request, $id) {
-		//
+	public function update(Request $request, Dlc $dlc) {
+		$this->validate($request, [
+			'name'      => 'required|string',
+			'status'    => 'required|exists:statuses,id',
+			'note'      => 'string',
+		]);
+
+		// Update properties
+		$dlc->name = $request->name;
+		$dlc->status_id = $request->status;
+		$dlc->note = $request->note;
+		$dlc->save();
+
+		return redirect()->action('DlcController@edit', ['id' => $dlc->id])->with('status', 'DLC modified!');
 	}
 
 	public function destroy(Dlc $dlc) {
