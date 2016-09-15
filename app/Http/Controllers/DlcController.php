@@ -7,16 +7,18 @@ use App\Http\Requests;
 use App\Dlc;
 
 class DlcController extends Controller {
-	public function index() {
+	public function index(Request $request) {
+		// Start Eloquent query
+		$dlcQuery = Dlc::with('status');
 
-	}
+		// Completion filter
+		if($request->has('completion')) {
+			$dlcQuery = $dlcQuery->whereHas('status', function($q) use($request) {
+				$q->where('completed', '=', $request->completion);
+			});
+		}
 
-	public function create() {
-
-	}
-
-	public function store(Request $request) {
-		//
+		return view('dlc.index', ['dlc' => $dlcQuery->get()]);
 	}
 
 	public function show($id) {
