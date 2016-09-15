@@ -39,7 +39,7 @@ class Purchase extends Model {
 	}
 
 	public function getNumChildren() {
-		return count($this->games)+count($this->dlc);
+		return $this->games->count() + $this->dlc->count();
 	}
 
 	public function getFormattedPrice() {
