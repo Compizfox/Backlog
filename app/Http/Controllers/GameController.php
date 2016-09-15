@@ -9,7 +9,8 @@ use App\Game;
 class GameController extends Controller {
 	public function index(Request $request) {
 		// Start Eloquent query
-		$gamesQuery = Game::with('status');
+		$gamesQuery = Game::with('status')
+			->orderBy('name');
 
 		// Completion filter
 		if($request->has('completion')) {

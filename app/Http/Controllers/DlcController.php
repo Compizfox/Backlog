@@ -9,7 +9,8 @@ use App\Dlc;
 class DlcController extends Controller {
 	public function index(Request $request) {
 		// Start Eloquent query
-		$dlcQuery = Dlc::with('status');
+		$dlcQuery = Dlc::with('status')
+			->orderBy('name');
 
 		// Completion filter
 		if($request->has('completion')) {
