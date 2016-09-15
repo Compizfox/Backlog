@@ -49,15 +49,6 @@ This project wasn't originally intended for public distribution, but rather as a
 ##### Start of project
 As you might have guessed, Backlog is heavily in development. You should regard it as WIP/alpha. Even in the releases, there are undoubtedly bugs I missed. If you encounter a bug, please report it using the [issues page on Github](https://github.com/Compizfox/Backlog/issues)
 
-### Installation
-
-##### Prerequisites
-- Webserver with PHP > 5.3 and mysqlnd driver
-- MySQL
-
-##### Instructions
-Download a stable release or clone the development branch (bleeding edge!). You only need to extract the inner _backlog_ folder to the docroot. Create a MySQL database and user and import the SQL file. Enter the database details in _config.php_. If you want Steam integration, you'll also need to enter your SteamID and API key.
-
 ### Used tools and libraries
 Backlog is written in PHP and uses the Laravel framework.
     
