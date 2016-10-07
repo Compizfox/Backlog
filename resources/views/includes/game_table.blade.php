@@ -41,7 +41,7 @@
 			<tbody>
 				@foreach($games as $game)
 					<tr>
-						<td><img src="{{$game->getImageUrl('logo')}}" width="184px" height="69px"> {{$game->name}}</td>
+						<td><a href="{{action('GameController@show', ['id' => $game->id])}}"><img src="{{$game->getImageUrl('logo')}}" width="184px" height="69px"> {{$game->name}}</a></td>
 						<td style="background-color: {{$game->status->color}}">{{$game->status->name}}</td>
 						<td>{{$game->getFormattedPlaytime()}}</td>
 						<td>{{$game->notes}}</td>

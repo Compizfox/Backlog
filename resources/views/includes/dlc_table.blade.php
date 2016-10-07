@@ -39,8 +39,8 @@
 			<tbody>
 				@foreach($dlcs as $dlc)
 					<tr>
-						<td>{{$dlc->name}}</td>
-						<td><img src="{{$dlc->game->getImageUrl('logo')}}" width="184px" height="69px"><img src="{{asset('images/dlc-logo.png')}}"> {{$dlc->game->name}}</td>
+						<td><a href="{{action('DlcController@show', ['id' => $dlc->id])}}">{{$dlc->name}}</a></td>
+						<td><a href="{{action('GameController@show', ['id' => $dlc->game->id])}}"><img src="{{$dlc->game->getImageUrl('logo')}}" width="184px" height="69px"><img src="{{asset('images/dlc-logo.png')}}"> {{$dlc->game->name}}</a></td>
 						<td style="background-color: {{$dlc->status->color}}">{{$dlc->status->name}}</td>
 						<td>{{$dlc->notes}}</td>
 						<td>
