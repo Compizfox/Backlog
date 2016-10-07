@@ -26,8 +26,8 @@ class GameController extends Controller {
 		return view('game.index', ['games' => $gamesQuery->get()]);
 	}
 
-	public function show($id) {
-		//
+	public function show(Game $game) {
+		return view('game.show', ['game' => $game]);
 	}
 
 	public function edit(Game $game) {
