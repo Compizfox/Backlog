@@ -21,8 +21,8 @@ class DlcController extends Controller {
 		return view('dlc.index', ['dlc' => $dlcQuery->get()]);
 	}
 
-	public function show($id) {
-
+	public function show(Dlc $dlc) {
+		return view('dlc.show', ['dlc' => $dlc]);
 	}
 
 	public function edit(Dlc $dlc) {
