@@ -24,7 +24,10 @@
 --}}
 
 <li class="{{Request::is('purchases/create') ? 'active' : ''}}">
-	<a href="{{url('purchases/create')}}"><span class="glyphicon glyphicon-plus"></span> Add</a>
+	<a href="{{url('purchases/create')}}"><span class="glyphicon glyphicon-plus"></span> Add purchase</a>
+</li>
+<li class="{{Request::is('playthroughs/create') ? 'active' : ''}}">
+	<a href="{{url('playthroughs/create')}}"><span class="glyphicon glyphicon-plus"></span> Add playthrough</a>
 </li>
 <li class="dropdown{{Request::is('steam/*') ? 'active' : ''}}">
 	<a class="dropdown-toggle clickable" data-toggle="dropdown"><span class="glyphicon fa fa-steam"></span> Steam</a>
