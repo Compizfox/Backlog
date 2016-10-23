@@ -31,6 +31,11 @@ Route::delete('dlc', 'DlcController@destroyMany');
 Route::patch('dlc', 'DlcController@patchMany');
 Route::resource('dlc', DlcController::class);
 
+// Playthrough
+Route::delete('playthroughs', 'PlaythroughController@destroyMany');
+Route::patch('playthroughs', 'PlaythroughController@patchMany');
+Route::resource('playthroughs', 'PlaythroughController');
+
 // API
 Route::group(['prefix' => 'api'], function() {
 	Route::get('games', 'GameController@getCategorisedJson');

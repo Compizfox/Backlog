@@ -25,7 +25,13 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class Playthrough extends Model {
-    public function playable() {
-    	return $this->morphTo();
-    }
+	protected $guarded = [];
+
+	public function playable() {
+		return $this->morphTo();
+	}
+
+	public function isEnded() {
+		return $this->ended_at != NULL;
+	}
 }
