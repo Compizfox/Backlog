@@ -76,10 +76,32 @@
 					</tbody>
 				</table>
 			@endif
+
+			@if(!$game->playthroughs->isEmpty())
+				<hr>
+				<h2>Playthroughs</h2>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Start date</th>
+							<th>End date</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($game->playthroughs as $pt)
+							<tr>
+								<td>{{$pt->id}}</td>
+								<td>{{$pt->started_at}}</td>
+								<td>{{$pt->ended_at or ''}}</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			@endif
 		</div>
 		<div class="panel-footer">
 			<a href="{{action('GameController@edit', ['id' => $game->id])}}" class="btn btn-default">Edit</a>
 		</div>
 	</div>
-
 @endsection

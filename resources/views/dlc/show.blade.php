@@ -53,6 +53,29 @@
 					@endforeach
 				</tbody>
 			</table>
+
+			@if(!$dlc->playthroughs->isEmpty())
+				<hr>
+				<h2>Playthroughs</h2>
+				<table class="table table-bordered table-hover">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>Start date</th>
+							<th>End date</th>
+						</tr>
+					</thead>
+					<tbody>
+						@foreach($dlc->playthroughs as $pt)
+							<tr>
+								<td>{{$pt->id}}</td>
+								<td>{{$pt->started_at}}</td>
+								<td>{{$pt->ended_at or ''}}</td>
+							</tr>
+						@endforeach
+					</tbody>
+				</table>
+			@endif
 		</div>
 		<div class="panel-footer">
 			<a href="{{action('DlcController@edit', ['id' => $dlc->id])}}" class="btn btn-default">Edit</a>
