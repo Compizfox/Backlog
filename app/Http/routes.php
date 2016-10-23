@@ -19,17 +19,17 @@ Route::get('/', function() {
 
 // Purchase
 Route::delete('purchases', 'PurchaseController@destroyMany');
-Route::resource('purchases', PurchaseController::class);
+Route::resource('purchases', 'PurchaseController');
 
 // Game
 Route::delete('games', 'GameController@destroyMany');
 Route::patch('games', 'GameController@patchMany');
-Route::resource('games', GameController::class);
+Route::resource('games', 'GameController');
 
 // DLC
 Route::delete('dlc', 'DlcController@destroyMany');
 Route::patch('dlc', 'DlcController@patchMany');
-Route::resource('dlc', DlcController::class);
+Route::resource('dlc', 'DlcController');
 
 // Playthrough
 Route::delete('playthroughs', 'PlaythroughController@destroyMany');
