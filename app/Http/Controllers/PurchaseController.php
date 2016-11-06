@@ -10,7 +10,7 @@ use App\Dlc;
 class PurchaseController extends Controller {
 	public function index() {
 		// Retrieve all purchases (eager load games and dlc) and pass it to the view
-		return view('purchase.index', ['purchases' => Purchase::with('games', 'dlc')->get()]);
+		return view('purchase.index', ['purchases' => Purchase::with('games', 'dlc')->orderBy('purchased_at', 'desc')->get()]);
 	}
 
 	public function create() {
