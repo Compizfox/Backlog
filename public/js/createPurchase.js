@@ -13,6 +13,7 @@ $(document).ready(function() {
 	$('#addGame').click(function() {
 		// Clone template, replace $i with auto-increment id, add new class
 		$('#gameTemplate').clone()
+			.removeAttr('id')
 			.html(function(i, oldHTML) {
 				return oldHTML.replace(/\$i/g, gameCounter);
 			})
@@ -23,6 +24,7 @@ $(document).ready(function() {
 	var dlcCounter = 0;
 	$('#addDlc').click(function() {
 		$('#dlcTemplate').clone()
+			.removeAttr('id')
 			.html(function(i, oldHTML) {
 				return oldHTML.replace(/\$i/g, dlcCounter);
 			})
