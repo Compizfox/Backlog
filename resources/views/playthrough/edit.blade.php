@@ -46,16 +46,16 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">Started at:</label>
 			<div class="col-md-9">
-				<input class="form-control" type="date" name="started_at" value="{{$pt->started_at}}" required>
+				<input class="form-control" type="date" name="started_at" value="{{$pt->started_at}}">
 			</div>
 		</div>
 
 		<div class="form-group">
 			<div class="col-md-3 control-label">
-				<label><input type="checkbox" name="isEnded" id="isEnded"{{$pt->isEnded() ? ' checked' : ''}}> Finished at:</label>
+				<label><input type="checkbox" name="isEnded" id="isEnded"{{$pt->ended ? ' checked' : ''}}> Finished at:</label>
 			</div>
 			<div class="col-md-9">
-				<input class="form-control" type="date" name="ended_at" id="ended_at" value="{{$pt->ended_at or date("Y-m-d")}}"{{$pt->isEnded() ? '' : ' disabled'}}>
+				<input class="form-control" type="date" name="ended_at" id="ended_at" value="{{$pt->ended_at}}"{{$pt->ended ? '' : ' disabled'}}>
 			</div>
 		</div>
 

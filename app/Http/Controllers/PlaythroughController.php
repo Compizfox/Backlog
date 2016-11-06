@@ -10,12 +10,12 @@ class PlaythroughController extends Controller {
 		$all = Playthrough::with('playable')->get();
 
 		$pending = $all->filter(function($value) {
-			return !$value->isEnded();
+			return !$value->ended;
 		});
 
 
 		$ended = $all->filter(function($value) {
-			return $value->isEnded();
+			return $value->ended;
 		});
 
 		return view('playthrough.index', ['pending' => $pending, 'ended' => $ended]);
@@ -30,11 +30,11 @@ class PlaythroughController extends Controller {
 			'playable_type'  => 'required|in:Game,Dlc',
 			'game'           => 'exists:games,id',
 			'dlc'            => 'exists:dlc,id',
-			'started_at'     => 'required|date_format:Y-m-d',
+			'started_at'     => 'date_format:Y-m-d',
 			'note'           => 'string',
 
 			'isEnded'        => 'in:on',
-			'ended_at'       => 'required_if:isEnded,on|date_format:Y-m-d',
+			'ended_at'       => 'date_format:Y-m-d',
 
 			'updateStatus'   => 'in:on',
 			'status'         => 'required_if:updateStatus,on|exists:statuses,id'
@@ -46,7 +46,8 @@ class PlaythroughController extends Controller {
 		$playthrough->playable_id = $request->{$request->playable_type};
 		$playthrough->started_at = $request->started_at;
 		$playthrough->note = $request->note;
-		if($request->isEnded) $playthrough->ended_at = $request->ended_at;
+		$playthrough->ended = isset($request->isEnded);
+		$playthrough->ended_at = $request->ended_at;
 		$playthrough->save();
 
 		// Set status on playable (if needed)
@@ -61,11 +62,11 @@ class PlaythroughController extends Controller {
 
 	public function update(Request $request, Playthrough $playthrough) {
 		$this->validate($request, [
-			'started_at'     => 'required|date_format:Y-m-d',
+			'started_at'     => 'date_format:Y-m-d',
 			'note'           => 'string',
 
 			'isEnded'        => 'in:on',
-			'ended_at'       => 'required_if:isEnded,on|date_format:Y-m-d',
+			'ended_at'       => 'date_format:Y-m-d',
 
 			'updateStatus'   => 'in:on',
 			'status'         => 'required_if:updateStatus,on|exists:statuses,id'
@@ -74,13 +75,8 @@ class PlaythroughController extends Controller {
 		// Update properties
 		$playthrough->started_at = $request->started_at;
 		$playthrough->note = $request->note;
-
-		if($request->isEnded) {
-			$playthrough->ended_at = $request->ended_at;
-		} else {
-			$playthrough->ended_at = NULL;
-		}
-
+		$playthrough->ended = isset($request->isEnded);
+		$playthrough->ended_at = $request->ended_at;
 		$playthrough->save();
 
 		// Set status on playable (if needed)

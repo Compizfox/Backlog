@@ -64,7 +64,7 @@
 		<div class="form-group">
 			<label class="col-sm-3 control-label">Started at:</label>
 			<div class="col-md-9">
-				<input class="form-control" type="date" name="started_at" value="{{date("Y-m-d")}}" required>
+				<input class="form-control" type="date" name="started_at" value="{{date("Y-m-d")}}">
 			</div>
 		</div>
 
