@@ -21,7 +21,7 @@ class PurchaseController extends Controller {
 		$this->validate($request, [
 			'shop'           => 'required|string',
 			'valuta'         => 'required|in:€,$,£',
-			'date'           => 'required|date',
+			'date'           => 'date_format:Y-m-d',
 			'note'           => 'string',
 
 			'games.*.name'   => 'required|string',
