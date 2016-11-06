@@ -45,4 +45,8 @@ class Purchase extends Model {
 	public function getFormattedPrice() {
 		return $this->valuta . ' ' . number_format($this->price, 2, ',', ' ');
 	}
+
+	public function setPurchasedAtAttribute($value) {
+		$this->attributes['purchased_at'] = $value ?: null;
+	}
 }

@@ -31,7 +31,11 @@ class Playthrough extends Model {
 		return $this->morphTo();
 	}
 
-	public function isEnded() {
-		return $this->ended_at != NULL;
+	public function setStartedAtAttribute($value) {
+		$this->attributes['started_at'] = $value ?: null;
+	}
+
+	public function setEndedAtAttribute($value) {
+		$this->attributes['ended_at'] = $value ?: null;
 	}
 }
