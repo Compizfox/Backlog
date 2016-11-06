@@ -44,7 +44,7 @@ class PurchaseController extends Controller {
 		$purchase->save();
 
 		// Insert games (unless they exist) and attach to new purchase
-		foreach($request->games as $game) {
+		foreach($request->input('games', []) as $game) {
 			$gameModel = Game::firstOrNew(['name' => $game['name']]);
 			if(!$gameModel->exists) {
 				$gameModel->status_id = $game['status'];
@@ -55,7 +55,7 @@ class PurchaseController extends Controller {
 		}
 
 		// Insert DLC and attach to game (unless they exist) and attach to new purchase
-		foreach($request->dlc as $dlc) {
+		foreach($request->input('dlc', []) as $dlc) {
 			$dlcModel = Dlc::firstOrNew(['name' => $dlc['name']]);
 			if(!$dlcModel->exists) {
 				// Get game_id of game with given name
