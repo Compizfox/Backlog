@@ -13,7 +13,6 @@ class PlaythroughController extends Controller {
 			return !$value->ended;
 		});
 
-
 		$ended = $all->filter(function($value) {
 			return $value->ended;
 		});
@@ -106,8 +105,11 @@ class PlaythroughController extends Controller {
 		Playthrough::whereIn('id', $request->checkedPlaythroughs)
 			->get()
 			->each(function(Playthrough $pt) use($request) {
-				// Update ended date
-				$pt->update(['ended_at' => $request->ended_at]);
+				// Update ended date and status
+				$pt->update([
+					'ended' => true,
+					'ended_at' => $request->ended_at
+				]);
 
 				// Update status of playable
 				$pt->playable()->update(['status_id' => $request->status]);
