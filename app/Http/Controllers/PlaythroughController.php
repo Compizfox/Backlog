@@ -7,7 +7,12 @@ use Illuminate\Http\Request;
 
 class PlaythroughController extends Controller {
 	public function index() {
-		$all = Playthrough::with('playable')->get();
+		$all = Playthrough::with('playable')
+			->get()
+			->sortByDesc(function($row) {
+				// Sort by ended_at date is started_at is not set
+				return empty($row['started_at']) ? $row['ended_at'] : $row['started_at'];
+			});
 
 		$pending = $all->filter(function($value) {
 			return !$value->ended;
