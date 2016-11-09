@@ -31,9 +31,9 @@
 			<h1>{{$dlc->name}}</h1>
 		</div>
 		<div class="panel-body">
-			<p><a href="{{action('GameController@show', ['id' => $dlc->game->id])}}">{{$dlc->game->name}}</a></p>
-			<p style="background-color: {{$dlc->status->color}}">Status: {{$dlc->status->name}}</p>
-			<p>Note: {{$dlc->note}}</p>
+			<p><a href="{{action('GameController@show', ['id' => $dlc->game->id])}}"><img src="{{$dlc->game->getImageUrl('logo')}}" width="184px" height="69px"> {{$dlc->game->name}}</a></p>
+			<p style="background-color: {{$dlc->status->color}}"><b>Status:</b> {{$dlc->status->name}}</p>
+			<p><b>Note:</b> {{$dlc->note}}</p>
 
 			<hr>
 			<h2>Purchases</h2>
