@@ -26,19 +26,37 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Purchase #{{$purchase->id}}</h1>
-	@if(!$purchase->games->isEmpty())
-		@include('includes.game_table', ['games' => $purchase->games])
-	@endif
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h1>Purchase #{{$purchase->id}}</h1>
+		</div>
 
-	@if(!$purchase->dlc->isEmpty())
-		@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
-	@endif
+		<div class="panel-body">
+			<p><b>Shop:</b> {{$purchase->shop}}</p>
+			<p><b>Price:</b> {{$purchase->getFormattedPrice()}}</p>
+			<p><b>Purchase date:</b> {{$purchase->purchased_at}}</p>
+			<p><b>Note:</b> {{$purchase->note}}</p>
+			<hr>
+		</div>
+
+		@if(!$purchase->games->isEmpty())
+			<div class="panel-body">
+				<h2>Games</h2>
+			</div>
+			@include('includes.game_table', ['games' => $purchase->games])
+		@endif
+
+		@if(!$purchase->dlc->isEmpty())
+			<div class="panel-body">
+				<h2>DLC</h2>
+			</div>
+			@include('includes.dlc_table', ['dlcs' => $purchase->dlc])
+		@endif
+
+		<div class="panel-footer">
+			<a href="{{action('PurchaseController@edit', ['id' => $purchase->id])}}" class="btn btn-default">Edit</a>
+		</div>
+	</div>
 
 	@include('includes.delete_game')
 @endsection
-
-@push('scripts')
-	<script src="{{asset('js/checkall.js')}}"></script>
-	<script src="{{asset('js/batchOperations.js')}}"></script>
-@endpush
