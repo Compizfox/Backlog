@@ -23,62 +23,29 @@
 	along with Backlog2. If not, see <http://www.gnu.org/licenses/>.
 --}}
 
-<form class="form-horizontal" action="{{action('DlcController@index')}}" method="post">
-	<div class="panel panel-default">
-		<div class="panel-heading"><h2>DLC</h2></div>
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Game</th>
-					<th>Status</th>
-					<th>Notes</th>
-					<th><input type="checkbox" class="selectall" /></th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($dlcs as $dlc)
-					<tr>
-						<td><a href="{{action('DlcController@show', ['id' => $dlc->id])}}">{{$dlc->name}}</a></td>
-						<td><a href="{{action('GameController@show', ['id' => $dlc->game->id])}}"><img src="{{$dlc->game->getImageUrl('logo')}}" width="184px" height="69px"><img src="{{asset('images/dlc-logo.png')}}"> {{$dlc->game->name}}</a></td>
-						<td style="background-color: {{$dlc->status->color}}">{{$dlc->status->name}}</td>
-						<td>{{$dlc->notes}}</td>
-						<td>
-							<input type="checkbox" name="checkedDlc[]" value="{{$dlc->id}}">&nbsp;
-							<a href="{{action('DlcController@edit', ['id' => $dlc->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
-							<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('DlcController@destroy', ['id' => $dlc->id])}}"></span>
-						</td>
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
-		<div class="panel-body">
-			{{csrf_field()}}
-			<div class="form-group">
-				<div class="col-sm-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="updateStatus"> Set status:
-						</label>
-					</div>
-				</div>
-				<div class="col-sm-3"><select name="status" class="form-control status"><option value="">Select a status</option>@include('includes.status_options')</select></div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-2">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" name="setHidden"> Set hidden
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-3">
-					<button type="submit" name="_method" value="PATCH" class="btn btn-primary">Submit</button>
-					<button type="submit" name="_method" value="DELETE" class="btn btn-danger">Delete</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</form>
+<table class="table table-bordered table-hover">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Game</th>
+			<th>Status</th>
+			<th>Notes</th>
+			<th><input type="checkbox" class="selectall" /></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach($dlcs as $dlc)
+			<tr>
+				<td><a href="{{action('DlcController@show', ['id' => $dlc->id])}}">{{$dlc->name}}</a></td>
+				<td><a href="{{action('GameController@show', ['id' => $dlc->game->id])}}"><img src="{{$dlc->game->getImageUrl('logo')}}" width="184px" height="69px"><img src="{{asset('images/dlc-logo.png')}}"> {{$dlc->game->name}}</a></td>
+				<td style="background-color: {{$dlc->status->color}}">{{$dlc->status->name}}</td>
+				<td>{{$dlc->notes}}</td>
+				<td>
+					<input type="checkbox" name="checkedDlc[]" value="{{$dlc->id}}">&nbsp;
+					<a href="{{action('DlcController@edit', ['id' => $dlc->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
+					<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('DlcController@destroy', ['id' => $dlc->id])}}"></span>
+				</td>
+			</tr>
+		@endforeach
+	</tbody>
+</table>

@@ -26,9 +26,44 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Games</h1>
+	<div class="alert alert-warning .alert-dismissable fade in"><button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button><strong>Warning: </strong>Deleting a game will delete all of its DLC. <br />Empty purchases will be automatically deleted.</div>
 
-	@include('includes.game_table', ['games' => $games])
+	<form class="form-horizontal" action="{{action('GameController@index')}}" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h1>Games</h1></div>
+
+			@include('includes.game_table', ['games' => $games])
+
+			<div class="panel-body">
+				{{csrf_field()}}
+				<div class="form-group">
+					<div class="col-sm-2">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="updateStatus"> Set status:
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-3"><select name="status" class="form-control status"><option value="">Select a status</option>@include('includes.status_options')</select></div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="setHidden"> Set hidden
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3">
+						<button type="submit" name="_method" value="PATCH" class="btn btn-primary">Submit</button>
+						<button type="submit" name="_method" value="DELETE" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 
 	@include('includes.delete_game')
 @endsection

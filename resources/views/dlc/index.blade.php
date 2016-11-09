@@ -26,9 +26,42 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>DLC</h1>
+	<form class="form-horizontal" action="{{action('DlcController@index')}}" method="post">
+		<div class="panel panel-default">
+			<div class="panel-heading"><h1>DLC</h1></div>
 
-	@include('includes.dlc_table', ['dlcs' => $dlc])
+			@include('includes.dlc_table', ['dlcs' => $dlc])
+
+			<div class="panel-body">
+				{{csrf_field()}}
+				<div class="form-group">
+					<div class="col-sm-2">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="updateStatus"> Set status:
+							</label>
+						</div>
+					</div>
+					<div class="col-sm-3"><select name="status" class="form-control status"><option value="">Select a status</option>@include('includes.status_options')</select></div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="setHidden"> Set hidden
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-3">
+						<button type="submit" name="_method" value="PATCH" class="btn btn-primary">Submit</button>
+						<button type="submit" name="_method" value="DELETE" class="btn btn-danger">Delete</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 
 	@include('includes.delete_game')
 @endsection
