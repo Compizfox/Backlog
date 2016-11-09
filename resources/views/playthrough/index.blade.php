@@ -52,7 +52,7 @@
 								<a href="{{action('PlaythroughController@edit', ['id' => $pt->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
 								<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PlaythroughController@destroy', ['id' => $pt->id])}}"></span>
 							</td>
-							<td><a href="{{action('PlaythroughController@show', ['id' => $pt->id])}}">{{$pt->id}}</a></td>
+							<td>{{$pt->id}}</td>
 							<td>
 								@if($pt->playable_type == 'App\Game')
 									<a href="{{action('GameController@show', ['id' => $pt->playable->id])}}"><img src="{{$pt->playable->getImageUrl()}}" width="32px" height="32px"> {{$pt->playable->name}}</a>
@@ -117,7 +117,7 @@
 								<a href="{{action('PlaythroughController@edit', ['id' => $pt->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
 								<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PlaythroughController@destroy', ['id' => $pt->id])}}"></span>
 							</td>
-							<td><a href="{{action('PlaythroughController@show', ['id' => $pt->id])}}">{{$pt->id}}</a></td>
+							<td>{{$pt->id}}</td>
 							<td>
 								@if($pt->playable_type == 'App\Game')
 									<a href="{{action('GameController@show', ['id' => $pt->playable->id])}}"><img src="{{$pt->playable->getImageUrl()}}" width="32px" height="32px"> {{$pt->playable->name}}</a>
