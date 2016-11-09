@@ -31,9 +31,9 @@
 			<h1><img src="{{$game->getImageUrl('logo')}}" width="184px" height="69px"> {{$game->name}}</h1>
 		</div>
 		<div class="panel-body">
-			<p style="background-color: {{$game->status->color}}">Status: {{$game->status->name}}</p>
-			<p>Playtime (minutes): {{$game->getFormattedPlaytime()}}</p>
-			<p>Note: {{$game->note}}</p>
+			<p style="background-color: {{$game->status->color}}"><b>Status:</b> {{$game->status->name}}</p>
+			<p><b>Playtime (minutes):</b> {{$game->getFormattedPlaytime()}}</p>
+			<p><b>Note:</b> {{$game->note}}</p>
 
 			<hr>
 			<h2>Purchases</h2>
