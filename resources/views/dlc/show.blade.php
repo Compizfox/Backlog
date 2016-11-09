@@ -37,44 +37,12 @@
 
 			<hr>
 			<h2>Purchases</h2>
-			<table class="table table-bordered table-hover">
-				<thead>
-					<tr>
-						<th>Name</th>
-					</tr>
-				</thead>
-				<tbody>
-					@foreach($dlc->purchases as $purchase)
-						<tr>
-							<td>
-								<a href="{{action('PurchaseController@show', ['id' => $purchase->id])}}">#{{$purchase->id}} ({{$purchase->shop}})</a>
-							</td>
-						</tr>
-					@endforeach
-				</tbody>
-			</table>
+			@include('includes.purchase_table', ['purchases' => $dlc->purchases])
 
 			@if(!$dlc->playthroughs->isEmpty())
 				<hr>
 				<h2>Playthroughs</h2>
-				<table class="table table-bordered table-hover">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Start date</th>
-							<th>End date</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($dlc->playthroughs as $pt)
-							<tr>
-								<td>{{$pt->id}}</td>
-								<td>{{$pt->started_at}}</td>
-								<td>{{$pt->ended_at or ''}}</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
+				@include('includes.playthrough_table', ['playthroughs' => $dlc->playthroughs])
 			@endif
 		</div>
 		<div class="panel-footer">
