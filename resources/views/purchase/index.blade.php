@@ -26,48 +26,50 @@
 @extends('layouts.master')
 
 @section('content')
-	<h1>Purchases</h1>
-
 	<form class="form-horizontal" action="{{action('PurchaseController@destroyMany')}}" method="post">
-		<table class="table table-bordered table-hover">
-			<thead>
-				<tr>
-					<th><input type="checkbox" class="selectall"></th>
-					<th>Shop</th>
-					<th>Price</th>
-					<th>Date</th>
-					<th>Note</th>
-					<th>Games/DLC</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($purchases as $purchase)
-					<tr>
-						<td>
-							<input type="checkbox" name="checkedPurchases[]" value="{{$purchase->id}}">&nbsp;
-							<a href="{{action('PurchaseController@show', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-search"></span></a>&nbsp;
-							<a href="{{action('PurchaseController@edit', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
-							<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PurchaseController@destroy', ['id' => $purchase->id])}}"></span>
-						</td>
-						<td>{{$purchase->shop}}</td>
-						<td>{{$purchase->getFormattedPrice()}}</td>
-						<td>{{$purchase->purchased_at}}</td>
-						<td>{{$purchase->note}}</td>
-						<td>
-							@foreach($purchase->games as $game)
-								<a href="{{action('GameController@show', ['id' => $game->id])}}"><img src="{{$game->getImageUrl()}}" title="{{$game->name}}" width="32px" height="32px"></a>&nbsp;
-							@endforeach
-							@foreach($purchase->dlc as $dlc)
-								<a href="{{action('DlcController@show', ['id' => $dlc->id])}}"><img src="{{$dlc->game->getImageUrl()}}" title="{{$dlc->name}}" width="32px" height="32px"><img src="{{asset('images/dlc-icon.png')}}" title="{{$dlc->name}}"></a>&nbsp;
-							@endforeach
-						</td>
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
-
 		<div class="panel panel-default">
+			<div class="panel-heading"><h1>Purchases</h1></div>
+
+			<table class="table table-bordered table-hover">
+				<thead>
+					<tr>
+						<th><input type="checkbox" class="selectall"></th>
+						<th>Shop</th>
+						<th>Price</th>
+						<th>Date</th>
+						<th>Note</th>
+						<th>Games/DLC</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach($purchases as $purchase)
+						<tr>
+							<td>
+								<input type="checkbox" name="checkedPurchases[]" value="{{$purchase->id}}">&nbsp;
+								<a href="{{action('PurchaseController@show', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-search"></span></a>&nbsp;
+								<a href="{{action('PurchaseController@edit', ['id' => $purchase->id])}}"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;
+								<span class="glyphicon glyphicon-trash clickable delete" data-url="{{action('PurchaseController@destroy', ['id' => $purchase->id])}}"></span>
+							</td>
+							<td>{{$purchase->shop}}</td>
+							<td>{{$purchase->getFormattedPrice()}}</td>
+							<td>{{$purchase->purchased_at}}</td>
+							<td>{{$purchase->note}}</td>
+							<td>
+								@foreach($purchase->games as $game)
+									<a href="{{action('GameController@show', ['id' => $game->id])}}"><img src="{{$game->getImageUrl()}}" title="{{$game->name}}" width="32px" height="32px"></a>&nbsp;
+								@endforeach
+								@foreach($purchase->dlc as $dlc)
+									<a href="{{action('DlcController@show', ['id' => $dlc->id])}}"><img src="{{$dlc->game->getImageUrl()}}" title="{{$dlc->name}}" width="32px" height="32px"><img src="{{asset('images/dlc-icon.png')}}" title="{{$dlc->name}}"></a>&nbsp;
+								@endforeach
+							</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+
 			<div class="panel-body">
+				{{method_field('DELETE')}}
+				{{csrf_field()}}
 				<button type="submit" name="submit" value="delete" class="btn btn-danger">Delete</button>
 				<div class="checkbox">
 					<label>
@@ -76,8 +78,6 @@
 				</div>
 			</div>
 		</div>
-		{{method_field('DELETE')}}
-		{{csrf_field()}}
 	</form>
 	@include('includes.delete_purchase')
 @endsection
