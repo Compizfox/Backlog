@@ -13,9 +13,7 @@
 
 Route::singularResourceParameters();
 
-Route::get('/', function() {
-	return view('summary');
-});
+Route::get('/', 'StatisticsController@summary');
 
 // Purchase
 Route::delete('purchases', 'PurchaseController@destroyMany');
@@ -42,4 +40,7 @@ Route::group(['prefix' => 'api'], function() {
 	Route::get('dlc', 'DlcController@getJson');
 
 	Route::get('statistics/purchases', 'StatisticsController@getPurchases');
+	Route::get('statistics/playthroughs', 'StatisticsController@getPlaythroughs');
+	Route::get('statistics/statusshare', 'StatisticsController@getStatusShare');
+	Route::get('statistics/shopshare', 'StatisticsController@getShopShare');
 });
