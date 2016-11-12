@@ -45,11 +45,13 @@ CREATE TABLE `game_purchase` (
 CREATE TABLE `playthroughs` (
   `id` int(11) NOT NULL,
   `playable_id` int(11) NOT NULL,
-  `playable_type` int(11) NOT NULL,
-  `started_at` datetime NOT NULL,
-  `ended_at` datetime DEFAULT NULL,
+  `playable_type` varchar(25) NOT NULL,
+  `started_at` date DEFAULT NULL,
+  `ended_at` date DEFAULT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  `note` varchar(255) NOT NULL,
+  `ended` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `purchases` (
