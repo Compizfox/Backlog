@@ -20,7 +20,14 @@ class GameController extends Controller {
 
 		// Orphaned filter
 		if($request->has('purchased')) {
-			$gamesQuery = $gamesQuery->has('purchases');
+			if($request->purchased == 0) {
+				// Get orphaned games
+				$gamesQuery = $gamesQuery->has('purchases' , '=', 0);
+			}
+			if($request->purchased == 1) {
+				// Get purchased games
+				$gamesQuery = $gamesQuery->has('purchases');
+			}
 		}
 
 		return view('game.index', ['games' => $gamesQuery->get()]);
