@@ -34,6 +34,11 @@ Route::delete('playthroughs', 'PlaythroughController@destroyMany');
 Route::patch('playthroughs', 'PlaythroughController@patchMany');
 Route::resource('playthroughs', 'PlaythroughController');
 
+// Steam integration
+Route::get('steam/sync', 'SteamController@syncGames');
+Route::get('steam/import', 'SteamController@importGames');
+Route::get('steam/update', 'SteamController@updateAppinfo');
+
 // API
 Route::group(['prefix' => 'api'], function() {
 	Route::get('games', 'GameController@getCategorisedJson');

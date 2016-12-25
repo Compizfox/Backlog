@@ -5,7 +5,8 @@
 	"type": "project",
 	"require": {
 		"php": ">=7.0",
-		"laravel/framework": "5.2.*"
+		"laravel/framework": "5.2.*",
+		"anlutro/l4-settings": "^0.4.9"
 	},
 	"authors": [
 		{

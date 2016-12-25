@@ -32,12 +32,10 @@
 <li class="dropdown{{Request::is('steam/*') ? 'active' : ''}}">
 	<a class="dropdown-toggle clickable" data-toggle="dropdown"><span class="glyphicon fa fa-steam"></span> Steam</a>
 	<ul class="dropdown-menu">
-		<li><a href="{{url('steam/syncappids')}}"><span class="glyphicon glyphicon-link"></span> Link games with Steam</a></li>
-		<li><a href="{{url('steam/syncplaytime')}}"><span class="glyphicon glyphicon-time"></span> Sync playtime with Steam</a></li>
-		<li><a href="{{url('steam/syncicons')}}"><span class="glyphicon glyphicon-picture"></span> Retrieve icons/logos</a></li>
-		<li><a href="{{url('steam/addgames')}}"><span class="glyphicon glyphicon-import"></span> Import games from Steam</a></li>
+		<li><a href="{{url('steam/sync')}}"><span class="glyphicon glyphicon-link"></span> Link games with Steam</a></li>
+		<li><a href="{{url('steam/import')}}"><span class="glyphicon glyphicon-import"></span> Import games from Steam</a></li>
+		<li><a href="{{url('steam/update')}}"><span class="glyphicon glyphicon-time"></span> Update playtime, icons and logos</a></li>
 		<li><a href="{{url('steam/refreshuserstats')}}"><span class="glyphicon glyphicon-refresh"></span> Refresh user stats</a></li>
-		<li><a href="{{url('steam')}}"><span class="glyphicon fa fa-steam"></span> Steam</a></li>
 	</ul>
 </li>
 <li class="{{Request::is('settings') ? 'active' : ''}}">
