@@ -18,6 +18,6 @@ composer.phar
 ### Laravel
 .env
 _ide_helper.php
+public/storage
+storage/*.key
 # Other files are gitignored using per-directory .gitignore files
-
-.directory

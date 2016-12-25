@@ -2,16 +2,14 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::singularResourceParameters();
 
 Route::get('/', 'StatisticsController@summary');
 
@@ -38,14 +36,3 @@ Route::resource('playthroughs', 'PlaythroughController');
 Route::get('steam/sync', 'SteamController@syncGames');
 Route::get('steam/import', 'SteamController@importGames');
 Route::get('steam/update', 'SteamController@updateAppinfo');
-
-// API
-Route::group(['prefix' => 'api'], function() {
-	Route::get('games', 'GameController@getCategorisedJson');
-	Route::get('dlc', 'DlcController@getJson');
-
-	Route::get('statistics/purchases', 'StatisticsController@getPurchases');
-	Route::get('statistics/playthroughs', 'StatisticsController@getPlaythroughs');
-	Route::get('statistics/statusshare', 'StatisticsController@getStatusShare');
-	Route::get('statistics/shopshare', 'StatisticsController@getShopShare');
-});
