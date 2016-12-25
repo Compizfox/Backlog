@@ -104,8 +104,8 @@ class PurchaseController extends Controller {
 		$purchase->save();
 
 		// Sync members
-		$purchase->games()->sync($request->games);
-		$purchase->dlc()->sync($request->dlc);
+		$purchase->games()->sync($request->games ?? []);
+		$purchase->dlc()->sync($request->dlc ?? []);
 
 		return redirect()->action('PurchaseController@edit', ['id' => $purchase->id])->with('status', 'Purchase modified!');
 	}
