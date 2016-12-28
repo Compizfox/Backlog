@@ -45,27 +45,16 @@ class PurchaseController extends Controller {
 
 		// Insert games (unless they exist) and attach to new purchase
 		foreach($request->input('games', []) as $game) {
-			$gameModel = Game::firstOrNew(['name' => $game['name']]);
-			if(!$gameModel->exists) {
-				$gameModel->status_id = $game['status'];
-				$gameModel->note = $game['note'];
-				$gameModel->save();
-			}
-			$gameModel->purchases()->attach($purchase->id);
+			$gameModel = Game::firstOrCreate(['name' => $game['name']], ['status_id' => $game['status'], 'note' => $game['note']]);
+			$gameModel->purchases()->attach($purchase);
 		}
 
 		// Insert DLC and attach to game (unless they exist) and attach to new purchase
 		foreach($request->input('dlc', []) as $dlc) {
-			$dlcModel = Dlc::firstOrNew(['name' => $dlc['name']]);
-			if(!$dlcModel->exists) {
-				// Get game_id of game with given name
-				$gameId = Game::where('name', $dlc['game'])->firstOrFail()->id;
-				// Set DLC properties and insert
-				$dlcModel->game_id = $gameId;
-				$dlcModel->status_id = $dlc['status'];
-				$dlcModel->note = $dlc['note'];
-				$dlcModel->save();
-			}
+			// Get game_id of game with given name
+			$gameId = Game::where('name', $dlc['game'])->firstOrFail()->id;
+
+			$dlcModel = Dlc::firstOrCreate(['name' => $dlc['name']], ['game_id' => $gameId, 'status_id' => $dlc['status'], 'note' => $dlc['note']]);
 			$dlcModel->purchases()->attach($purchase->id);
 		}
 
