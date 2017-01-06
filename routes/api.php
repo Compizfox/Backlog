@@ -16,7 +16,9 @@ use Illuminate\Http\Request;
 Route::get('games', 'GameController@getCategorisedJson');
 Route::get('dlc', 'DlcController@getJson');
 
-Route::get('statistics/purchases', 'StatisticsController@getPurchases');
-Route::get('statistics/playthroughs', 'StatisticsController@getPlaythroughs');
-Route::get('statistics/statusshare', 'StatisticsController@getStatusShare');
-Route::get('statistics/shopshare', 'StatisticsController@getShopShare');
+Route::group(['prefix' => 'statistics'], function () {
+	Route::get('purchases', 'StatisticsController@getPurchases');
+	Route::get('playthroughs', 'StatisticsController@getPlaythroughs');
+	Route::get('statusshare', 'StatisticsController@getStatusShare');
+	Route::get('shopshare', 'StatisticsController@getShopShare');
+});
