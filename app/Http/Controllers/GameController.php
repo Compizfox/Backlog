@@ -7,13 +7,14 @@ use App\Game;
 
 class GameController extends Controller {
 	public function index(Request $request) {
+		// TODO: Use Eloquent scopes for this?
 		// Start Eloquent query
 		$gamesQuery = Game::with('status')
-			->orderBy('name');
+				->orderBy('name');
 
 		// Completion filter
 		if($request->has('completion')) {
-			$gamesQuery = $gamesQuery->whereHas('status', function($q) use($request) {
+			$gamesQuery = $gamesQuery->whereHas('status', function ($q) use ($request) {
 				$q->where('completed', '=', $request->completion);
 			});
 		}
@@ -22,7 +23,7 @@ class GameController extends Controller {
 		if($request->has('purchased')) {
 			if($request->purchased == 0) {
 				// Get orphaned games
-				$gamesQuery = $gamesQuery->has('purchases' , '=', 0);
+				$gamesQuery = $gamesQuery->has('purchases', '=', 0);
 			}
 			if($request->purchased == 1) {
 				// Get purchased games
@@ -43,11 +44,11 @@ class GameController extends Controller {
 
 	public function update(Request $request, Game $game) {
 		$this->validate($request, [
-			'name'      => 'required|string',
-			'status'    => 'required|exists:statuses,id',
-			'appid'     => 'integer',
-			'playtime'  => 'integer',
-			'note'      => 'string',
+				'name'      => 'required|string',
+				'status'    => 'required|exists:statuses,id',
+				'appid'     => 'integer',
+				'playtime'  => 'integer',
+				'note'      => 'string',
 		]);
 
 		// Update properties
@@ -57,7 +58,7 @@ class GameController extends Controller {
 		$game->appid_lock = $request->appid_lock;
 		$game->playtime = $request->playtime;
 		$game->note = $request->note;
-		$game->hidden = $request->hidden;
+		$game->hidden = isset($request->hidden);
 		$game->save();
 
 		return redirect()->action('GameController@edit', ['id' => $game->id])->with('status', 'Game modified!');
@@ -89,26 +90,26 @@ class GameController extends Controller {
 
 		return redirect()->back()->with('status', 'Games updated!');
 	}
-	
+
 	public function getCategorisedJson() {
-		// Retrieve array of games with purchase count (for determinging owned/orphaned status)
+		// Retrieve array of games with purchase count (for determining owned/orphaned status)
 		$games = Game::withCount('purchases')
-			->orderBy('name')
-			->get();
+				->orderBy('name')
+				->get();
 
 		$gamesArray = $games
-			->map(function ($game) {
-				if($game->purchases_count == 0) $category = 'Orphaned';
-				else $category = 'Already purchased';
+				->map(function ($game) {
+					if($game->purchases_count == 0) $category = 'Orphaned';
+					else $category = 'Already purchased';
 
-				return [
-					'label' => $game->name,
-					'category' => $category,
-					'id' => $game->id
-				];
-			})->sortBy(function($row) {
-				return $row['category'] . " " . $row['label'];
-			})->values();
+					return [
+							'label' => $game->name,
+							'category' => $category,
+							'id' => $game->id
+					];
+				})->sortBy(function ($row) {
+					return $row['category'] . " " . $row['label'];
+				})->values();
 
 		return response()->json($gamesArray);
 	}

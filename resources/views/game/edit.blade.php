@@ -56,7 +56,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-6">
-					<div class="checkbox"><label><input name="hidden" type="checkbox"{{$game->hidden ? ' selected' : ''}}>Hidden</label></div>
+					<div class="checkbox"><label><input name="hidden" type="checkbox"{{$game->hidden ? ' checked' : ''}}>Hidden</label></div>
 				</div>
 			</div>
 		</fieldset>
