@@ -36,3 +36,11 @@ Route::resource('playthroughs', 'PlaythroughController');
 Route::get('steam/sync', 'SteamController@syncGames');
 Route::get('steam/import', 'SteamController@importGames');
 Route::get('steam/update', 'SteamController@updateAppinfo');
+
+// Settings
+Route::group(['prefix' => 'settings'], function () {
+	Route::get('', 'SettingsController@get');
+	Route::post('general', 'SettingsController@postGeneral');
+	Route::post('hidden', 'SettingsController@postHidden');
+	Route::post('status', 'SettingsController@postStatuses');
+});

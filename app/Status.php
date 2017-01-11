@@ -20,6 +20,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  */
 class Status extends Model {
+	protected $guarded = [];
+
 	public function games() {
 		return $this->hasMany(Game::class);
 	}
