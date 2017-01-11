@@ -27,7 +27,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Game;
 use App\Services\SteamService;
 
@@ -48,7 +47,7 @@ class SteamController extends Controller {
 			$dbGame = Game::where('name', $steamGame->name)->first();
 
 			// Update game with appid if it is not set
-			if($dbGame != NULL and $dbGame->appid == NULL) {
+			if($dbGame != NULL and empty($dbGame->appid)) {
 				$dbGame->appid = $steamGame->appid;
 				$dbGame->save();
 
