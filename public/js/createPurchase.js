@@ -5,31 +5,32 @@
 $(document).ready(function() {
 	// Remove rows
 	$('.form-horizontal').on('click', '.deleteRow', function() {
-		$(this).closest('tr').remove();
+		$(this).closest('tr')
+			.fadeOut("normal", function() {
+				$(this).remove();
+			})
 	});
 
-	var gameCounter = 0;
 	// Clone new rows from template
 	$('#addGame').click(function() {
 		// Clone template, replace $i with auto-increment id, add new class
 		$('#gameTemplate').clone()
 			.removeAttr('id')
 			.html(function(i, oldHTML) {
-				return oldHTML.replace(/\$i/g, gameCounter);
+				return oldHTML.replace(/\$i/g, $('#gameContainer tr').length);
 			})
+			.fadeIn("normal")
 			.appendTo('#gameContainer');
-		gameCounter++;
 	});
 
-	var dlcCounter = 0;
 	$('#addDlc').click(function() {
 		$('#dlcTemplate').clone()
 			.removeAttr('id')
 			.html(function(i, oldHTML) {
-				return oldHTML.replace(/\$i/g, dlcCounter);
+				return oldHTML.replace(/\$i/g, $('#dlcContainer tr').length);
 			})
+			.fadeIn("normal")
 			.appendTo('#dlcContainer');
-		dlcCounter++;
 	});
 });
 
