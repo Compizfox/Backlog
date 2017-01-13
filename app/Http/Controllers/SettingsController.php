@@ -74,22 +74,24 @@ class SettingsController extends Controller {
 
 	public function postStatuses(Request $request) {
 		$this->validate($request, [
+				'id.*'          => 'integer',
 				'name.*'        => 'required|string',
 				'color.*'       => 'required|string',
 		]);
 
+		// Get all rows that were removed in the form and remove them
+		$removed = array_diff(Status::pluck('id')->toArray(), $request->id);
+		Status::destroy($removed);
+
 		// Update or insert all POSTed rows
 		foreach($request->name as $i => $name) {
-			Status::updateOrCreate(['id' => $i], [
-					'name'      => $name,
+			$id = $request->id[$i] ?? NULL;
+			Status::updateOrCreate(['id' => $id], [
+					'name'      => $request->name[$i],
 					'color'     => $request->color[$i],
 					'completed' => isset($request->completed[$i])
 			]);
 		}
-
-		// Get all rows that were removed in the form and remove them
-		$removed = array_diff(Status::pluck('id')->toArray(), array_keys($request->name));
-		Status::destroy($removed);
 
 		return redirect()->action('SettingsController@get')->with('status', 'Statuses updated!');
 	}

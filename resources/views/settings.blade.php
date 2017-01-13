@@ -98,14 +98,21 @@
 				</tr>
 			</thead>
 			<tbody id="statuses">
-				@foreach($statuses as $status)
+				@foreach($statuses as $i => $status)
 					<tr>
-						<td><input type="text" class="form-control" name="name[{{$status->id}}]" value="{{$status->name}}" required></td>
-						<td><input type="color" class="form-control" name="color[{{$status->id}}]" value="{{$status->color}}" required></td>
 						<td>
-							<input type="checkbox" name="completed[{{$status->id}}]"{{$status->completed ? ' checked' : ''}}>
+							<input type="hidden" name="id[{{$i}}]" value="{{$status->id}}">
+							<input type="text" class="form-control" name="name[{{$i}}]" value="{{$status->name}}" required>
 						</td>
-						<td><span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span></td>
+						<td>
+							<input type="color" class="form-control" name="color[{{$i}}]" value="{{$status->color}}" required>
+						</td>
+						<td>
+							<input type="checkbox" name="completed[{{$i}}]"{{$status->completed ? ' checked' : ''}}>
+						</td>
+						<td>
+							<span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span>
+						</td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -133,10 +140,7 @@
 			<td><input type="text" class="form-control" name="name[$i]" required></td>
 			<td><input type="color" class="form-control" name="color[$i]" required></td>
 			<td><input type="checkbox" name="completed[$i]"></td>
-			<td>
-				<input type="hidden" name="completed[$i]" value="0">
-				<span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span>
-			</td>
+			<td><span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span></td>
 		</tr>
 	</table>
 @endsection
