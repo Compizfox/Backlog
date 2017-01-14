@@ -7,28 +7,18 @@ use App\Game;
 
 class GameController extends Controller {
 	public function index(Request $request) {
-		// TODO: Use Eloquent scopes for this?
 		// Start Eloquent query
 		$gamesQuery = Game::with('status')
 				->orderBy('name');
 
 		// Completion filter
 		if($request->has('completion')) {
-			$gamesQuery = $gamesQuery->whereHas('status', function ($q) use ($request) {
-				$q->where('completed', '=', $request->completion);
-			});
+			$gamesQuery = $gamesQuery->completed($request->completion);
 		}
 
 		// Orphaned filter
 		if($request->has('purchased')) {
-			if($request->purchased == 0) {
-				// Get orphaned games
-				$gamesQuery = $gamesQuery->has('purchases', '=', 0);
-			}
-			if($request->purchased == 1) {
-				// Get purchased games
-				$gamesQuery = $gamesQuery->has('purchases');
-			}
+			$gamesQuery = $gamesQuery->purchased($request->purchased);
 		}
 
 		return view('game.index', ['games' => $gamesQuery->get()]);

@@ -46,4 +46,10 @@ class Dlc extends Model {
 	public function playthroughs() {
 		return $this->morphMany(Playthrough::class, 'playable');
 	}
+
+	public function scopeCompleted($query, $status) {
+		return $query->whereHas('status', function($q) use($status) {
+			$q->where('completed', '=', $status);
+		});
+	}
 }

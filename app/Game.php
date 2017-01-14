@@ -73,4 +73,22 @@ class Game extends Model {
 		    else throw new \InvalidArgumentException;
 	    }
     }
+
+    public function scopeCompleted($query, $status) {
+	    return $query->whereHas('status', function ($q) use ($status) {
+		    $q->where('completed', '=', $status);
+	    });
+    }
+
+    public function scopePurchased($query, $status) {
+	    if($status == 0) {
+		    // Get orphaned games
+		    return $query->has('purchases', '=', 0);
+	    } elseif($status == 1) {
+		    // Get purchased games
+		    return $query->has('purchases');
+	    } else {
+	    	throw new \InvalidArgumentException();
+	    }
+    }
 }

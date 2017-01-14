@@ -13,9 +13,7 @@ class DlcController extends Controller {
 
 		// Completion filter
 		if($request->has('completion')) {
-			$dlcQuery = $dlcQuery->whereHas('status', function($q) use($request) {
-				$q->where('completed', '=', $request->completion);
-			});
+			$dlcQuery = $dlcQuery->completed($request->completion);
 		}
 
 		return view('dlc.index', ['dlc' => $dlcQuery->get()]);
