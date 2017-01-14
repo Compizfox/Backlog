@@ -74,6 +74,10 @@ class Game extends Model {
 	    }
     }
 
+    public function scopeVisible($query) {
+    	return $query->where('hidden', 0);
+    }
+
     public function scopeCompleted($query, $status) {
 	    return $query->whereHas('status', function ($q) use ($status) {
 		    $q->where('completed', '=', $status);

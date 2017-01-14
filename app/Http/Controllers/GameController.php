@@ -9,6 +9,7 @@ class GameController extends Controller {
 	public function index(Request $request) {
 		// Start Eloquent query
 		$gamesQuery = Game::with('status')
+				->visible()
 				->orderBy('name');
 
 		// Completion filter
