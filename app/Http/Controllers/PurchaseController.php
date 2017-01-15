@@ -118,4 +118,10 @@ class PurchaseController extends Controller {
 
 		return redirect()->action('PurchaseController@index')->with('status', 'Purchases deleted!');
 	}
+
+	public function cleanup() {
+		$count = Purchase::isEmpty()->delete();
+
+		return redirect()->action('SettingsController@get')->with('status', "$count empty purchases deleted!");
+	}
 }

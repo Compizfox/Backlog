@@ -29,6 +29,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Game;
+use App\Purchase;
+use App\Dlc;
+use App\Playthrough;
 use App\Status;
 
 class SettingsController extends Controller {
@@ -94,5 +97,14 @@ class SettingsController extends Controller {
 		}
 
 		return redirect()->action('SettingsController@get')->with('status', 'Statuses updated!');
+	}
+
+	public function truncate() {
+		Purchase::truncate();
+		Game::truncate();
+		Dlc::truncate();
+		Playthrough::truncate();
+
+		return redirect()->action('SettingsController@get')->with('status', 'Database truncated!');
 	}
 }

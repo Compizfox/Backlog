@@ -49,4 +49,8 @@ class Purchase extends Model {
 	public function setPurchasedAtAttribute($value) {
 		$this->attributes['purchased_at'] = $value ?: null;
 	}
+
+	public function scopeIsEmpty($query) {
+		return $query->has('games', '=', 0)->has('dlc', '=', 0);
+	}
 }

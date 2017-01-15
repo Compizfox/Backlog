@@ -124,16 +124,16 @@
 		</div>
 	</form>
 
-	<form class="panel panel-default" method="post" action="../../public/index.php?page=settings&amp;process=dbops">
+	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h2>Database operations</h2>
 		</div>
 		<div class="panel-body">
 			{{csrf_field()}}
-			<button class="btn btn-default" type="submit" name="truncate">Truncate database</button>
-			<button class="btn btn-default" type="submit" name="cleanup">Cleanup database (remove empty purchases)</button>
+			<button class="btn btn-default" name="truncate" id="truncate">Truncate database</button>
+			<a class="btn btn-default" href="{{action('PurchaseController@cleanup')}}">Cleanup database (remove empty purchases)</a>
 		</div>
-	</form>
+	</div>
 
 	<table id="template" style="display:none;">
 		<tr>
@@ -143,9 +143,18 @@
 			<td><span class="glyphicon glyphicon-remove-sign clickable deleteRow"></span></td>
 		</tr>
 	</table>
+
+	@include('includes.truncate')
 @endsection
 
 @push('scripts')
 	<script src="{{asset('js/checkall.js')}}"></script>
 	<script src="{{asset('js/statuses.js')}}"></script>
+	<script>
+		$(document).ready(function() {
+			$('#truncate').click(function() {
+				$('#myModal').modal();
+			});
+		});
+	</script>
 @endpush

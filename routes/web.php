@@ -43,4 +43,6 @@ Route::group(['prefix' => 'settings'], function () {
 	Route::post('general', 'SettingsController@postGeneral');
 	Route::post('hidden', 'SettingsController@postHidden');
 	Route::post('status', 'SettingsController@postStatuses');
+	Route::post('truncate', 'SettingsController@truncate');
+	Route::get('cleanup', 'PurchaseController@cleanup');
 });
