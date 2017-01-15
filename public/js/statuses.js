@@ -3,6 +3,9 @@
  */
 
 $(document).ready(function() {
+	// Count initial number of rows
+	var counter = $('#statuses tr').length;
+
 	// Remove rows
 	$('form').on('click', '.deleteRow', function() {
 		$(this).closest('tr')
@@ -16,9 +19,11 @@ $(document).ready(function() {
 		$('#template tr')
 			.clone()
 			.html(function(i, oldHTML) {
-				return oldHTML.replace(/\$i/g, $('#statuses tr').length);
+				return oldHTML.replace(/\$i/g, counter);
 			})
 			.fadeIn("normal")
 			.appendTo('#statuses');
+
+		counter++;
 	});
 });
