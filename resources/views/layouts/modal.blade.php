@@ -35,7 +35,7 @@
 			</div>
 
 			<div class="modal-footer">
-				<form id="modalForm" action="" method="POST">
+				<form id="modalForm" action="@yield('action')" method="POST">
 					{{csrf_field()}}
 					@yield('inputs')
 					<button type="button" class="btn btn-default" data-dismiss="modal">No</button>
