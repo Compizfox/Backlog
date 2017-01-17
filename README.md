@@ -36,6 +36,9 @@ Every game has a status attached, like:
 Every game or DLC can have one or multiple playthroughs. You can create a playthrough when you start playing a game and easily see which games are started but unfinished. You can also see a history of playthroughs, including start and and data and optional notes.
 
 ### Development status
+##### **2017-01-16**
+The new Laravel rewrite of Backlog has reached feature parity with the legacy branch. This means all features from the old version are present (but better, of course). It is usable but may contain bugs.
+
 ##### **2016-09-15**
 The most important features of the new Laravel-based rewrite of Backlog are working and the `rewrite` branch will be set as the default branch. You can track the current development progress [here](https://github.com/Compizfox/Backlog/projects/1).
 
