@@ -32,6 +32,10 @@ class SteamService {
 	private $steamID;
 
 	public function __construct($apiKey, $steamID) {
+		if(empty($apiKey) or empty($steamID)) {
+			throw new \RuntimeException('No SteamID or API key set!');
+		}
+
 		$this->apiKey = $apiKey;
 		$this->steamID = $steamID;
 	}
