@@ -14,6 +14,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 		view()->composer('includes.status_options', 'App\Http\ViewComposers\StatusOptionsComposer');
+		view()->composer('*', 'App\Http\ViewComposers\SteamWidgetComposer');
     }
 
     /**

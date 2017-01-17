@@ -29,6 +29,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\Services\SteamService;
+use Cache;
 
 class SteamController extends Controller {
 	private $steamGames = [];
@@ -99,8 +100,12 @@ class SteamController extends Controller {
 			}
 		}
 
-		return redirect()->back()->with('status', "Playtime, icons and logos updated!");
+		return redirect()->back()->with('status', 'Playtime, icons and logos updated!');
+	}
+
+	public function updateUserStats() {
+		Cache::flush();
+
+		return redirect()->back()->with('status', 'User stats updated!');
 	}
 }
-
-?>

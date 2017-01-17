@@ -1,29 +1,29 @@
 body {
-    font-family: Open Sans, serif		!important;
-    padding-top: 51px;
+	font-family: Open Sans, serif !important;
+	padding-top: 51px;
 }
 
 footer {
-    min-height: 0 !important;
-    height: 40px;
-    line-height: 40px;
+	min-height: 0 !important;
+	height: 40px;
+	line-height: 40px;
 }
 
 table th {
-    background-color: #5A5F66;
-    color: #FF4D00;
+	background-color: #5A5F66;
+	color: #FF4D00;
 }
 
 table td {
-    background-color: #BDC4C4;
-    color:#333333;
-	vertical-align: middle		!important;
+	background-color: #BDC4C4;
+	color: #333333;
+	vertical-align: middle !important;
 }
 
 tr.dlc > td {
-    line-height: 65%		!important;
-	padding-top: 2px		!important;
-	padding-bottom: 2px		!important;
+	line-height: 65% !important;
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
 }
 
 .sidebar {
@@ -34,7 +34,7 @@ tr.dlc > td {
 	z-index: 1000;
 	display: block;
 	padding: 20px;
-    background-color: #5A5F66;
+	background-color: #5A5F66;
 }
 
 .nav-sidebar {
@@ -44,55 +44,56 @@ tr.dlc > td {
 }
 
 .nav-sidebar > li > ul > li > a {
-    padding: 5px 30px;
+	padding: 5px 30px;
 }
 
 .nav-sidebar > li > a {
-    display: block;
-    padding: 10px 10px;
-    margin-top: 5px;
+	display: block;
+	padding: 10px 10px;
+	margin-top: 5px;
 }
 
 .nav > .active > a {
-	background-color: #FF4D00  !important;
+	background-color: #FF4D00 !important;
 }
 
 .navbar-header > .h1 {
-    line-height: 20px;
-    height: 20px;
-    padding: 15px;
-    margin: 0 20px 0 0;
+	line-height: 20px;
+	height: 20px;
+	padding: 15px;
+	margin: 0 20px 0 0;
 }
 
 .steamwidget {
-    position: absolute;
-    bottom: 0;
-    margin-bottom: 40px !important;
-    width: 100%;
+	position: absolute;
+	bottom: 0;
+	margin-bottom: 40px;
+	width: 100%;
+	background-color: #2e3338;
 }
 
 .main {
-    padding: 20px 40px 50px;
+	padding: 20px 40px 50px;
 }
 
-.statbox > p,h1 {
-    text-align: center;
+.statbox > p, h1 {
+	text-align: center;
 }
 
 .statbox canvas {
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
 }
 
 .ui-autocomplete-category {
-    font-weight: bold;
-    padding: .2em .4em;
-    margin: .8em 0 .2em;
-    line-height: 1.5;
+	font-weight: bold;
+	padding: .2em .4em;
+	margin: .8em 0 .2em;
+	line-height: 1.5;
 }
 
 .clickable {
-    cursor:pointer;
-    color: #ffffff;
+	cursor: pointer;
+	color: #ffffff;
 }

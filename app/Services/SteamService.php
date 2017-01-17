@@ -40,17 +40,39 @@ class SteamService {
 		$this->steamID = $steamID;
 	}
 
+	private function doRequest($url, $arguments) {
+		return json_decode(file_get_contents($url . http_build_query($arguments)));
+	}
+
 	public function retrieveGames() {
-		$url = 'https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?';
+		$result = $this->doRequest('https://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?', [
+				'key'               => $this->apiKey,
+				'steamid'           => $this->steamID,
+				'format'            => 'json',
+				'include_appinfo'   => 1
+		]);
 
-		$arguments = [
-			'key'               => $this->apiKey,
-			'steamid'           => $this->steamID,
-			'format'            => 'json',
-			'include_appinfo'   => 1,
+		return $result->response->games;
+	}
+
+	public function retrieveUserData() {
+		$result = $this->doRequest('https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?', [
+				'key'       => $this->apiKey,
+				'steamids'  => $this->steamID,
+		]);
+
+		return [
+				$result->response->players[0]->profileurl,
+				$result->response->players[0]->avatarmedium,
+				$result->response->players[0]->personaname
 		];
+	}
 
-		$result = json_decode(file_get_contents($url . http_build_query($arguments)));
+	public function retrieveRecentlyPlayed() {
+		$result = $this->doRequest('https://api.steampowered.com/IPlayerService/GetRecentlyPlayedGames/v0001/?', [
+				'key'       => $this->apiKey,
+				'steamid'   => $this->steamID,
+		]);
 
 		return $result->response->games;
 	}

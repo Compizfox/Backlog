@@ -36,6 +36,7 @@ Route::resource('playthroughs', 'PlaythroughController');
 Route::get('steam/sync', 'SteamController@syncGames');
 Route::get('steam/import', 'SteamController@importGames');
 Route::get('steam/update', 'SteamController@updateAppinfo');
+Route::get('steam/refreshuserstats', 'SteamController@updateUserStats');
 
 // Settings
 Route::group(['prefix' => 'settings'], function () {
