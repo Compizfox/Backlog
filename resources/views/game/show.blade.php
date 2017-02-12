@@ -32,7 +32,7 @@
 		</div>
 		<div class="panel-body">
 			<p style="background-color: {{$game->status->color}}"><b>Status:</b> {{$game->status->name}}</p>
-			<p><b>Playtime (minutes):</b> {{$game->getFormattedPlaytime()}}</p>
+			<p><b>Playtime:</b> {{$game->getFormattedPlaytime()}} hours</p>
 			<p><b>Note:</b> {{$game->note}}</p>
 
 			<hr>
