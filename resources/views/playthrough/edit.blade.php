@@ -76,6 +76,13 @@
 		</div>
 
 		<div class="form-group">
+			<label class="col-md-3 control-label">Playtime (hours):</label>
+			<div class="col-md-9">
+				<input class="form-control" type="text" name="playtime" value="{{$pt->getPlaytime()}}">
+			</div>
+		</div>
+
+		<div class="form-group">
 			<div class="col-md-offset-3 col-md-5">
 				<button class="btn btn-default" type="submit" name="submit">Submit</button>
 			</div>

@@ -44,6 +44,8 @@ class PlaythroughController extends Controller {
 			'status'         => 'required_if:updateStatus,on|exists:statuses,id'
 		]);
 
+		$this->updatePlaytime();
+
 		// Create new Playthrough from request
 		$playthrough = new Playthrough();
 		$playthrough->playable_type = 'App\\' . $request->playable_type;
@@ -52,6 +54,7 @@ class PlaythroughController extends Controller {
 		$playthrough->note = $request->note;
 		$playthrough->ended = isset($request->isEnded);
 		$playthrough->ended_at = $request->ended_at;
+		$playthrough->playtime_start = $playthrough->playable->playtime / 60 ?? 0;
 		$playthrough->save();
 
 		// Set status on playable (if needed)
@@ -73,14 +76,25 @@ class PlaythroughController extends Controller {
 			'ended_at'       => 'date_format:Y-m-d',
 
 			'updateStatus'   => 'in:on',
-			'status'         => 'required_if:updateStatus,on|exists:statuses,id'
+			'status'         => 'required_if:updateStatus,on|exists:statuses,id',
+
+			'playtime'       => 'int'
 		]);
+
+		$this->updatePlaytime();
 
 		// Update properties
 		$playthrough->started_at = $request->started_at;
 		$playthrough->note = $request->note;
 		$playthrough->ended = isset($request->isEnded);
 		$playthrough->ended_at = $request->ended_at;
+
+		// Set manual playtime (if modified)
+		if($request->playtime != $playthrough->getPlaytime()) {
+			$playthrough->playtime_start = 0;
+			$playthrough->playtime_end = $request->playtime;
+		}
+
 		$playthrough->save();
 
 		// Set status on playable (if needed)
@@ -107,13 +121,16 @@ class PlaythroughController extends Controller {
 			'ended_at'  => 'required|date_format:Y-m-d'
 		]);
 
+		$this->updatePlaytime();
+
 		Playthrough::whereIn('id', $request->checkedPlaythroughs)
 			->get()
 			->each(function(Playthrough $pt) use($request) {
 				// Update ended date and status
 				$pt->update([
-					'ended' => true,
-					'ended_at' => $request->ended_at
+					'ended'         => true,
+					'ended_at'      => $request->ended_at,
+					'playtime_end'  => $pt->playable->playtime / 60 ?? 0
 				]);
 
 				// Update status of playable
@@ -121,5 +138,10 @@ class PlaythroughController extends Controller {
 			});
 
 		return redirect()->back()->with('status', 'Playthroughs updated!');
+	}
+
+	private function updatePlaytime() {
+		$steamcontroller = new SteamController();
+		$steamcontroller->updateAppinfo();
 	}
 }

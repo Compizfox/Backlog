@@ -38,4 +38,8 @@ class Playthrough extends Model {
 	public function setEndedAtAttribute($value) {
 		$this->attributes['ended_at'] = $value ?: null;
 	}
+
+	public function getPlaytime() {
+		return $this->playtime_end - $this->playtime_start;
+	}
 }

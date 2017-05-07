@@ -107,6 +107,7 @@
 						<th>End date</th>
 						<th>Status</th>
 						<th>Note</th>
+						<th>Length (hours)</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -130,6 +131,7 @@
 							<td>{{$pt->ended_at}}</td>
 							<td style="background-color: {{$pt->playable->status->color}}">{{$pt->playable->status->name}}</td>
 							<td>{{$pt->note}}</td>
+							<td>{{$pt->getPlaytime()}}</td>
 						</tr>
 					@endforeach
 				</tbody>
